@@ -1,0 +1,44 @@
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  outline: 0;
+  box-shadow: none;
+  border: 0 !important;
+  background: transparent;
+  cursor: pointer;
+  font-weight: 600;
+  padding: 10px;
+}
+
+li.chatbox app-chat-window {
+  position: fixed;
+  bottom: 20px;
+  height: 520px;
+  width: 350px !important;
+  right: 40px;
+}
+
+li.notifications app-notifications {
+  position: fixed;
+  top: 60px;
+  right: 50px;
+  height: 520px;
+  width: 300px;
+  animation: myAnim 1s ease 0s 1 normal forwards;
+}
+
+@keyframes myAnim {
+  0% {
+    opacity: 0;
+    transform: rotateX(-100deg);
+    transform-origin: top;
+  }
+
+  100% {
+    opacity: 1;
+    transform: rotateX(0deg);
+    transform-origin: top;
+  }
+}

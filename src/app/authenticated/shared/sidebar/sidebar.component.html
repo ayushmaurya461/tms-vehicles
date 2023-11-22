@@ -1,0 +1,89 @@
+<!-- sidebar  -->
+<nav class="sidebar">
+  <div class="logo d-flex justify-content-center">
+    <!-- <a class="large_logo" routerLink="/dashboard"
+      ><img src="/assets/img/tms-erp.svg" alt=""
+    /></a> -->
+    <img src="/assets/img/mini_logo.png" alt="" />
+    <div class="sidebar_close_icon d-lg-none">
+      <i class="text-white">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="currentColor"
+          class="bi bi-x-lg"
+          viewBox="0 0 16 16"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z"
+          />
+          <path
+            fill-rule="evenodd"
+            d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z"
+          />
+        </svg>
+      </i>
+    </div>
+  </div>
+
+  <!-- ==================================================================================================================================================== -->
+  <!-- ====================================================================================================================================================== -->
+
+  <ul *ngIf="sidebarService.menus?.length" class="sidebar-menu-list">
+    <li
+      *ngFor="let menu of sidebarService.menus; let menuIndex = index"
+      class="menu-item"
+      id="menu_title_{{ menuIndex }}"
+      appExpandCollapseMenu
+    >
+      <a
+        class="menu"
+        [routerLink]="
+          menu.sub_modules.length
+            ? null
+            : menu.url == '#' || menu.url == null || menu.url == ''
+            ? null
+            : menu.url
+        "
+        [routerLinkActive]="
+          menu.sub_modules.length ||
+          menu.url == '#' ||
+          menu.url == null ||
+          menu.url == ''
+            ? ''
+            : 'active'
+        "
+        (click)="sidebarService.closeSidebar(menu.url)"
+        aria-expanded="false"
+      >
+        <div class="menu_icon">
+          <i class="{{ menu.icon }}"></i>
+        </div>
+        <div class="menu_title show">
+          <span>{{ menu.name }}</span>
+        </div>
+      </a>
+      <ul *ngIf="menu.sub_modules.length" class="submenu-list hide">
+        <li *ngFor="let subMenu of menu.sub_modules">
+          <a
+            [routerLink]="
+              subMenu.url == '#' || subMenu.url == null || subMenu.url == ''
+                ? null
+                : subMenu.url
+            "
+            [routerLinkActive]="
+              subMenu.url == '#' || subMenu.url == null || subMenu.url == ''
+                ? ''
+                : 'active'
+            "
+            (click)="sidebarService.closeSidebar(subMenu.url)"
+            >>&nbsp;&nbsp; {{ subMenu.name }}</a
+          >
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+<!--/ sidebar  -->

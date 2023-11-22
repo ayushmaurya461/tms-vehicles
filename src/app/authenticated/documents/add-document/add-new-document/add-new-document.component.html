@@ -1,0 +1,278 @@
+<div
+  id="document"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  data-backdrop="static"
+  aria-labelledby="document"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title font-weight-bold" id="addDistrictModalTitle">
+          Add Vehicle Document
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">Close &times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form
+          class="highlight-required"
+          id="vehicleDetails"
+          #document="ngForm"
+          autocomplete="off"
+        >
+          <input type="hidden" name="id" id="id" [(ngModel)]="this.fields.id" />
+          <div class="col-md-3">
+            <label for="documentName">
+              <h6 class="small font-weight-bold">Document Name</h6>
+            </label>
+            <select2
+              [selectionCounter]="false"
+              [options]="documentNameoptions"
+              [id]="'documentName'"
+              name="documentName"
+              (onChange)="setDocumentName($event)"
+              [selectedData]="fields.documentName"
+              [placeholder]="'Select'"
+              [(ngModel)]="fields.documentName"
+              ngDefaultControl
+              [required]="true"
+            ></select2>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-md-3" *ngIf="fieldsToShow?.vehicleNo">
+              <label for="vehicleNo">
+                <h6 class="small font-weight-bold">Vehicle No.</h6>
+              </label>
+              <select2
+                [id]="'vehicleNo'"
+                name="vehicleNo"
+                [selectionCounter]="false"
+                [options]="vehcileOptions"
+                [placeholder]="'Select'"
+                [(ngModel)]="fields.vehicleNo"
+                [selectedData]="fields.vehicleNo"
+                (onChange)="setDocumentValues($event, 'vehicleNo')"
+                ngDefaultControl
+              ></select2>
+            </div>
+            <div class="col-md-3" *ngIf="fieldsToShow?.resource">
+              <label for="resource">
+                <h6 class="small font-weight-bold">Resource</h6>
+              </label>
+              <select2
+                [selectionCounter]="false"
+                [options]="resourceOptions"
+                [id]="'resource'"
+                [placeholder]="'Select'"
+                name="resource"
+                (onChange)="setDocumentValues($event, 'resource')"
+                [selectedData]="fields.resource"
+                [(ngModel)]="fields.resource"
+                ngDefaultControl
+                [required]="true"
+              ></select2>
+            </div>
+            <div class="col-md-3" *ngIf="fieldsToShow?.refNo">
+              <label for="refNo">
+                <h6 class="small font-weight-bold">Reference No</h6>
+              </label>
+              <select2
+                [selectionCounter]="false"
+                [options]="refOptions"
+                [id]="'refNo'"
+                name="refNo"
+                (onChange)="setDocumentValues($event, 'refNo')"
+                [selectedData]="fields.refNo"
+                [(ngModel)]="fields.refNo"
+                ngDefaultControl
+                [placeholder]="'Select'"
+                [required]="true"
+              ></select2>
+            </div>
+            <div class="col-md-3" *ngIf="fieldsToShow?.insuranceCompany">
+              <label for="insuranceCompany">
+                <h6 class="small font-weight-bold">Insurance Company</h6>
+              </label>
+              <select2
+                [selectionCounter]="false"
+                [options]="insuranceCompanyOptions"
+                [id]="'insuranceCompany'"
+                name="insuranceCompany"
+                (onChange)="setDocumentValues($event, 'insuranceCompany')"
+                [selectedData]="fields.insuranceCompany"
+                [(ngModel)]="fields.insuranceCompany"
+                ngDefaultControl
+                [placeholder]="'Select'"
+                [required]="true"
+              ></select2>
+            </div>
+            <div class="col-md-3" *ngIf="fieldsToShow?.validFrom">
+              <label for="validFrom">
+                <h6 class="small font-weight-bold">Valid From</h6>
+              </label>
+              <input
+                type="text"
+                id="validFrom"
+                [(ngModel)]="fields.validFrom"
+                required
+                placeholder="Select a Date"
+                class="form-control"
+                onFocus="(this.type = 'date')"
+                name="validFrom"
+              />
+            </div>
+            <div class="col-md-3" *ngIf="fieldsToShow?.validTo">
+              <label for="validTo">
+                <h6 class="small font-weight-bold">Valid To</h6>
+              </label>
+              <input
+                type="text"
+                id="validTo"
+                [(ngModel)]="fields.validTo"
+                required
+                placeholder="Select a Date"
+                class="form-control"
+                onFocus="(this.type = 'date')"
+                name="validTo"
+              />
+            </div>
+            <div class="col-md-3" *ngIf="fieldsToShow?.authority">
+              <label for="authority">
+                <h6 class="small font-weight-bold">Authority</h6>
+              </label>
+              <select2
+                [selectionCounter]="false"
+                [options]="authorityOptions"
+                [id]="'authority'"
+                name="authority"
+                (onChange)="setDocumentValues($event, 'authority')"
+                [selectedData]="fields.authority"
+                [(ngModel)]="fields.authority"
+                ngDefaultControl
+                [placeholder]="'Select'"
+                [required]="true"
+              ></select2>
+            </div>
+            <div class="col-md-3" *ngIf="fieldsToShow?.ncb">
+              <label for="ncb">
+                <h6 class="small font-weight-bold">NCB</h6>
+              </label>
+              <select2
+                [selectionCounter]="false"
+                [options]="ncbOptions"
+                [id]="'ncb'"
+                name="ncb"
+                (onChange)="setDocumentValues($event, 'ncb')"
+                [selectedData]="fields.ncb"
+                [(ngModel)]="fields.ncb"
+                ngDefaultControl
+                [placeholder]="'Select'"
+                [required]="true"
+              ></select2>
+            </div>
+            <div class="col-md-3" *ngIf="fieldsToShow?.idv">
+              <label for="idv">
+                <h6 class="small font-weight-bold">IDV</h6>
+              </label>
+              <select2
+                [selectionCounter]="false"
+                [options]="idvOptions"
+                [id]="'idv'"
+                name="idv"
+                (onChange)="setDocumentValues($event, 'idv')"
+                [selectedData]="fields.idv"
+                [(ngModel)]="fields.idv"
+                [placeholder]="'Select'"
+                ngDefaultControl
+                [required]="true"
+              ></select2>
+            </div>
+            <div class="col-md-3" *ngIf="fieldsToShow?.govt">
+              <label for="govt">
+                <h6 class="small font-weight-bold">Govt. Name</h6>
+              </label>
+              <select2
+                [selectionCounter]="false"
+                [options]="govtOptions"
+                [id]="'govt'"
+                name="govt"
+                (onChange)="setDocumentValues($event, 'govt')"
+                [selectedData]="fields.govt"
+                [(ngModel)]="fields.govt"
+                ngDefaultControl
+                [placeholder]="'Select'"
+                [required]="true"
+              ></select2>
+            </div>
+            <div class="col-md-3" *ngIf="fieldsToShow?.tax">
+              <label for="tax">
+                <h6 class="small font-weight-bold">Tax Name</h6>
+              </label>
+              <select2
+                [selectionCounter]="false"
+                [options]="taxOptions"
+                [id]="'tax'"
+                name="tax"
+                (onChange)="setDocumentValues($event, 'tax')"
+                [selectedData]="fields.tax"
+                [(ngModel)]="fields.tax"
+                ngDefaultControl
+                [required]="true"
+                [placeholder]="'Select'"
+              ></select2>
+            </div>
+            <div class="col-md-3" *ngIf="fieldsToShow?.amount">
+              <label for="amt">
+                <h6 class="small font-weight-bold">Amount</h6>
+              </label>
+              <input
+                type="number"
+                id="amt"
+                [(ngModel)]="fields.amount"
+                required
+                class="form-control"
+                name="amt"
+                placeholder="Amount"
+              />
+            </div>
+            <div class="col-md-3" *ngIf="fieldsToShow?.transactionId">
+              <label for="transactionId">
+                <h6 class="small font-weight-bold">Transaction ID</h6>
+              </label>
+              <input
+                type="date"
+                id="transactionId"
+                placeholder="Transaction ID"
+                [(ngModel)]="fields.transactionId"
+                required
+                class="form-control"
+                name="transactionId"
+              />
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          id="submitDistrictInformation"
+          class="btn btn-theme"
+          [disabled]="document.invalid"
+          (click)="submitDetails(document)"
+        >
+          Save Details
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

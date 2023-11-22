@@ -1,0 +1,56 @@
+<div
+  class="form-group form-input-group mb-0"
+  [ngClass]="readonly ? 'not-allowed' : ''"
+>
+  <ngx-select
+    class="flex-1 select2"
+    [id]="id"
+    [multiple]="multiple"
+    (keydown.tab)="doCloseTab(id, selectComponent)"
+    [allowClear]="allowClear"
+    [items]="options"
+    optionValueField="id"
+    optionTextField="text"
+    placeholder="{{ placeholder }}"
+    (typed)="inputTyped('ngx-select', $event)"
+    (focus)="doFocus(id)"
+    (blur)="doBlur()"
+    (open)="doOpen(id)"
+    (close)="doClose()"
+    (select)="doSelect($event)"
+    (remove)="doRemove($event)"
+    (selectionChanges)="doSelectOptions($event, id)"
+    [name]="'{{id}}'"
+    [(ngModel)]="selectedData"
+    #select="ngModel"
+    [required]="required"
+    [disabled]="disabled"
+    [noSanitize]="true"
+    [autoClearSearch]="true"
+    [isFocused]="isFocused"
+    [ngClass]="readonly ? 'readonly' : ''"
+    [autocomplete]="'xxxxxx'"
+    #selectComponent
+  >
+  </ngx-select>
+  <a (click)="showSelectedOptions(id)" *ngIf="selectionCounter">
+    <div class="input-group-append">
+      <span
+        class="input-group-text"
+        class="{{ id }}"
+        id="selected-options-count"
+        >0</span
+      >
+    </div>
+  </a>
+  <!-- select.invalid && (select.dirty || select.touched) -->
+  <div
+    *ngIf="select.invalid && (select.dirty || select.touched)"
+    class="input-error-container text-danger text-left"
+  >
+    <i class="p-2 input-error-indicator fa fa-exclamation-triangle"></i>
+    <div class="input-error">
+      <div *ngIf="select.errors?.required">Field is required.</div>
+    </div>
+  </div>
+</div>

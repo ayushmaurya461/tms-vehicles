@@ -1,0 +1,14 @@
+.backdrop {
+  display: none;
+  background-color: #000000ad;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  position: fixed;
+  left: 0;
+  z-index: 100;
+}
+
+li .row {
+  word-wrap: break-word;
+}

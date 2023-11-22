@@ -1,0 +1,25 @@
+<div class="form-group form-input-group mb-0">
+  <div class="filename" (click)="triggerInput(id)">{{ fileName }}</div>
+  <input
+    type="file"
+    class="form-control-file"
+    id="{{ id }}"
+    [multiple]="multiple"
+    (change)="onFileSelected($event)"
+    name="{{ id }}"
+    [required]="required"
+    hidden
+  />
+  <a
+    href="javascript:void(0)"
+    id="viewImagePreview"
+    tabindex="-1"
+    data-toggle="modal"
+    data-target="#imagePreviewModal"
+    (click)="viewImagePreview(filesToUpload, id)"
+  >
+    <div class="input-group-append">
+      <span class="input-group-text" id="{{ id }}-count">0</span>
+    </div>
+  </a>
+</div>

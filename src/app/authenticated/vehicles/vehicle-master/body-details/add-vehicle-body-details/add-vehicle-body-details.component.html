@@ -1,0 +1,328 @@
+<div
+  id="addVehicleBodyDetails"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  data-backdrop="static"
+  aria-labelledby="addVehicleBodyDetails"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5
+          class="modal-title font-weight-bold"
+          id="
+              addVehicleBrandModalTitle"
+        >
+          Trailer Details
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">Close &times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form
+          class="highlight-required"
+          id="vehicleBodyDetails"
+          #vehicleBodyDetails="ngForm"
+          autocomplete="off"
+        >
+          <input type="hidden" name="id" id="id" [(ngModel)]="this.fields.id" />
+          <div class="row">
+            <div class="col-md-4">
+              <label for="bodyType"
+                ><h6 class="font-weight-bold small">Body Type</h6></label
+              >
+              <select2
+                [nextElement]="{ id: 'noOfAxle', type: 'number' }"
+                [options]="bodyTypeOptions"
+                [required]="true"
+                [multiple]="false"
+                placeholder="Body Type"
+                [id]="'bodyType'"
+                name="bodyType"
+                [selectedData]="this.fields.bodyType"
+                [(ngModel)]="this.fields.bodyType"
+                (onChange)="setValue('bodyType', $event)"
+                ngDefaultControl
+              ></select2>
+            </div>
+
+            <div class="col-md-4 mb-1">
+              <label for="noOfAxle"
+                ><h6 class="font-weight-bold small mb-1">No. Of Axle</h6></label
+              >
+              <div class="form-group mb-0">
+                <input
+                  type="number"
+                  class="form-control"
+                  name="noOfAxle"
+                  id="noOfAxle"
+                  [ngModel]="this.fields.noOfAxle"
+                  #noOfAxle="ngModel"
+                  placeholder="Number of Axle"
+                  (keypress)="
+                    this.tabEnterService.keyFunc(
+                      $event,
+                      'bodyNo',
+                      'text',
+                      'bodyType',
+                      'select'
+                    )
+                  "
+                  required
+                />
+                <div
+                  *ngIf="
+                    noOfAxle.invalid && (noOfAxle.dirty || noOfAxle.touched)
+                  "
+                  class="input-error-container text-danger text-left"
+                >
+                  <i
+                    class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                  ></i>
+                  <div class="input-error">
+                    <div *ngIf="noOfAxle.errors?.required">
+                      Field is required.
+                    </div>
+                    <div *ngIf="noOfAxle.errors?.pattern">Pattern Mismatch</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4 mb-1">
+              <label for="bodyNo"
+                ><h6 class="font-weight-bold small mb-1">Body No.</h6></label
+              >
+              <div class="form-group mb-0">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="bodyNo"
+                  id="bodyNo"
+                  [(ngModel)]="this.fields.bodyNo"
+                  #bodyNo="ngModel"
+                  placeholder="Body Number"
+                  (keypress)="
+                    this.tabEnterService.keyFunc(
+                      $event,
+                      'chasisNo',
+                      'text',
+                      'noOfAxle',
+                      'text'
+                    )
+                  "
+                  required
+                />
+                <div
+                  *ngIf="bodyNo.invalid && (bodyNo.dirty || bodyNo.touched)"
+                  class="input-error-container text-danger text-left"
+                >
+                  <i
+                    class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                  ></i>
+                  <div class="input-error">
+                    <div *ngIf="bodyNo.errors?.required">
+                      Field is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4 mb-1">
+              <label for="chasisNo"
+                ><h6 class="font-weight-bold small mb-1">Chassis No.</h6></label
+              >
+              <div class="form-group mb-0">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="chasisNo"
+                  id="chasisNo"
+                  [(ngModel)]="this.fields.chassisNo"
+                  #chasisNo="ngModel"
+                  placeholder="Chassis Number"
+                  (keypress)="
+                    this.tabEnterService.keyFunc(
+                      $event,
+                      'noOfTyres',
+                      'text',
+                      'bodyNo',
+                      'text'
+                    )
+                  "
+                  required
+                />
+                <div
+                  *ngIf="
+                    chasisNo.invalid && (chasisNo.dirty || chasisNo.touched)
+                  "
+                  class="input-error-container text-danger text-left"
+                >
+                  <i
+                    class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                  ></i>
+                  <div class="input-error">
+                    <div *ngIf="chasisNo.errors?.required">
+                      Field is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4 mb-1">
+              <label for="noOfTyres"
+                ><h6 class="font-weight-bold small mb-1">
+                  No. of Tyres
+                </h6></label
+              >
+              <div class="form-group mb-0">
+                <input
+                  type="number"
+                  class="form-control"
+                  name="noOfTyres"
+                  id="noOfTyres"
+                  [ngModel]="this.fields.noOfTyres"
+                  #noOfTyres="ngModel"
+                  placeholder="Chassis Number"
+                  (keypress)="
+                    this.tabEnterService.keyFunc(
+                      $event,
+                      'odometer',
+                      'text',
+                      'chasisNo',
+                      'text'
+                    )
+                  "
+                  required
+                />
+                <div
+                  *ngIf="
+                    noOfTyres.invalid && (noOfTyres.dirty || noOfTyres.touched)
+                  "
+                  class="input-error-container text-danger text-left"
+                >
+                  <i
+                    class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                  ></i>
+                  <div class="input-error">
+                    <div *ngIf="noOfTyres.errors?.required">
+                      Field is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4 mb-1">
+              <label for="odometer"
+                ><h6 class="font-weight-bold small mb-1">Odometer</h6></label
+              >
+              <div class="form-group mb-0">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="odometer"
+                  id="odometer"
+                  [(ngModel)]="this.fields.odometer"
+                  #odometer="ngModel"
+                  placeholder="Odometer"
+                  (keypress)="
+                    this.tabEnterService.keyFunc(
+                      $event,
+                      'manufacturerName',
+                      'text',
+                      'noOfTyres',
+                      'text'
+                    )
+                  "
+                  required
+                />
+                <div
+                  *ngIf="
+                    odometer.invalid && (odometer.dirty || odometer.touched)
+                  "
+                  class="input-error-container text-danger text-left"
+                >
+                  <i
+                    class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                  ></i>
+                  <div class="input-error">
+                    <div *ngIf="odometer.errors?.required">
+                      Field is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4 mb-1">
+              <label for="manufacturerName"
+                ><h6 class="font-weight-bold small mb-1">
+                  Manufacturer Name
+                </h6></label
+              >
+              <div class="form-group mb-0">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="manufacturerName"
+                  id="manufacturerName"
+                  [(ngModel)]="this.fields.manufacturerName"
+                  #manufacturerName="ngModel"
+                  placeholder="Manufacturer Name"
+                  (keypress)="
+                    this.tabEnterService.keyFunc(
+                      $event,
+                      'submitformdata',
+                      'button',
+                      'odometer',
+                      'text'
+                    )
+                  "
+                  required
+                />
+                <div
+                  *ngIf="
+                    manufacturerName.invalid &&
+                    (manufacturerName.dirty || manufacturerName.touched)
+                  "
+                  class="input-error-container text-danger text-left"
+                >
+                  <i
+                    class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                  ></i>
+                  <div class="input-error">
+                    <div *ngIf="manufacturerName.errors?.required">
+                      Field is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          id="submitformdata"
+          [disabled]="vehicleBodyDetails.invalid"
+          class="btn btn-theme"
+          (click)="submitForm(vehicleBodyDetails)"
+        >
+          Save Details
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

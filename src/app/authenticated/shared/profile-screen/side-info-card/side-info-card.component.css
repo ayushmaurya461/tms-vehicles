@@ -1,0 +1,39 @@
+.detailed-card{
+  border: 1px solid #0000009e;
+  box-sizing: content-box;
+}
+
+.text-ellipsis{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+.side-card{
+  border-radius: 15px;
+  transition: all 3s ease-in-out;
+}
+
+.side-card.active{
+  box-shadow: 0 2px 10px rgb(0 0 0 / 12%), 0 2px 10px rgb(0 0 0 / 24%);
+  flex-direction: row-reverse;
+}
+
+.side-card-icon img{
+  max-width: 45px;
+  max-height: 45px;
+}
+
+.side-card-content{
+  flex: 5;
+}
+
+.side-card-detailed-icon{
+  flex: 1;
+}
+
+.side-card-content span.title{
+  font-size: 1rem;
+  font-weight: 800;
+}

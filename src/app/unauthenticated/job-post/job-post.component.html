@@ -1,0 +1,207 @@
+<section class="align">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 m-auto">
+        <h4 class="text-light mb-3 text-center">
+          Please fill the application form below.
+        </h4>
+        <fieldset class="pb-3 m-auto pt-4">
+          <legend class="font-weight-bold w-auto">Job Application</legend>
+          <form #applicantForm="ngForm">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group m-auto">
+                  <label for="first-name">
+                    <h6 class="text-light font-weight-bold small">
+                      First Name
+                    </h6>
+                  </label>
+                  <input
+                    type="text"
+                    autocomplete="off"
+                    name="first-name"
+                    id="first-name"
+                    ngModel
+                    [required]="true"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group m-auto">
+                  <label for="last-name">
+                    <h6 class="text-light font-weight-bold small">Last Name</h6>
+                  </label>
+                  <input
+                    type="text"
+                    name="last-name"
+                    [required]="true"
+                    ngModel
+                    autocomplete="off"
+                    id="last-name"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group m-auto">
+                  <label for="email">
+                    <h6 class="text-light font-weight-bold small">Email</h6>
+                  </label>
+                  <input
+                    type="email"
+                    ngModel
+                    autocomplete="off"
+                    name="email"
+                    [required]="true"
+                    id="email"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group m-auto">
+                  <label for="mobile">
+                    <h6 class="text-light font-weight-bold small">Mobile</h6>
+                  </label>
+                  <input
+                    type="tel"
+                    name="mobile"
+                    id="mobile"
+                    [required]="true"
+                    ngModel
+                    maxlength="10"
+                    class="form-control"
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group m-auto">
+                  <label for="name">
+                    <h6 class="text-light font-weight-bold small">Gender</h6>
+                  </label>
+                  <select
+                    class="form-select form-control"
+                    name="gender"
+                    id="gender"
+                    ngModel
+                    aria-label="gender select"
+                  >
+                    <option value="0" selected></option>
+                    <option value="1">Male</option>
+                    <option value="2">Female</option>
+                    <option value="3">Others</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-4">
+              <div class="col-md-6">
+                <div class="form-group m-auto">
+                  <label for="expectedSalary">
+                    <h6 class="text-light font-weight-bold small">
+                      Expected Salary per Annum
+                    </h6>
+                  </label>
+                  <input
+                    type="number"
+                    name="expectedSalary"
+                    id="expectedSalary"
+                    maxlength="10"
+                    ngModel
+                    class="form-control"
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group m-auto">
+                  <label for="resume">
+                    <h6 class="text-light font-weight-bold small">Resume/CV</h6>
+                  </label>
+                  <button
+                    class="file-button btn col-12"
+                    (click)="triggerFileInput()"
+                  >
+                    {{ filename }}
+                  </button>
+                  <input
+                    type="file"
+                    name="resume"
+                    [required]="true"
+                    id="resume"
+                    class="form-control"
+                    (change)="fileSelect($event)"
+                    ngModel
+                    hidden
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group m-auto">
+                  <label for="timings">
+                    <h6 class="text-light font-weight-bold small">
+                      Preffered Contact Timings
+                    </h6>
+                  </label>
+                  <input
+                    type="text"
+                    name="timings"
+                    ngModel
+                    id="timings"
+                    class="form-control"
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group m-auto">
+                  <label for="skillset">
+                    <h6 class="text-light font-weight-bold small">Skill Set</h6>
+                  </label>
+                  <textarea
+                    type="text"
+                    name="skillset"
+                    id="skillset"
+                    ngModel
+                    rows="2"
+                    class="form-control"
+                    autocomplete="off"
+                  ></textarea>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group m-auto">
+                  <label for="timings">
+                    <h6 class="text-light font-weight-bold small">About</h6>
+                  </label>
+                  <textarea
+                    type="text"
+                    name="timings"
+                    id="timings"
+                    ngModel
+                    rows="2"
+                    class="form-control"
+                    autocomplete="off"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="row d-flex justify-content-end mt-3 p-3">
+              <button
+                type="submit"
+                class="btn btn-theme"
+                (click)="submitForm(applicantForm)"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+</section>

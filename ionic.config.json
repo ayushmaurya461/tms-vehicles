@@ -1,0 +1,15 @@
+{
+  "defaultProject": "Tms-Frontend",
+  "projects": {
+    "Tms-Frontend": {
+      "name": "Tms-Frontend",
+      "root": "",
+      "integrations": {
+        "cordova": {}
+      },
+      "projectType": "application",
+      "prefix": "app",
+      "sourceRoot": "src"
+    }
+  }
+}

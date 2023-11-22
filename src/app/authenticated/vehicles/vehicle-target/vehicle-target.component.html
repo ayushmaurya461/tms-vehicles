@@ -1,0 +1,399 @@
+<div class="main_content_iner overly_inner">
+  <div class="container-fluid p-0">
+    <section class="container table-wrapper">
+      <div class="position-relative">
+        <div
+          class="page_title_box d-flex flex-wrap align-items-center justify-content-between"
+        >
+          <div class="page_title_left d-flex align-items-center">
+            <h3 class="f_s_25 f_w_700 dark_text mr_30">Vehicle Targets</h3>
+          </div>
+        </div>
+        <table-full
+          *ngIf="!mobile"
+          [columns]="tableColumns"
+          [buttons]="tableButtons"
+          [tableTitle]="'Vehicle Targets'"
+          [optionData]="optionData"
+        ></table-full>
+
+        <app-data-card
+          *ngIf="mobile"
+          [optionData]="optionData"
+          [buttons]="tableButtons"
+          [cardTitle]="'Vehicle Targets'"
+          [columns]="tableColumns"
+        ></app-data-card>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div
+  id="vehicleTargets"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  data-backdrop="static"
+  aria-labelledby="vehicleTargets"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title font-weight-bold" id="vehicleTargetsModalTitle">
+          Vehicle Targets
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">Close &times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #target="ngForm">
+          <input type="text" name="id" [(ngModel)]="fields.id" hidden />
+          <fieldset>
+            <legend>Details</legend>
+            <div class="row d-flex justify-content-between">
+              <div class="col-md-2">
+                <label for="vehicle">
+                  <h6 class="font-weight-bold small">Vehicle No.</h6>
+                </label>
+                <select2
+                  [options]="vehicleOptions"
+                  [id]="'vehicle'"
+                  name="vehicle"
+                  [selectedData]="fields.vehicle"
+                  [(ngModel)]="fields.vehicle"
+                  ngDefaultControl
+                  [nextElement]="{ id: 'year', type: 'select' }"
+                  (onChange)="setValues($event, 'vehicle')"
+                  [required]="true"
+                ></select2>
+              </div>
+              <div class="col-md-2">
+                <label for="year">
+                  <h6 class="font-weight-bold small">Year</h6>
+                </label>
+                <select2
+                  [options]="yearOptions"
+                  [id]="'year'"
+                  name="year"
+                  [selectedData]="fields.year"
+                  [(ngModel)]="fields.year"
+                  ngDefaultControl
+                  [nextElement]="{ id: 'jan', type: 'text' }"
+                  [prevElement]="{ id: 'vehicle', type: 'select' }"
+                  (onChange)="setValues($event, 'year')"
+                  [required]="true"
+                ></select2>
+              </div>
+              <div class="col-md-2 ml-auto">
+                <label for="target">
+                  <h6 class="font-weight-bold small">Yearly Target</h6>
+                </label>
+                <input
+                  type="number"
+                  name="target"
+                  id="target"
+                  [(ngModel)]="fields.target"
+                  [required]="true"
+                  class="form-control"
+                />
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Target Per Month</legend>
+            <div class="row">
+              <div class="col-md-2">
+                <label for="jan">
+                  <h6 class="font-weight-bold small">January</h6>
+                </label>
+                <input
+                  type="number"
+                  name="jan"
+                  id="jan"
+                  [(ngModel)]="fields.jan"
+                  class="form-control"
+                  (ngModelChange)="calculateTarget()"
+                  [required]="true"
+                  (keypress)="
+                    tabEnterService.keyFunc(
+                      $event,
+                      'feb',
+                      'number',
+                      'year',
+                      'select'
+                    )
+                  "
+                />
+              </div>
+              <div class="col-md-2">
+                <label for="feb">
+                  <h6 class="font-weight-bold small">February</h6>
+                </label>
+                <input
+                  type="number"
+                  name="feb"
+                  [required]="true"
+                  id="feb"
+                  [(ngModel)]="fields.feb"
+                  (ngModelChange)="calculateTarget()"
+                  class="form-control"
+                  (keypress)="
+                    tabEnterService.keyFunc(
+                      $event,
+                      'mar',
+                      'number',
+                      'jan',
+                      'number'
+                    )
+                  "
+                />
+              </div>
+              <div class="col-md-2">
+                <label for="mar">
+                  <h6 class="font-weight-bold small">March</h6>
+                </label>
+                <input
+                  type="number"
+                  name="mar"
+                  class="form-control"
+                  [required]="true"
+                  id="mar"
+                  [(ngModel)]="fields.mar"
+                  (ngModelChange)="calculateTarget()"
+                  (keypress)="
+                    tabEnterService.keyFunc(
+                      $event,
+                      'apr',
+                      'number',
+                      'feb',
+                      'number'
+                    )
+                  "
+                />
+              </div>
+              <div class="col-md-2">
+                <label for="apr">
+                  <h6 class="font-weight-bold small">April</h6>
+                </label>
+                <input
+                  type="number"
+                  class="form-control"
+                  name="apr"
+                  [required]="true"
+                  id="apr"
+                  [(ngModel)]="fields.apr"
+                  (ngModelChange)="calculateTarget()"
+                  (keypress)="
+                    tabEnterService.keyFunc(
+                      $event,
+                      'may',
+                      'number',
+                      'mar',
+                      'number'
+                    )
+                  "
+                />
+              </div>
+              <div class="col-md-2">
+                <label for="may">
+                  <h6 class="font-weight-bold small">May</h6>
+                </label>
+                <input
+                  type="number"
+                  name="may"
+                  class="form-control"
+                  id="may"
+                  [required]="true"
+                  [(ngModel)]="fields.may"
+                  (ngModelChange)="calculateTarget()"
+                  (keypress)="
+                    tabEnterService.keyFunc(
+                      $event,
+                      'jun',
+                      'number',
+                      'apr',
+                      'number'
+                    )
+                  "
+                />
+              </div>
+              <div class="col-md-2">
+                <label for="jun">
+                  <h6 class="font-weight-bold small">June</h6>
+                </label>
+                <input
+                  type="number"
+                  class="form-control"
+                  name="jun"
+                  id="jun"
+                  [(ngModel)]="fields.jun"
+                  (ngModelChange)="calculateTarget()"
+                  [required]="true"
+                  (keypress)="
+                    tabEnterService.keyFunc(
+                      $event,
+                      'jul',
+                      'number',
+                      'may',
+                      'number'
+                    )
+                  "
+                />
+              </div>
+              <div class="col-md-2">
+                <label for="jul">
+                  <h6 class="font-weight-bold small">July</h6>
+                </label>
+                <input
+                  class="form-control"
+                  type="number"
+                  name="jul"
+                  id="jul"
+                  [(ngModel)]="fields.jul"
+                  (ngModelChange)="calculateTarget()"
+                  [required]="true"
+                  (keypress)="
+                    tabEnterService.keyFunc(
+                      $event,
+                      'aug',
+                      'number',
+                      'jun',
+                      'number'
+                    )
+                  "
+                />
+              </div>
+              <div class="col-md-2">
+                <label for="aug">
+                  <h6 class="font-weight-bold small">August</h6>
+                </label>
+                <input
+                  type="number"
+                  name="aug"
+                  class="form-control"
+                  [required]="true"
+                  id="aug"
+                  [(ngModel)]="fields.aug"
+                  (ngModelChange)="calculateTarget()"
+                  (keypress)="
+                    tabEnterService.keyFunc(
+                      $event,
+                      'sep',
+                      'number',
+                      'jul',
+                      'number'
+                    )
+                  "
+                />
+              </div>
+              <div class="col-md-2">
+                <label for="sep">
+                  <h6 class="font-weight-bold small">September</h6>
+                </label>
+                <input
+                  type="number"
+                  class="form-control"
+                  name="sep"
+                  [required]="true"
+                  id="sep"
+                  [(ngModel)]="fields.sep"
+                  (ngModelChange)="calculateTarget()"
+                  (keypress)="
+                    tabEnterService.keyFunc(
+                      $event,
+                      'oct',
+                      'number',
+                      'aug',
+                      'number'
+                    )
+                  "
+                />
+              </div>
+              <div class="col-md-2">
+                <label for="oct">
+                  <h6 class="font-weight-bold small">October</h6>
+                </label>
+                <input
+                  type="number"
+                  name="oct"
+                  class="form-control"
+                  [required]="true"
+                  id="oct"
+                  [(ngModel)]="fields.oct"
+                  (ngModelChange)="calculateTarget()"
+                  (keypress)="
+                    tabEnterService.keyFunc(
+                      $event,
+                      'nov',
+                      'number',
+                      'sep',
+                      'number'
+                    )
+                  "
+                />
+              </div>
+              <div class="col-md-2">
+                <label for="nov">
+                  <h6 class="font-weight-bold small">November</h6>
+                </label>
+                <input
+                  type="number"
+                  name="nov"
+                  class="form-control"
+                  id="nov"
+                  [required]="true"
+                  [(ngModel)]="fields.nov"
+                  (ngModelChange)="calculateTarget()"
+                  (keypress)="
+                    tabEnterService.keyFunc(
+                      $event,
+                      'dec',
+                      'number',
+                      'oct',
+                      'number'
+                    )
+                  "
+                />
+              </div>
+              <div class="col-md-2">
+                <label for="dec">
+                  <h6 class="font-weight-bold small">December</h6>
+                </label>
+                <input
+                  type="number"
+                  name="dec"
+                  class="form-control"
+                  [required]="true"
+                  id="dec"
+                  [(ngModel)]="fields.dec"
+                  (ngModelChange)="calculateTarget()"
+                  (keypress)="
+                    tabEnterService.keyFunc($event, '', '', 'nov', 'number')
+                  "
+                />
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          class="btn btn-theme"
+          type="submit"
+          data-dismiss="modal"
+          [disabled]="target.invalid"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

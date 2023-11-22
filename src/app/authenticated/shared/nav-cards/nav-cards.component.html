@@ -1,0 +1,26 @@
+<div class="nav">
+  <div class="nav-card" *ngFor="let nav of navs">
+    <div
+      routerLink="/{{ nav.url }}"
+      class="background"
+      [style.background]="
+        'url(' + (nav.backgroundImage || backgroundImage) + ')'
+      "
+    >
+      <div
+        class="nav-title"
+        [style.backgroundColor]="nav.titleBackground || '#3d3d3dcf'"
+      >
+        {{ nav.label }}
+      </div>
+    </div>
+    <div class="buttons" *ngIf="buttons">
+      <div class="details" (click)="showDetails(nav)">
+        <i class="pi pi-info-circle"></i>
+      </div>
+      <div class="update" (click)="updateDetails(nav)">
+        <i class="pi pi-cog"></i>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<div class="w-100 p-3 bg-white mb-3 side-card d-flex cursor-pointer" id="profile" (click)="showDetails('profile')">
+  <div class="side-card-icon d-flex align-items-center mr-2"><img class="rounded-circle" src="assets/img/profile/profile.jpg" alt="Icon"></div>
+  <div class="side-card-content d-flex flex-column">
+    <span class="title">Selva Esakki Muthu.S</span>
+    <span class="count">Personal Information</span>
+  </div>
+  <div class="side-card-detailed-icon d-flex align-items-center"><i class="ti-angle-right"></i></div>
+</div>
+
+<div *ngFor="let component of sideInfoData" [id]="component.id" (click)="showDetails(component.id)" class="w-100 p-3 bg-white mb-3 side-card d-flex cursor-pointer">
+  <div class="side-card-icon d-flex align-items-center mr-2"><img src="{{component.iconImage}}" alt="Icon"></div>
+  <div class="side-card-content d-flex flex-column">
+    <span class="title">{{component.title}}</span>
+    <span class="count">{{(component.data).length}} entries</span>
+  </div>
+  <div class="side-card-detailed-icon d-flex align-items-center"><i class="ti-angle-right"></i></div>
+</div>
+
+<!-- <div *ngFor="let component of sideInfoData" class="card col-md-12 p-0 rounded-lg detailed-card mb-3">
+  <div class="card-header bg-dark text-ellipsis">{{component.title}}</div>
+  <div class="card-body rounded-lg p-2 bg-light" [id]="'card_'+component.id">
+    <div *ngFor="let subComponent of component.data" class="card rounded-lg mb-1">
+      <div class="card-header rounded-lg bg-theme-secondary text-white py-1 px-3 cursor-pointer text-ellipsis" data-toggle="collapse" [attr.href]="'#subCard_'+subComponent.id">
+        {{subComponent.title}}
+      </div>
+      <div [id]="'subCard_'+subComponent.id" class="collapse" [attr.data-parent]="'#card_'+component.id">
+        <div class="card-body text-ellipsis text-dark py-1 px-3">
+          <span *ngFor="let item of subComponent.data" class="text-ellipsis m-0"><b>{{item.title}}: </b>{{item.data}}<br></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->

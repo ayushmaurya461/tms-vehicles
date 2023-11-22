@@ -1,0 +1,46 @@
+<div class="backdrop"></div>
+<div
+  id="details"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  data-backdrop="false"
+  aria-labelledby="details"
+>
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title font-weight-bold" id="detailsModalTitle">
+          Details
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="closedDetails()"
+        >
+          <span aria-hidden="true">Close &times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ul>
+          <li *ngFor="let detail of detailsToBeShown">
+            <div class="row d-flex justify-content-center">
+              <p class="col-5 font-weight-bold text-right">
+                {{ detail.title }}
+              </p>
+              :
+              <p class="col-6 font-weight-bold text-left">
+                {{ detail.value ? detail.value : "Not Available" }}
+              </p>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <div class="btns-controls"></div>
+      </div>
+    </div>
+  </div>
+</div>

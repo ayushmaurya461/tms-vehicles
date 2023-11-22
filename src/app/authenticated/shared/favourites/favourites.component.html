@@ -1,0 +1,13 @@
+<div class="favourites">
+  <div class="fav-header">
+    <h3>Favourites</h3>
+  </div>
+  <div class="fav-body">
+    <ul class="list-group">
+      <li *ngFor="let item of favourites" class="list-group-item">
+        <img src="assets/img/icon/heart.png" />
+        <a [routerLink]="item.url">{{ item.name }}</a>
+      </li>
+    </ul>
+  </div>
+</div>

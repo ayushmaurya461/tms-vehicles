@@ -1,0 +1,167 @@
+<div class="main_content_iner overly_inner">
+  <div class="container-fluid p-0">
+    <section class="container table-wrapper">
+      <div class="position-relative">
+        <div
+          class="page_title_box d-flex flex-wrap align-items-center justify-content-between"
+        >
+          <div class="page_title_left d-flex align-items-center">
+            <h3 class="f_s_25 f_w_700 dark_text mr_30">Segments</h3>
+          </div>
+        </div>
+        <table-full
+          *ngIf="!mobile"
+          [columns]="tableColumns"
+          [buttons]="tableButtons"
+          [tableTitle]="'Vehicle Segments'"
+          [optionData]="optionData"
+          (dblClick)="viewDetails($event)"
+        ></table-full>
+
+        <app-data-card
+          *ngIf="mobile"
+          [title]="'Vehcile Segments'"
+          [columns]="tableColumns"
+          [buttons]="tableButtons"
+          [optionData]="optionData"
+          (showFullDetailsPage)="viewDetails($event)"
+        ></app-data-card>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div
+  id="addSegment"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  data-backdrop="static"
+  aria-labelledby="addSegment"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5
+          class="modal-title font-weight-bold"
+          id="
+              addVehicleBrandModalTitle"
+        >
+          Segment
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">Close &times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form
+          class="highlight-required"
+          id="addSegment"
+          #addSegment="ngForm"
+          autocomplete="off"
+        >
+          <input type="hidden" name="id" id="id" [(ngModel)]="this.fields.id" />
+          <div class="row">
+            <div class="col-md-4 mb-1">
+              <label for="segmentName"
+                ><h6 class="font-weight-bold small mb-1">
+                  Segment Name
+                </h6></label
+              >
+              <div class="form-group mb-0">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="segmentName"
+                  id="segmentName"
+                  [(ngModel)]="this.fields.segmentName"
+                  #segmentName="ngModel"
+                  placeholder="Enter Segment Name"
+                  (keypress)="
+                    this.tabEnterService.keyFunc($event, 'remarks', 'text')
+                  "
+                  required
+                />
+                <div
+                  *ngIf="
+                    segmentName.invalid &&
+                    (segmentName.dirty || segmentName.touched)
+                  "
+                  class="input-error-container text-danger text-left"
+                >
+                  <i
+                    class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                  ></i>
+                  <div class="input-error">
+                    <div *ngIf="segmentName.errors?.required">
+                      Field is required.
+                    </div>
+                    <div *ngIf="segmentName.errors?.pattern">
+                      Pattern Mismatch
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-8 mb-1">
+              <label for="remarks"
+                ><h6 class="font-weight-bold small mb-1">Remarks</h6></label
+              >
+              <div class="form-group mb-0">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="remarks"
+                  id="remarks"
+                  [(ngModel)]="this.fields.remarks"
+                  #remarks="ngModel"
+                  placeholder="Remarks"
+                  (keypress)="
+                    this.tabEnterService.keyFunc(
+                      $event,
+                      'submitformdata',
+                      'button',
+                      'companyType',
+                      'select'
+                    )
+                  "
+                  required
+                />
+                <div
+                  *ngIf="remarks.invalid && (remarks.dirty || remarks.touched)"
+                  class="input-error-container text-danger text-left"
+                >
+                  <i
+                    class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                  ></i>
+                  <div class="input-error">
+                    <div *ngIf="remarks.errors?.required">
+                      Field is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          id="submitformdata"
+          [disabled]="addSegment.invalid"
+          class="btn btn-theme"
+        >
+          Save Details
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

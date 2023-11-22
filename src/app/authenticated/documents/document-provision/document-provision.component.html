@@ -1,0 +1,155 @@
+<div class="main_content_iner overly_inner">
+  <div class="container-fluid p-0">
+    <section class="container table-wrapper">
+      <div class="position-relative">
+        <div
+          class="page_title_box d-flex flex-wrap align-items-center justify-content-between"
+        >
+          <div class="page_title_left d-flex align-items-center">
+            <h3 style="font-size: 23px" class="f_s_25 f_w_700 dark_text mr_30">
+              Document Provision
+            </h3>
+          </div>
+        </div>
+
+        <table-full
+          *ngIf="mobile"
+          [columns]="tableColumns"
+          [buttons]="tableButtons"
+          [tableTitle]="'Cities'"
+          [optionData]="optionData"
+        >
+        </table-full>
+
+        <!-- <app-data-card
+          *ngIf="mobile"
+          [columns]="tableColumns"
+          [optionData]="optionData"
+          [buttons]="tableButtons"
+          [cardTitle]="'Cities'"
+        >
+        </app-data-card> -->
+      </div>
+    </section>
+  </div>
+</div>
+
+<div
+  id="searchDocument"
+  class="modal"
+  tabindex="-1"
+  role="dialog"
+  data-backdrop="static"
+  aria-labelledby="searchDocument"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5
+          class="modal-title font-weight-bold"
+          id="partyOutStandingModalTitle"
+        >
+          Search Document
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">Close &times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form
+          class="highlight-required"
+          id="searchForm"
+          #searchForm="ngForm"
+          autocomplete="off"
+        >
+          <input type="hidden" name="id" id="id" [(ngModel)]="this.fields.id" />
+          <div class="row">
+            <div class="col-lg-3 col-sm-6 col-xl-4">
+              <select2
+                [multiple]="false"
+                [options]="allFirstOptions"
+                [required]="true"
+                placeholder="Click to select allFirst"
+                [id]="'allFirst'"
+                name="allFirst"
+                [prevElement]="{ id: '', type: '' }"
+                [nextElement]="{ id: 'allsecond', type: 'select' }"
+                [selectedData]="this.fields.allFirst"
+                [(ngModel)]="this.fields.allFirst"
+                (onChange)="setSearchValue($event, 'allFirst')"
+                ngDefaultControl
+              ></select2>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-xl-4">
+              <select2
+                [multiple]="false"
+                [options]="allSecondOptions"
+                [required]="true"
+                placeholder="Click to select allsecond"
+                [id]="'allsecond'"
+                name="allsecond"
+                [prevElement]="{ id: 'allFirst', type: 'select' }"
+                [nextElement]="{ id: 'month', type: 'select' }"
+                [selectedData]="this.fields.allsecond"
+                [(ngModel)]="this.fields.allsecond"
+                (onChange)="setSearchValue($event, 'allsecond')"
+                ngDefaultControl
+              ></select2>
+            </div>
+
+            <div class="col-lg-3 col-sm-6 col-xl-4">
+              <select2
+                [multiple]="false"
+                [options]="monthOptions"
+                [required]="true"
+                placeholder="Click to select month"
+                [id]="'month'"
+                name="month"
+                [prevElement]="{ id: 'allsecond', type: 'select' }"
+                [nextElement]="{ id: 'year', type: 'select' }"
+                [selectedData]="this.fields.month"
+                [(ngModel)]="this.fields.month"
+                (onChange)="setSearchValue($event, 'month')"
+                ngDefaultControl
+              ></select2>
+            </div>
+
+            <div class="col-lg-3 col-sm-6 col-xl-4">
+              <select2
+                [multiple]="false"
+                [options]="yearOptions"
+                [required]="true"
+                placeholder="Click to select year"
+                [id]="'year'"
+                name="year"
+                [prevElement]="{ id: 'month', type: 'select' }"
+                [nextElement]="{ id: 'searchForm', type: 'button' }"
+                [selectedData]="this.fields.year"
+                [(ngModel)]="this.fields.year"
+                (onChange)="setSearchValue($event, 'year')"
+                ngDefaultControl
+              ></select2>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-theme"
+          id="searchForm"
+          [disabled]="searchForm.invalid || loader"
+          (click)="submitSearchingForm(searchForm)"
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

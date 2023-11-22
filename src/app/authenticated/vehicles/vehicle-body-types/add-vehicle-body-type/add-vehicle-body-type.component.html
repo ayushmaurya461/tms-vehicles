@@ -1,0 +1,296 @@
+<div
+  id="addVehicleBodyType"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  data-backdrop="static"
+  aria-labelledby="addVehicleBodyType"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title font-weight-bold" id="addVehicleBodyTypeTitle">
+          Add Vehicle Body Type
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">Close &times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form
+          class="highlight-required"
+          id="vehicleBodyType"
+          #vehicleBodyType="ngForm"
+          autocomplete="off"
+        >
+          <!-- Add Cities Field-->
+          <input type="hidden" name="id" id="id" [(ngModel)]="this.fields.id" />
+          <fieldset>
+            <legend>Details</legend>
+            <div class="row">
+              <div class="col-md-4 mb-1">
+                <label for="name"
+                  ><h6 class="font-weight-bold small mb-1">Name</h6></label
+                >
+                <div class="form-group mb-0">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="name"
+                    id="name"
+                    [(ngModel)]="this.fields.name"
+                    #name="ngModel"
+                    placeholder="Name"
+                    (keypress)="
+                      this.tabEnterService.keyFunc($event, 'segment', 'select')
+                    "
+                    required
+                  />
+                  <div
+                    *ngIf="name.invalid && (name.dirty || name.touched)"
+                    class="input-error-container text-danger text-left"
+                  >
+                    <i
+                      class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                    ></i>
+                    <div class="input-error">
+                      <div *ngIf="name.errors?.required">
+                        Field is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-1">
+                <label for="segment"
+                  ><h6 class="font-weight-bold small mb-1">Segment</h6></label
+                >
+                <div class="form-group mb-0">
+                  <select2
+                    [prevElement]="{ id: 'name', type: 'text' }"
+                    [nextElement]="{ id: 'bodyAttachment', type: 'select' }"
+                    [options]="segmentOptions"
+                    [multiple]="false"
+                    [required]="true"
+                    placeholder="Click to select"
+                    [id]="'segment'"
+                    name="segment"
+                    [selectedData]="this.fields.segment"
+                    [(ngModel)]="this.fields.segment"
+                    (onChange)="setValue($event, 'segment')"
+                    ngDefaultControl
+                  ></select2>
+                </div>
+              </div>
+              <div class="col-md-4 mb-1">
+                <label for="bodyAttachment"
+                  ><h6 class="font-weight-bold small mb-1">
+                    Trailer Attachments
+                  </h6></label
+                >
+                <div class="form-group mb-0">
+                  <select2
+                    [prevElement]="{ id: 'segment', type: 'select' }"
+                    [nextElement]="{ id: 'applicableFor', type: 'select' }"
+                    [multiple]="false"
+                    [options]="bodyAttachmentOptions"
+                    [required]="true"
+                    placeholder="Click to select"
+                    [id]="'bodyAttachment'"
+                    name="bodyAttachment"
+                    [selectedData]="this.fields.bodyAttachment"
+                    [(ngModel)]="this.fields.bodyAttachment"
+                    (onChange)="setValue($event, 'bodyAttachment')"
+                    ngDefaultControl
+                  ></select2>
+                </div>
+              </div>
+              <div class="col-md-4 mb-1">
+                <label for="applicableFor"
+                  ><h6 class="font-weight-bold small mb-1">
+                    Applicable For
+                  </h6></label
+                >
+                <div class="form-group mb-0">
+                  <select2
+                    [multiple]="false"
+                    [options]="applicableForOptions"
+                    [required]="true"
+                    placeholder="Click to select Type"
+                    [id]="'applicableFor'"
+                    name="applicableFor"
+                    [prevElement]="{ id: 'bodyAttachment', type: 'select' }"
+                    [nextElement]="{ id: 'bodyType', type: 'select' }"
+                    [selectedData]="this.fields.applicableFor"
+                    [(ngModel)]="this.fields.applicableFor"
+                    (onChange)="setValue($event, 'applicableFor')"
+                    ngDefaultControl
+                  ></select2>
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-1">
+                <label for="bodyType"
+                  ><h6 class="font-weight-bold small mb-1">Body Type</h6></label
+                >
+                <div class="form-group mb-0">
+                  <select2
+                    [multiple]="false"
+                    [options]="bodyTypeOptions"
+                    [required]="true"
+                    placeholder="Click to select Type"
+                    [id]="'bodyType'"
+                    name="bodyType"
+                    [prevElement]="{ id: 'applicableFor', type: 'select' }"
+                    [nextElement]="{ id: 'tyres', type: 'select' }"
+                    [selectedData]="this.fields.bodyType"
+                    [(ngModel)]="this.fields.bodyType"
+                    (onChange)="setValue($event, 'bodyType')"
+                    ngDefaultControl
+                  ></select2>
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-1">
+                <label for="tyres"
+                  ><h6 class="font-weight-bold small mb-1">Tyres</h6></label
+                >
+                <div class="form-group mb-0">
+                  <select2
+                    [multiple]="false"
+                    [options]="tyresOptions"
+                    [required]="true"
+                    placeholder="Click to select Type"
+                    [id]="'tyres'"
+                    name="tyres"
+                    [prevElement]="{ id: 'bodyType', type: 'select' }"
+                    [nextElement]="{ id: 'remarks', type: 'text' }"
+                    [selectedData]="this.fields.tyres"
+                    [(ngModel)]="this.fields.tyres"
+                    (onChange)="setValue($event, 'tyres')"
+                    ngDefaultControl
+                  ></select2>
+                </div>
+              </div>
+
+              <div class="col-md-12 mb-1">
+                <label for="remarks"
+                  ><h6 class="font-weight-bold small mb-1">Remarks</h6></label
+                >
+                <div class="form-group mb-0">
+                  <textarea
+                    name="remarks"
+                    id="remarks"
+                    rows="1"
+                    class="form-control"
+                    [(ngModel)]="this.fields.remarks"
+                    #remarks="ngModel"
+                  ></textarea>
+                  <div
+                    *ngIf="
+                      remarks.invalid && (remarks.dirty || remarks.touched)
+                    "
+                    class="input-error-container text-danger text-left"
+                  >
+                    <i
+                      class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                    ></i>
+                    <div class="input-error">
+                      <div *ngIf="remarks.errors?.required">
+                        Field is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Upload Images</legend>
+            <div class="row">
+              <div class="row" style="margin-top: 10px !important">
+                <div class="col-md-3 col-12 col-xs-12 col-sm-12 mb-1">
+                  <label for="frontImage">
+                    <h6 class="font-weight-bold small mb-1">Front Image</h6>
+                  </label>
+                  <input-file
+                    [id]="'frontImage'"
+                    name="frontImage"
+                    (onFileSelect)="setValue('frontImage', $event)"
+                    [(ngModel)]="fields.frontImage"
+                    [selectedFile]="fields.frontImage"
+                    [required]="true"
+                    ngDefaultControl
+                  ></input-file>
+                </div>
+
+                <div class="col-md-3 col-12 col-xs-12 col-sm-12 mb-1">
+                  <label for="leftImage">
+                    <h6 class="font-weight-bold small mb-1">Left Image</h6>
+                  </label>
+                  <input-file
+                    name="leftImage"
+                    [id]="'leftImage'"
+                    (onFileSelect)="setValue('leftImage', $event)"
+                    [(ngModel)]="fields.leftImage"
+                    [selectedFile]="fields.leftImage"
+                    [required]="true"
+                    ngDefaultControl
+                  >
+                  </input-file>
+                </div>
+
+                <div class="col-md-3 col-12 col-xs-12 col-sm-12 mb-1">
+                  <label for="rightImage">
+                    <h6 class="font-weight-bold small mb-1">Right Image</h6>
+                  </label>
+                  <input-file
+                    [id]="'rightImage'"
+                    name="rightImage"
+                    (onFileSelect)="setValue('rightImage', $event)"
+                    [(ngModel)]="fields.rightImage"
+                    [selectedFile]="fields.rightImage"
+                    [required]="true"
+                    ngDefaultControl
+                  ></input-file>
+                </div>
+
+                <div class="col-md-3 col-12 col-xs-12 col-sm-12 mb-1">
+                  <label for="backImage">
+                    <h6 class="font-weight-bold small mb-1">Back Image</h6>
+                  </label>
+                  <input-file
+                    [id]="'backImage'"
+                    name="backImage"
+                    (onFileSelect)="setValue('backImage', $event)"
+                    [(ngModel)]="fields.backImage"
+                    [selectedFile]="fields.backImage"
+                    [required]="true"
+                    ngDefaultControl
+                  ></input-file>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          id="submitCitiesInformation"
+          class="btn btn-theme"
+          [disabled]="vehicleBodyType.invalid || loading"
+          (click)="submitVehicleBodyTypeDetails(vehicleBodyType)"
+        >
+          Save Details
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

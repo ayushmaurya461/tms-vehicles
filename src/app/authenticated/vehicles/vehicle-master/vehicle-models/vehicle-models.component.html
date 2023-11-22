@@ -1,0 +1,875 @@
+<div class="main_content_iner overly_inner">
+  <div class="container-fluid p-0">
+    <section class="container table-wrapper">
+      <data-counter
+        [data]="counterData"
+        (counterClickFunction)="counterClickFunction($event)"
+      ></data-counter>
+      <div class="position-relative">
+        <div
+          class="page_title_box d-flex flex-wrap align-items-center justify-content-between"
+        >
+          <div class="page_title_left d-flex align-items-center">
+            <h3 class="f_s_25 f_w_700 dark_text mr_30">Vehicle Models</h3>
+          </div>
+        </div>
+        <table-full
+          *ngIf="!mobile"
+          [columns]="tableColumns"
+          [buttons]="tableButtons"
+          [tableTitle]="'Vehicle Models'"
+          [optionData]="optionData"
+          (dblClick)="viewDetails($event)"
+        ></table-full>
+
+        <app-data-card
+          *ngIf="mobile"
+          [optionData]="optionData"
+          [buttons]="tableButtons"
+          [cardTitle]="'Vehicle Models'"
+          [columns]="tableColumns"
+          (showFullDetailsPage)="viewDetails($event)"
+        ></app-data-card>
+      </div>
+    </section>
+  </div>
+</div>
+<div
+  id="addVehicleModel"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  data-backdrop="static"
+  aria-labelledby="
+addVehicleModel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5
+          class="modal-title font-weight-bold"
+          id="
+              addVehicleModelModalTitle"
+        >
+          Vehicle Model Details
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">Close &times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form
+          class="highlight-required"
+          id="addVehicleModel"
+          #addVehicleModel="ngForm"
+          autocomplete="off"
+        >
+          <input type="hidden" name="id" id="id" [(ngModel)]="this.fields.id" />
+          <fieldset>
+            <legend>Model Details</legend>
+            <div class="row">
+              <div class="col-md-4 mb-1">
+                <label for="vehicleModelName"
+                  ><h6 class="font-weight-bold small mb-1">Name</h6></label
+                >
+                <div class="form-group mb-0">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="vehicleModelName"
+                    id="vehicleModelName"
+                    [(ngModel)]="this.fields.vehicleModelName"
+                    #vehicleModelName="ngModel"
+                    placeholder="Vehicle Model Name"
+                    (keypress)="
+                      this.tabEnterService.keyFunc(
+                        $event,
+                        'brandName',
+                        'select'
+                      )
+                    "
+                    required
+                  />
+                  <div
+                    *ngIf="
+                      vehicleModelName.invalid &&
+                      (vehicleModelName.dirty || vehicleModelName.touched)
+                    "
+                    class="input-error-container text-danger text-left"
+                  >
+                    <i
+                      class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                    ></i>
+                    <div class="input-error">
+                      <div *ngIf="vehicleModelName.errors?.required">
+                        Field is required.
+                      </div>
+                      <div *ngIf="vehicleModelName.errors?.pattern">
+                        Pattern Mismatch
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-1">
+                <label for="brandName"
+                  ><h6 class="font-weight-bold small mb-1">
+                    Brand Name
+                  </h6></label
+                >
+                <select2
+                  [isFocused]="true"
+                  [prevElement]="{ id: 'vehicleModelName', type: 'text' }"
+                  [nextElement]="{ id: 'vehicleType', type: 'select' }"
+                  [options]="brandNameOptions"
+                  [required]="true"
+                  placeholder="Select Brand"
+                  [id]="'brandName'"
+                  name="brandName"
+                  [selectedData]="this.fields.brandName"
+                  [(ngModel)]="this.fields.brandName"
+                  (onChange)="setValue('brandName', $event)"
+                  #approchType="ngModel"
+                  ngDefaultControl
+                ></select2>
+
+              </div>
+              <div class="col-md-4 mb-1">
+                <label for="vehicleType"
+                  ><h6 class="font-weight-bold small mb-1">
+                    Vehicle Type
+                  </h6></label
+                >
+                <select2
+                  [isFocused]="true"
+                  [prevElement]="{ id: 'brandName', type: 'select' }"
+                  [nextElement]="{ id: 'curbWeight', type: 'number' }"
+                  [options]="vehicleTypeOptions"
+                  [required]="true"
+                  placeholder="Select Vehicle Type"
+                  [id]="'vehicleType'"
+                  name="vehicleType"
+                  [selectedData]="this.fields.vehicleType"
+                  [(ngModel)]="this.fields.vehicleType"
+                  #approchType="ngModel"
+                  (onChange)="setValue('vehicleType', $event)"
+                  ngDefaultControl
+                ></select2>
+
+              </div>
+              <div class="col-md-4 mb-1">
+                <label for="curbWeight"
+                  ><h6 class="font-weight-bold small mb-1">
+                    Curb Weight
+                  </h6></label
+                >
+                <div class="form-group mb-0">
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="curbWeight"
+                    id="curbWeight"
+                    [(ngModel)]="this.fields.curbWeight"
+                    #curbWeight="ngModel"
+                    placeholder="Curb Weight"
+                    (keypress)="
+                      this.tabEnterService.keyFunc(
+                        $event,
+                        'grossWeight',
+                        'number'
+                      )
+                    "
+                    required
+                  />
+                  <div
+                    *ngIf="
+                      curbWeight.invalid &&
+                      (curbWeight.dirty || curbWeight.touched)
+                    "
+                    class="input-error-container text-danger text-left"
+                  >
+                    <i
+                      class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                    ></i>
+                    <div class="input-error">
+                      <div *ngIf="curbWeight.errors?.required">
+                        Field is required.
+                      </div>
+                      <div *ngIf="curbWeight.errors?.pattern">
+                        Pattern Mismatch
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-1">
+                <label for="grossWeight"
+                  ><h6 class="font-weight-bold small mb-1">
+                    Gross Weight
+                  </h6></label
+                >
+                <div class="form-group mb-0">
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="grossWeight"
+                    id="grossWeight"
+                    [(ngModel)]="this.fields.grossWeight"
+                    #grossWeight="ngModel"
+                    placeholder="Gross Weight"
+                    (keypress)="
+                      this.tabEnterService.keyFunc(
+                        $event,
+                        'seatingCapacity',
+                        'number'
+                      )
+                    "
+                    required
+                  />
+                  <div
+                    *ngIf="
+                      grossWeight.invalid &&
+                      (grossWeight.dirty || grossWeight.touched)
+                    "
+                    class="input-error-container text-danger text-left"
+                  >
+                    <i
+                      class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                    ></i>
+                    <div class="input-error">
+                      <div *ngIf="grossWeight.errors?.required">
+                        Field is required.
+                      </div>
+                      <div *ngIf="grossWeight.errors?.pattern">
+                        Pattern Mismatch
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-1">
+                <label for="seatingCapacity"
+                  ><h6 class="font-weight-bold small mb-1">
+                    Seating Capacity
+                  </h6></label
+                >
+                <div class="form-group mb-0">
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="seatingCapacity"
+                    id="seatingCapacity"
+                    [(ngModel)]="this.fields.seatingCapacity"
+                    #seatingCapacity="ngModel"
+                    placeholder="Seating Capacity"
+                    (keypress)="
+                      this.tabEnterService.keyFunc($event, 'milageE', 'number')
+                    "
+                    required
+                  />
+                  <div
+                    *ngIf="
+                      seatingCapacity.invalid &&
+                      (seatingCapacity.dirty || seatingCapacity.touched)
+                    "
+                    class="input-error-container text-danger text-left"
+                  >
+                    <i
+                      class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                    ></i>
+                    <div class="input-error">
+                      <div *ngIf="seatingCapacity.errors?.required">
+                        Field is required.
+                      </div>
+                      <div *ngIf="seatingCapacity.errors?.pattern">
+                        Pattern Mismatch
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-1">
+                <label for="milageE"
+                  ><h6 class="font-weight-bold small mb-1">
+                    Milage Without Load
+                  </h6></label
+                >
+                <div class="form-group mb-0">
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="milageE"
+                    id="milageE"
+                    [(ngModel)]="this.fields.milageE"
+                    #milageE="ngModel"
+                    placeholder="Milage Without Load"
+                    (keypress)="
+                      this.tabEnterService.keyFunc($event, 'milageL', 'number')
+                    "
+                    required
+                  />
+                  <div
+                    *ngIf="
+                      milageE.invalid && (milageE.dirty || milageE.touched)
+                    "
+                    class="input-error-container text-danger text-left"
+                  >
+                    <i
+                      class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                    ></i>
+                    <div class="input-error">
+                      <div *ngIf="milageE.errors?.required">
+                        Field is required.
+                      </div>
+                      <div *ngIf="milageE.errors?.pattern">
+                        Pattern Mismatch
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-1">
+                <label for="milageL"
+                  ><h6 class="font-weight-bold small mb-1">
+                    Milage With Load
+                  </h6></label
+                >
+                <div class="form-group mb-0">
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="milageL"
+                    id="milageL"
+                    [(ngModel)]="this.fields.milageL"
+                    #milageL="ngModel"
+                    placeholder="Milage With Load"
+                    (keypress)="
+                      this.tabEnterService.keyFunc(
+                        $event,
+                        'singleTyreAxle',
+                        'number'
+                      )
+                    "
+                    required
+                  />
+                  <div
+                    *ngIf="
+                      milageL.invalid && (milageL.dirty || milageL.touched)
+                    "
+                    class="input-error-container text-danger text-left"
+                  >
+                    <i
+                      class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                    ></i>
+                    <div class="input-error">
+                      <div *ngIf="milageL.errors?.required">
+                        Field is required.
+                      </div>
+                      <div *ngIf="milageL.errors?.pattern">
+                        Pattern Mismatch
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-1">
+                <label for="singleTyreAxle"
+                  ><h6 class="font-weight-bold small mb-1">
+                    Single Tyre Axle
+                  </h6></label
+                >
+                <div class="form-group mb-0">
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="singleTyreAxle"
+                    id="singleTyreAxle"
+                    [(ngModel)]="this.fields.singleTyreAxle"
+                    (ngModelChange)="calculateTyres()"
+                    placeholder="Single Tyre Axle"
+                    (keypress)="
+                      this.tabEnterService.keyFunc(
+                        $event,
+                        'pairTyreAxle',
+                        'number'
+                      )
+                    "
+                  />
+                </div>
+              </div>
+              <div class="col-md-4 mb-1">
+                <label for="pairTyreAxle"
+                  ><h6 class="font-weight-bold small mb-1">
+                    Pair Tyre Axle
+                  </h6></label
+                >
+                <div class="form-group mb-0">
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="pairTyreAxle"
+                    id="pairTyreAxle"
+                    [(ngModel)]="this.fields.pairTyreAxle"
+                    (ngModelChange)="calculateTyres()"
+                    placeholder="Pair Tyre Axle"
+                    (keypress)="
+                      this.tabEnterService.keyFunc(
+                        $event,
+                        'dualPairTyreAxle',
+                        'number'
+                      )
+                    "
+                  />
+                </div>
+              </div>
+              <div class="col-md-4 mb-1">
+                <label for="dualPairTyreAxle"
+                  ><h6 class="font-weight-bold small mb-1">
+                    Dual Pair Tyre Axle
+                  </h6></label
+                >
+                <div class="form-group mb-0">
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="dualPairTyreAxle"
+                    id="dualPairTyreAxle"
+                    [(ngModel)]="this.fields.dualPairTyreAxle"
+                    (ngModelChange)="calculateTyres()"
+                    placeholder="Dual Pair Tyre Axle"
+                    (keypress)="
+                      this.tabEnterService.keyFunc(
+                        $event,
+                        'spareTyre',
+                        'number'
+                      )
+                    "
+                  />
+                </div>
+              </div>
+              <div class="col-md-4 mb-1">
+                <label for="spareTyre"
+                  ><h6 class="font-weight-bold small mb-1">
+                    Spare Tyre
+                  </h6></label
+                >
+                <div class="form-group mb-0">
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="spareTyre"
+                    id="spareTyre"
+                    [(ngModel)]="this.fields.spareTyre"
+                    (ngModelChange)="calculateTyres()"
+                    placeholder="Spare Tyre"
+                    (keypress)="
+                      this.tabEnterService.keyFunc($event, 'tyre   ', 'number')
+                    "
+                  />
+                </div>
+              </div>
+              <div class="col-md-4 mb-1">
+                <label for="tyre"
+                  ><h6 class="font-weight-bold small mb-1">
+                    Total Tyres
+                  </h6></label
+                >
+                <div class="form-group mb-0">
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="tyre"
+                    id="tyre"
+                    [disabled]="true"
+                    [(ngModel)]="this.fields.tyres"
+                    #tyre="ngModel"
+                    placeholder="Total Tyres"
+                    (keypress)="
+                      this.tabEnterService.keyFunc($event, 'battery', 'number')
+                    "
+                  />
+                  <div
+                    *ngIf="tyre.invalid && (tyre.dirty || tyre.touched)"
+                    class="input-error-container text-danger text-left"
+                  >
+                    <i
+                      class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                    ></i>
+                    <div class="input-error">
+                      <div *ngIf="tyre.errors?.required">
+                        Field is required.
+                      </div>
+                      <div *ngIf="tyre.errors?.pattern">Pattern Mismatch</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-1">
+                <label for="battery"
+                  ><h6 class="font-weight-bold small mb-1">Battery</h6></label
+                >
+                <div class="form-group mb-0">
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="battery"
+                    id="battery"
+                    [(ngModel)]="this.fields.battery"
+                    #battery="ngModel"
+                    placeholder="Battery"
+                    (keypress)="
+                      this.tabEnterService.keyFunc(
+                        $event,
+                        'bharatStage',
+                        'select'
+                      )
+                    "
+                  />
+                  <div
+                    *ngIf="
+                      battery.invalid && (battery.dirty || battery.touched)
+                    "
+                    class="input-error-container text-danger text-left"
+                  >
+                    <i
+                      class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                    ></i>
+                    <div class="input-error">
+                      <div *ngIf="battery.errors?.required">
+                        Field is required.
+                      </div>
+                      <div *ngIf="battery.errors?.pattern">
+                        Pattern Mismatch
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-1">
+                <label for="bharatStage"
+                  ><h6 class="font-weight-bold small mb-1">
+                    Bharat Stage
+                  </h6></label
+                >
+                <select2
+                  [isFocused]="true"
+                  [prevElement]="{ id: 'battery', type: 'number' }"
+                  [nextElement]="{ id: 'adblue', type: 'select' }"
+                  [options]="bharatStageOptions"
+                  [required]="true"
+                  placeholder="Select Bharat Stage"
+                  [id]="'bharatStage'"
+                  name="bharatStage"
+                  [selectedData]="this.fields.bharatStage"
+                  [(ngModel)]="this.fields.bharatStage"
+                  #approchType="ngModel"
+                  (onChange)="setValue('bharatStage', $event)"
+                  ngDefaultControl
+                ></select2>
+
+              </div>
+              <div class="col-md-4 mb-1">
+                <label for="adblue"
+                  ><h6 class="font-weight-bold small mb-1">Adblue</h6></label
+                >
+                <select2
+                  [isFocused]="true"
+                  [prevElement]="{ id: 'bharatStage', type: 'select' }"
+                  [nextElement]="{ id: 'useCase', type: 'select' }"
+                  [options]="adblueOptions"
+                  placeholder="Adblue"
+                  [id]="'adblue'"
+                  name="adblue"
+                  [selectedData]="this.fields.adblue"
+                  [(ngModel)]="this.fields.adblue"
+                  #approchType="ngModel"
+                  (onChange)="setValue('adblue', $event)"
+                  ngDefaultControl
+                ></select2>
+
+              </div>
+              <div class="col-md-4 mb-1">
+                <label for="useCase"
+                  ><h6 class="font-weight-bold small mb-1">Use Case</h6></label
+                >
+                <select2
+                  [isFocused]="true"
+                  [prevElement]="{ id: 'adblue', type: 'select' }"
+                  [nextElement]="{ id: 'image-button', type: 'button' }"
+                  [options]="useCaseOptions"
+                  [required]="true"
+                  placeholder="Select Use Case"
+                  [id]="'useCase'"
+                  name="useCase"
+                  [selectedData]="this.fields.useCase"
+                  [(ngModel)]="this.fields.useCase"
+                  #approchType="ngModel"
+                  (onChange)="setValue('useCase', $event)"
+                  ngDefaultControl
+                ></select2>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Upload Images</legend>
+            <div class="row">
+              <div class="row" style="margin-top: 10px !important">
+                <div class="col-md-3 col-12 col-xs-12 col-sm-12 mb-1">
+                  <label for="frontImage">
+                    <h6 class="font-weight-bold small mb-1">Front Image</h6>
+                  </label>
+                  <input-file
+                    [id]="'frontImage'"
+                    name="frontImage"
+                    (onFileSelect)="setValue('frontImage', $event)"
+                    [(ngModel)]="fields.frontImage"
+                    [selectedFile]="fields.frontImage"
+                    [required]="true"
+                    ngDefaultControl
+                  ></input-file>
+                </div>
+
+                <div class="col-md-3 col-12 col-xs-12 col-sm-12 mb-1">
+                  <label for="leftImage">
+                    <h6 class="font-weight-bold small mb-1">Left Image</h6>
+                  </label>
+                  <input-file
+                    name="leftImage"
+                    [id]="'leftImage'"
+                    (onFileSelect)="setValue('leftImage', $event)"
+                    [(ngModel)]="fields.leftImage"
+                    [selectedFile]="fields.leftImage"
+                    [required]="true"
+                    ngDefaultControl
+                  >
+                  </input-file>
+                </div>
+
+                <div class="col-md-3 col-12 col-xs-12 col-sm-12 mb-1">
+                  <label for="rightImage">
+                    <h6 class="font-weight-bold small mb-1">Right Image</h6>
+                  </label>
+                  <input-file
+                    [id]="'rightImage'"
+                    name="rightImage"
+                    (onFileSelect)="setValue('rightImage', $event)"
+                    [(ngModel)]="fields.rightImage"
+                    [selectedFile]="fields.rightImage"
+                    [required]="true"
+                    ngDefaultControl
+                  ></input-file>
+                </div>
+
+                <div class="col-md-3 col-12 col-xs-12 col-sm-12 mb-1">
+                  <label for="backImage">
+                    <h6 class="font-weight-bold small mb-1">Back Image</h6>
+                  </label>
+                  <input-file
+                    [id]="'backImage'"
+                    name="backImage"
+                    (onFileSelect)="setValue('backImage', $event)"
+                    [(ngModel)]="fields.backImage"
+                    [selectedFile]="fields.backImage"
+                    [required]="true"
+                    ngDefaultControl
+                  ></input-file>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          id="submitformdata"
+          [disabled]="addVehicleModel.invalid"
+          class="btn btn-theme"
+        >
+          Save Details
+        </button>
+        <!-- (click)="submitLeadsInformation(Leads)"  -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  id="viewPageDetails"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  data-backdrop="static"
+  aria-labelledby="viewPageDetails"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title font-weight-bold" id="viewPageDetailsModalTitle">
+          View Job Post
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">Close &times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row d-flex">
+          <div class="col-md-3 mt-3">
+            <span class="font-weight-bold text-center text-dark text-ellipsis"
+              ><strong>Model Name: </strong
+              ><span [innerHTML]="separator"></span> 3518TC</span
+            >
+          </div>
+          <div
+            class="col-md-3 mt-3"
+            (click)="redirectToProfile('brand', 'tata')"
+          >
+            <span class="font-weight-bold text-dark text-ellipsis"
+              ><strong>Brand: </strong
+              ><span [innerHTML]="separator"></span> Tata</span
+            >
+          </div>
+          <div class="col-md-3 mt-3">
+            <span class="font-weight-bold text-dark text-ellipsis"
+              ><strong>Type: </strong
+              ><span [innerHTML]="separator"></span> Tractor Trailer</span
+            >
+          </div>
+          <div class="col-md-3 mt-3">
+            <span class="font-weight-bold text-dark text-ellipsis"
+              ><strong>Curb Weight: </strong
+              ><span [innerHTML]="separator"></span> 6500 Kg</span
+            >
+          </div>
+          <div class="col-md-3 mt-3">
+            <span class="font-weight-bold text-dark text-ellipsis"
+              ><strong>Gross Weight: </strong
+              ><span [innerHTML]="separator"></span> 35000 Kg</span
+            >
+          </div>
+          <div class="col-md-3 mt-3">
+            <span class="font-weight-bold text-dark text-ellipsis"
+              ><strong>Seating Capacity: </strong
+              ><span [innerHTML]="separator"></span> 3</span
+            >
+          </div>
+          <div class="col-md-3 mt-3">
+            <span class="font-weight-bold text-dark text-ellipsis"
+              ><strong>Milage Empty: </strong
+              ><span [innerHTML]="separator"></span> 4</span
+            >
+          </div>
+          <div class="col-md-3 mt-3">
+            <span class="font-weight-bold text-dark text-ellipsis"
+              ><strong>Milage Load: </strong
+              ><span [innerHTML]="separator"></span> 3.6</span
+            >
+          </div>
+          <div class="col-md-3 mt-3">
+            <span class="font-weight-bold text-dark text-ellipsis"
+              ><strong>Axle: </strong
+              ><span [innerHTML]="separator"></span> 2</span
+            >
+          </div>
+          <div class="col-md-3 mt-3">
+            <span class="font-weight-bold text-dark text-ellipsis"
+              ><strong>Tyre: </strong
+              ><span [innerHTML]="separator"></span> 7</span
+            >
+          </div>
+          <div class="col-md-3 mt-3">
+            <span class="font-weight-bold text-dark text-ellipsis"
+              ><strong>Battery: </strong
+              ><span [innerHTML]="separator"></span> 2</span
+            >
+          </div>
+          <div class="col-md-3 mt-3">
+            <span class="font-weight-bold text-dark text-ellipsis"
+              ><strong>Bharat Stage: </strong> BSVI</span
+            ><span [innerHTML]="separator"></span>
+          </div>
+          <div class="col-md-3 mt-3">
+            <span class="font-weight-bold text-dark text-ellipsis"
+              ><strong>Adblue: </strong
+              ><span [innerHTML]="separator"></span> Yes</span
+            >
+          </div>
+          <div class="col-md-3 mt-3">
+            <span class="font-weight-bold text-dark text-ellipsis"
+              ><strong>Use Case: </strong
+              ><span [innerHTML]="separator"></span> Both</span
+            >
+          </div>
+          <div class="col-md-3 mt-3">
+            <span class="font-weight-bold text-dark text-ellipsis"
+              ><strong>Status: </strong
+              ><span [innerHTML]="separator"></span> Active</span
+            >
+          </div>
+          <div class="col-md-3 mt-3">
+            <span class="font-weight-bold text-dark text-ellipsis"
+              ><strong>View Pictures: </strong
+              ><span [innerHTML]="separator"></span> Files</span
+            >
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          id="submitformdata"
+          class="btn btn-primary"
+          title="View Logs"
+        >
+          <i class="ti-info-alt"></i>
+        </button>
+        <button
+          type="button"
+          id="submitformdata"
+          class="btn btn-success"
+          title="Approve"
+        >
+          <i class="ti-check-box"></i>
+        </button>
+        <button
+          type="button"
+          id="submitformdata"
+          class="btn btn-theme"
+          title="Deactivate"
+        >
+          <i class="ti-thumb-down"></i>
+        </button>
+        <button
+          *ngIf="mobile"
+          type="button"
+          id="edit"
+          class="btn btn-info"
+          title="Edit"
+        >
+          <i class="ti-pencil"></i>
+        </button>
+        <button
+          *ngIf="mobile"
+          type="button"
+          id="delete"
+          class="btn btn-danger"
+          title="trash"
+        >
+          <i class="ti-trash"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

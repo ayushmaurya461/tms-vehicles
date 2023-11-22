@@ -1,0 +1,623 @@
+<div class="main_content_iner overly_inner">
+  <page-title [title]="'Driver Details'"></page-title>
+  <section class="row vh-100">
+    <div class="col-md-9 d-flex flex-column">
+      <!-- Profile Section -->
+      <div *ngIf="activeSection == 'profile'" class="w-100 mb-3">
+        <div class="profile-box">
+          <input type="file" class="input-file" id="imgInp" />
+          <button class="input-btn overlay-button" id="input_btn">
+            <i class="fa fa-camera cam"></i>
+          </button>
+          <img
+            class="cover"
+            id="blah"
+            src="https://images.ctfassets.net/7thvzrs93dvf/wpImage18643/2f45c72db7876d2f40623a8b09a88b17/linkedin-default-background-cover-photo-1.png?w=800&q=100"
+          />
+          <div class="d-flex row">
+            <div class="dp-container">
+              <img class="dp" src="/assets/img/profile/profile.jpg" />
+            </div>
+            <div class="d-flex flex-column dp-content flex-1 w-100">
+              <h3 class="text-ellipsis">{{ profile.name }}</h3>
+              <h6>Software Engineer @ Gadaget Solutions</h6>
+            </div>
+            <qr-code
+              class="px-3 mr-5"
+              [value]="currentURL"
+              size="70"
+              errorCorrectionLevel="M"
+            ></qr-code>
+            <button class="pen-btn overlay-button">
+              <i class="fa fa-pencil pen"></i>
+            </button>
+          </div>
+          <div class="d-flex pl-3 mt-4">
+            <div class="row w-100">
+              <div class="col-md-4 my-2">
+                <span class="font-weight-bold text-dark text-ellipsis">
+                  Employer Name: {{ profile.employer }}
+                </span>
+              </div>
+              <div class="col-md-4 my-2">
+                <span class="font-weight-bold text-dark text-ellipsis">
+                  Father Name: {{ profile.father_name }}
+                </span>
+              </div>
+              <div class="col-md-4 my-2">
+                <span class="font-weight-bold text-dark text-ellipsis">
+                  DOB: 12-09-1999
+                </span>
+              </div>
+              <div class="col-md-4 my-2">
+                <span class="font-weight-bold text-dark text-ellipsis">
+                  Designation: Software Developer
+                </span>
+              </div>
+              <div class="col-md-4 my-2">
+                <span class="font-weight-bold text-dark text-ellipsis">
+                  DOJ: 12-09-2020
+                </span>
+              </div>
+              <div class="col-md-4 my-2">
+                <span class="font-weight-bold text-dark text-ellipsis">
+                  Permissions: Developer Level
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="activeSection != 'profile'" class="w-100 mh-70 detailed-view">
+        <div
+          *ngFor="let data of dataList"
+          class="w-100 p-3 bg-white mb-3 inline-card d-flex cursor-pointer"
+        >
+          <div class="inline-card-content d-flex justify-content-end">
+            <div class="d-flex pr-3 align-items-center text-ellipsis flex-1">
+              <div class="inline-card-icon d-flex align-items-center">
+                <img
+                  class="mr-3"
+                  src="assets/img/icon/map-location.png"
+                  alt="Icon"
+                />
+              </div>
+              <div
+                class="d-flex flex-column justify-content-center text-ellipsis"
+              >
+                <span class="font-weight-bold text-dark text-ellipsis">
+                  {{ data.from }} - {{ data.to }}
+                </span>
+                <span class="small font-weight-bold text-dark text-ellipsis">
+                  {{ data.settlementNo }}
+                </span>
+              </div>
+            </div>
+            <div class="d-flex px-3 align-items-center border-left">
+              <div class="inline-card-icon d-flex align-items-center">
+                <img
+                  class="mr-3"
+                  src="assets/img/icon/money-bag.png"
+                  alt="Icon"
+                />
+              </div>
+              <div class="d-flex flex-column justify-content-center">
+                <span class="title text-dark text-ellipsis"> Freight </span>
+                <span class="count font-weight-bold text-dark text-ellipsis">
+                  {{ data.freight }}
+                </span>
+              </div>
+            </div>
+            <div class="d-flex px-3 align-items-center border-left">
+              <div class="inline-card-icon d-flex align-items-center">
+                <img
+                  class="mr-3"
+                  src="assets/img/icon/expenses.png"
+                  alt="Icon"
+                />
+              </div>
+              <div class="d-flex flex-column justify-content-center">
+                <span class="title text-dark text-ellipsis"> Expense </span>
+                <span class="count font-weight-bold text-dark text-ellipsis">
+                  {{ data.expense }}
+                </span>
+              </div>
+            </div>
+            <div class="d-flex px-3 align-items-center border-left">
+              <div class="inline-card-icon d-flex align-items-center">
+                <img class="mr-3" src="assets/img/icon/profit.png" alt="Icon" />
+              </div>
+              <div class="d-flex flex-column justify-content-center">
+                <span class="title text-dark text-ellipsis"> Profit </span>
+                <span
+                  class="count font-weight-bold text-ellipsis"
+                  [ngClass]="data.profit > 0 ? 'text-success' : 'text-danger'"
+                >
+                  {{ data.profit }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trips Section ------------------------------------------------------------------------------------------------------------------------------------- -->
+
+      <!-- <div *ngIf="activeSection == 'trips'" class="w-100 mh-70 detailed-view">
+        <div
+          *ngFor="let trip of driverProfile.trips.data"
+          class="w-100 p-3 bg-white mb-3 inline-card d-flex cursor-pointer"
+        >
+          <div class="inline-card-content d-flex justify-content-end">
+            <div class="d-flex pr-3 align-items-center text-ellipsis flex-1">
+              <div class="inline-card-icon d-flex align-items-center">
+                <img
+                  class="mr-3"
+                  src="assets/img/icon/map-location.png"
+                  alt="Icon"
+                />
+              </div>
+              <div
+                class="d-flex flex-column justify-content-center text-ellipsis"
+              >
+                <span class="font-weight-bold text-dark text-ellipsis">
+                  {{ trip.from }} - {{ trip.to }}
+                </span>
+                <span class="small font-weight-bold text-dark text-ellipsis">
+                  {{ trip.settlementNo }}
+                </span>
+              </div>
+            </div>
+            <div class="d-flex px-3 align-items-center border-left">
+              <div class="inline-card-icon d-flex align-items-center">
+                <img
+                  class="mr-3"
+                  src="assets/img/icon/money-bag.png"
+                  alt="Icon"
+                />
+              </div>
+              <div class="d-flex flex-column justify-content-center">
+                <span class="title text-dark text-ellipsis"> Freight </span>
+                <span class="count font-weight-bold text-dark text-ellipsis">
+                  {{ trip.freight }}
+                </span>
+              </div>
+            </div>
+            <div class="d-flex px-3 align-items-center border-left">
+              <div class="inline-card-icon d-flex align-items-center">
+                <img
+                  class="mr-3"
+                  src="assets/img/icon/expenses.png"
+                  alt="Icon"
+                />
+              </div>
+              <div class="d-flex flex-column justify-content-center">
+                <span class="title text-dark text-ellipsis"> Expense </span>
+                <span class="count font-weight-bold text-dark text-ellipsis">
+                  {{ trip.expense }}
+                </span>
+              </div>
+            </div>
+            <div class="d-flex px-3 align-items-center border-left">
+              <div class="inline-card-icon d-flex align-items-center">
+                <img class="mr-3" src="assets/img/icon/profit.png" alt="Icon" />
+              </div>
+              <div class="d-flex flex-column justify-content-center">
+                <span class="title text-dark text-ellipsis"> Profit </span>
+                <span
+                  class="count font-weight-bold text-ellipsis"
+                  [ngClass]="trip.profit > 0 ? 'text-success' : 'text-danger'"
+                >
+                  {{ trip.profit }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- Tyres Section----------------------------------------------------------------------------------------------------------------- -->
+
+      <!-- <div *ngIf="activeSection == 'tyres'" class="w-100 mh-70 detailed-view">
+        <div
+          *ngFor="let tyre of driverProfile.tyres.data"
+          class="w-100 p-3 bg-white mb-3 inline-card d-flex"
+        >
+          <div class="inline-card-content d-flex justify-content-end">
+            <div class="d-flex pr-3 align-items-center text-ellipsis flex-1">
+              <div class="inline-card-icon d-flex align-items-center">
+                <img class="mr-3" src="assets/img/icon/truck.png" alt="Icon" />
+              </div>
+              <div
+                class="d-flex flex-column justify-content-center text-ellipsis"
+              >
+                <span class="font-weight-bold text-dark text-ellipsis">
+                  {{ tyre.vehicleNo }} - {{ tyre.tyreCompany }}
+                </span>
+                <span class="small font-weight-bold text-dark text-ellipsis">
+                  {{ tyre.date }}
+                </span>
+              </div>
+            </div>
+            <div class="d-flex px-3 align-items-center border-left">
+              <div class="inline-card-icon d-flex align-items-center">
+                <img class="mr-3" src="assets/img/icon/tyre.png" alt="Icon" />
+              </div>
+              <div class="d-flex flex-column justify-content-center">
+                <span class="title text-dark text-ellipsis"> Tyre Run </span>
+                <span class="count font-weight-bold text-dark text-ellipsis">
+                  {{ tyre.tyreRun }}
+                </span>
+              </div>
+            </div>
+            <div class="d-flex px-3 align-items-center border-left">
+              <div class="inline-card-icon d-flex align-items-center">
+                <img
+                  class="mr-3"
+                  src="assets/img/icon/expenses.png"
+                  alt="Icon"
+                />
+              </div>
+              <div class="d-flex flex-column justify-content-center">
+                <span class="title text-dark text-ellipsis"> CPKM </span>
+                <span class="count font-weight-bold text-dark text-ellipsis">
+                  {{ tyre.cpkm }}/KM
+                </span>
+              </div>
+            </div>
+            <div class="d-flex px-3 align-items-center border-left">
+              <div
+                class="inline-card-icon d-flex align-items-center cursor-pointer"
+              >
+                <img
+                  title="{{ tyre.reson }}"
+                  data-toggle="tooltip"
+                  class="mr-3"
+                  src="assets/img/icon/info.png"
+                  alt="Icon"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- Maintainance Section ------------------------------------------------------------------------------------------------------------------ -->
+
+      <!-- <div
+        *ngIf="activeSection == 'maintainance'"
+        class="w-100 mh-70 detailed-view"
+      >
+        <div
+          *ngFor="let row of driverProfile.maintainance.data"
+          class="w-100 p-3 bg-white mb-3 inline-card d-flex"
+        >
+          <div class="inline-card-content d-flex justify-content-end">
+            <div class="d-flex pr-3 align-items-center text-ellipsis flex-1">
+              <div class="inline-card-icon d-flex align-items-center">
+                <img
+                  class="mr-3"
+                  src="assets/img/icon/maintainance.png"
+                  alt="Icon"
+                />
+              </div>
+              <div
+                class="d-flex flex-column justify-content-center text-ellipsis"
+              >
+                <span class="font-weight-bold text-dark text-ellipsis">
+                  {{ row.vehicleNo }} - {{ row.jcNo }}
+                </span>
+                <span class="small font-weight-bold text-dark text-ellipsis">
+                  {{ row.date }}
+                </span>
+              </div>
+            </div>
+            <div class="d-flex px-3 align-items-center border-left">
+              <div class="inline-card-icon d-flex align-items-center">
+                <img class="mr-3" src="assets/img/icon/gears.png" alt="Icon" />
+              </div>
+              <div class="d-flex flex-column justify-content-center">
+                <span class="title text-dark text-ellipsis">
+                  Maintainance Type
+                </span>
+                <span class="count font-weight-bold text-dark text-ellipsis">
+                  {{ row.maintainanceType }}
+                </span>
+              </div>
+            </div>
+            <div class="d-flex px-3 align-items-center border-left">
+              <div class="inline-card-icon d-flex align-items-center">
+                <img
+                  class="mr-3"
+                  src="assets/img/icon/expenses.png"
+                  alt="Icon"
+                />
+              </div>
+              <div class="d-flex flex-column justify-content-center">
+                <span class="title text-dark text-ellipsis"> Cost </span>
+                <span class="count font-weight-bold text-dark text-ellipsis">
+                  {{ row.cost }}
+                </span>
+              </div>
+            </div>
+            <div class="d-flex px-3 align-items-center border-left">
+              <div
+                class="inline-card-icon d-flex align-items-center cursor-pointer"
+              >
+                <img
+                  title="{{ row.reson }}"
+                  data-toggle="tooltip"
+                  class="mr-3"
+                  src="assets/img/icon/info.png"
+                  alt="Icon"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- Accidents Section --------------------------------------------------------------------------------------------------------------------------- -->
+
+      <!-- <div
+        *ngIf="activeSection == 'accidents'"
+        class="w-100 mh-70 detailed-view"
+      >
+        <div
+          *ngFor="let row of driverProfile.accidents.data"
+          class="w-100 p-3 bg-white mb-3 inline-card d-flex"
+        >
+          <div class="inline-card-content d-flex justify-content-end">
+            <div class="d-flex pr-3 align-items-center text-ellipsis flex-1">
+              <div class="inline-card-icon d-flex align-items-center">
+                <img
+                  class="mr-3"
+                  src="assets/img/icon/accident.png"
+                  alt="Icon"
+                />
+              </div>
+              <div
+                class="d-flex flex-column justify-content-center text-ellipsis"
+              >
+                <span class="font-weight-bold text-dark text-ellipsis">
+                  {{ row.vehicleNo }}
+                </span>
+                <span class="small font-weight-bold text-dark text-ellipsis">
+                  {{ row.route }}
+                </span>
+              </div>
+            </div>
+            <div class="d-flex px-3 align-items-center border-left">
+              <div class="inline-card-icon d-flex align-items-center">
+                <img
+                  class="mr-3"
+                  src="assets/img/icon/question-girl.png"
+                  alt="Icon"
+                />
+              </div>
+              <div class="d-flex flex-column justify-content-center">
+                <span class="title text-dark text-ellipsis"> Status </span>
+                <span class="count font-weight-bold text-dark text-ellipsis">
+                  {{ row.status }}
+                </span>
+              </div>
+            </div>
+            <div class="d-flex px-3 align-items-center border-left">
+              <div class="inline-card-icon d-flex align-items-center">
+                <img
+                  class="mr-3"
+                  src="assets/img/icon/expenses.png"
+                  alt="Icon"
+                />
+              </div>
+              <div class="d-flex flex-column justify-content-center">
+                <span class="title text-dark text-ellipsis"> Cost </span>
+                <span class="count font-weight-bold text-dark text-ellipsis">
+                  {{ row.cost }}
+                </span>
+              </div>
+            </div>
+            <div class="d-flex px-3 align-items-center border-left">
+              <div
+                class="inline-card-icon d-flex align-items-center cursor-pointer"
+              >
+                <img
+                  title="{{ row.reson }}"
+                  data-toggle="tooltip"
+                  class="mr-3"
+                  src="assets/img/icon/info.png"
+                  alt="Icon"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- Challans Section ------------------------------------------------------------------------------------------------------------------------->
+
+      <!-- <div
+        *ngIf="activeSection == 'challans'"
+        class="w-100 mh-70 detailed-view"
+      >
+        <div
+          *ngFor="let row of driverProfile.challans.data"
+          class="w-100 p-3 bg-white mb-3 inline-card d-flex"
+        >
+          <div class="inline-card-content d-flex justify-content-end">
+            <div class="d-flex pr-3 align-items-center text-ellipsis flex-1">
+              <div class="inline-card-icon d-flex align-items-center">
+                <img
+                  class="mr-3"
+                  src="assets/img/icon/challan.png"
+                  alt="Icon"
+                />
+              </div>
+              <div
+                class="d-flex flex-column justify-content-center text-ellipsis"
+              >
+                <span class="font-weight-bold text-dark text-ellipsis">
+                  {{ row.vehicleNo }}
+                </span>
+                <span class="small font-weight-bold text-dark text-ellipsis">
+                  {{ row.route }}
+                </span>
+              </div>
+            </div>
+            <div class="d-flex px-3 align-items-center border-left">
+              <div class="inline-card-icon d-flex align-items-center">
+                <img
+                  class="mr-3"
+                  src="assets/img/icon/question-girl.png"
+                  alt="Icon"
+                />
+              </div>
+              <div class="d-flex flex-column justify-content-center">
+                <span class="title text-dark text-ellipsis"> Status </span>
+                <span class="count font-weight-bold text-dark text-ellipsis">
+                  {{ row.status }}
+                </span>
+              </div>
+            </div>
+            <div class="d-flex px-3 align-items-center border-left">
+              <div class="inline-card-icon d-flex align-items-center">
+                <img
+                  class="mr-3"
+                  src="assets/img/icon/expenses.png"
+                  alt="Icon"
+                />
+              </div>
+              <div class="d-flex flex-column justify-content-center">
+                <span class="title text-dark text-ellipsis"> Cost </span>
+                <span class="count font-weight-bold text-dark text-ellipsis">
+                  {{ row.cost }}
+                </span>
+              </div>
+            </div>
+            <div class="d-flex px-3 align-items-center border-left">
+              <div
+                class="inline-card-icon d-flex align-items-center cursor-pointer"
+              >
+                <img
+                  title="{{ row.reson }}"
+                  data-toggle="tooltip"
+                  class="mr-3"
+                  src="assets/img/icon/info.png"
+                  alt="Icon"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- Vehicle History Section --------------------------------------------------------------------------------------------------------------------->
+
+      <!-- <div
+        *ngIf="activeSection == 'vehicleHistory'"
+        class="w-100 mh-70 detailed-view"
+      >
+        <div
+          *ngFor="let row of driverProfile.vehicleHistory.data"
+          class="w-100 p-3 bg-white mb-3 inline-card d-flex"
+        >
+          <div class="inline-card-content d-flex justify-content-end">
+            <div class="d-flex pr-3 align-items-center text-ellipsis flex-1">
+              <div class="inline-card-icon d-flex align-items-center">
+                <img class="mr-3" src="assets/img/icon/truck.png" alt="Icon" />
+              </div>
+              <div
+                class="d-flex flex-column justify-content-center text-ellipsis"
+              >
+                <span class="font-weight-bold text-dark text-ellipsis">
+                  {{ row.vehicleNo }} - {{ row.bodyType }}
+                </span>
+                <span class="small font-weight-bold text-dark text-ellipsis">
+                  {{ row.status }}
+                </span>
+              </div>
+            </div>
+            <div class="d-flex px-3 align-items-center border-left">
+              <div
+                class="d-flex flex-column justify-content-center text-ellipsis"
+              >
+                <span class="font-weight-bold text-dark text-ellipsis">
+                  From Date: {{ row.fromDate }}
+                </span>
+                <span class="font-weight-bold text-dark text-ellipsis">
+                  To Date: {{ row.toDate }}
+                </span>
+              </div>
+            </div>
+            <div class="d-flex px-3 align-items-center border-left">
+              <div class="inline-card-icon d-flex align-items-center">
+                <img class="mr-3" src="assets/img/icon/clock.png" alt="Icon" />
+              </div>
+              <div class="d-flex flex-column justify-content-center">
+                <span class="title text-dark text-ellipsis"> Time </span>
+                <span class="count font-weight-bold text-dark text-ellipsis">
+                  {{ row.time }}
+                </span>
+              </div>
+            </div>
+            <div class="d-flex px-3 align-items-center border-left">
+              <div
+                class="inline-card-icon d-flex align-items-center cursor-pointer"
+              >
+                <img
+                  title="{{ row.releavingReson }}"
+                  data-toggle="tooltip"
+                  class="mr-3"
+                  src="assets/img/icon/info.png"
+                  alt="Icon"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- <div class="w-100 h-30"></div> -->
+    </div>
+    <div class="col-md-3 px-3 vh-100">
+      <div
+        class="w-100 p-3 bg-white mb-3 side-card d-flex cursor-pointer"
+        id="profile"
+        (click)="showDetails('profile')"
+      >
+        <div class="side-card-icon d-flex align-items-center mr-2">
+          <img
+            class="rounded-circle"
+            src="assets/img/profile/profile.jpg"
+            alt="Icon"
+          />
+        </div>
+        <div class="side-card-content d-flex flex-column">
+          <span class="title text-ellipsis">Selva Esakki Muthu.S</span>
+          <span class="count">Personal Information</span>
+        </div>
+        <div class="side-card-detailed-icon d-flex align-items-center">
+          <i class="ti-angle-right"></i>
+        </div>
+      </div>
+
+      <div
+        *ngFor="let component of sideInfoData"
+        [id]="component.id"
+        (click)="showDetails(component.id)"
+        class="w-100 p-3 bg-white mb-3 side-card d-flex cursor-pointer"
+      >
+        <div class="side-card-icon d-flex align-items-center mr-2">
+          <img src="{{ component.iconImage }}" alt="Icon" />
+        </div>
+        <div class="side-card-content d-flex flex-column">
+          <span class="title">{{ component.title }}</span>
+          <span class="count">{{ component.data.length }} entries</span>
+        </div>
+        <div class="side-card-detailed-icon d-flex align-items-center">
+          <i class="ti-angle-right"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

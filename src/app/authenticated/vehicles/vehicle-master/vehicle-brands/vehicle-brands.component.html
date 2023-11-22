@@ -1,0 +1,309 @@
+<div class="main_content_iner overly_inner">
+  <div class="container-fluid p-0">
+    <section class="container table-wrapper">
+      <data-counter
+        [data]="counterData"
+        (counterClickFunction)="counterClickFunction($event)"
+      ></data-counter>
+      <div class="position-relative">
+        <div
+          class="page_title_box d-flex flex-wrap align-items-center justify-content-between"
+        >
+          <div class="page_title_left d-flex align-items-center">
+            <h3 class="f_s_25 f_w_700 dark_text mr_30">Brands</h3>
+          </div>
+        </div>
+        <table-full
+          [columns]="tableColumns"
+          [buttons]="tableButtons"
+          [tableTitle]="'Brands'"
+          [optionData]="optionData"
+          (dblClick)="viewDetails($event)"
+        ></table-full>
+
+        <app-data-card
+          [columns]="tableColumns"
+          [buttons]="tableButtons"
+          [cardTitle]="'Brands'"
+          [optionData]="optionData"
+          (showFullDetailsPage)="viewDetails($event)"
+        ></app-data-card>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div
+  id="addVehicleBrand"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  data-backdrop="static"
+  aria-labelledby="addVehicleBrand"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5
+          class="modal-title font-weight-bold"
+          id="
+              addVehicleBrandModalTitle"
+        >
+          Brand Details
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">Close &times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form
+          class="highlight-required"
+          id="addVehicleBrand"
+          #addVehicleBrand="ngForm"
+          autocomplete="off"
+        >
+          <input type="hidden" name="id" id="id" [(ngModel)]="this.fields.id" />
+          <div class="row">
+            <div class="col-md-4 mb-1">
+              <label for="brandName"
+                ><h6 class="font-weight-bold small mb-1">Brand Name</h6></label
+              >
+              <div class="form-group mb-0">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="brandName"
+                  id="brandName"
+                  [(ngModel)]="this.fields.brandName"
+                  #brandName="ngModel"
+                  placeholder="Brand Name"
+                  (keypress)="
+                    this.tabEnterService.keyFunc($event, 'origin', 'select')
+                  "
+                  required
+                />
+                <div
+                  *ngIf="
+                    brandName.invalid && (brandName.dirty || brandName.touched)
+                  "
+                  class="input-error-container text-danger text-left"
+                >
+                  <i
+                    class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                  ></i>
+                  <div class="input-error">
+                    <div *ngIf="brandName.errors?.required">
+                      Field is required.
+                    </div>
+                    <div *ngIf="brandName.errors?.pattern">
+                      Pattern Mismatch
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label for="origin"
+                ><h6 class="font-weight-bold small">Origin</h6></label
+              >
+              <select2
+                [prevElement]="{ id: 'brandName', type: 'text' }"
+                [nextElement]="{ id: 'companyType', type: 'select' }"
+                [options]="countryOptions"
+                [required]="true"
+                [multiple]="false"
+                placeholder="Origin Country"
+                [id]="'origin'"
+                name="origin"
+                [selectedData]="this.fields.origin"
+                [(ngModel)]="this.fields.origin"
+                (onChange)="setValues($event, 'origin')"
+                ngDefaultControl
+              ></select2>
+            </div>
+            <div class="col-md-4">
+              <label for="companyType"
+                ><h6 class="font-weight-bold small">Company Type</h6></label
+              >
+              <select2
+                [prevElement]="{ id: 'origin', type: 'select' }"
+                [nextElement]="{ id: 'remarks', type: 'text' }"
+                [options]="companyTypeOptions"
+                [selectionCounter]="true"
+                [multiple]="true"
+                [required]="true"
+                placeholder="Select Company Type"
+                [id]="'companyType'"
+                name="companyType"
+                [selectedData]="this.fields.companyType"
+                [(ngModel)]="this.fields.companyType"
+                (onChange)="setValues($event, 'companyType')"
+                ngDefaultControl
+              ></select2>
+            </div>
+
+            <div class="col-md-4 mb-1">
+              <label for="logo"
+                ><h6 class="font-weight-bold small mb-1">Upload Logo</h6></label
+              >
+              <input-file
+                [id]="'logo'"
+                name="logo"
+                [selectedFile]="fields.logo"
+                [(ngModel)]="fields.logo"
+                ngDefaultControl
+                (onFileSelect)="setValues($event, 'logo')"
+              ></input-file>
+            </div>
+
+            <div class="col-md-12 mb-1">
+              <label for="remarks">
+                <h6 class="font-weight-bold small mb-1">Remarks</h6>
+              </label>
+              <div class="form-group mb-0">
+                <textarea
+                  name="remarks"
+                  #remarks="ngModel"
+                  [(ngModel)]="this.fields.remarks"
+                  class="form-control"
+                  id="remarks"
+                  rows="1"
+                ></textarea>
+                <div
+                  *ngIf="remarks.invalid && (remarks.dirty || remarks.touched)"
+                  class="input-error-container text-danger text-left"
+                >
+                  <i
+                    class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                  ></i>
+                  <div class="input-error">
+                    <div *ngIf="remarks.errors?.required">
+                      Field is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          id="submitformdata"
+          [disabled]="addVehicleBrand.invalid || loading"
+          class="btn btn-theme"
+          (click)="saveDetails(addVehicleBrand)"
+        >
+          Save Details
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  id="viewDemoPage"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  data-backdrop="static"
+  aria-labelledby="viewDemoPage"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title font-weight-bold" id="viewDemoPageModalTitle">
+          View Brands
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">Close &times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-3 mt-3">
+            <span class="font-weight-bold text-dark text-ellipsis"
+              ><strong>Brand Name: </strong><br />
+              Tata</span
+            >
+          </div>
+          <div class="col-md-3 mt-3">
+            <span class="font-weight-bold text-dark text-ellipsis"
+              ><strong>Remarks: </strong><br />Best Indian Brand</span
+            >
+          </div>
+          <div class="col-md-3 mt-3">
+            <span class="font-weight-bold text-dark text-ellipsis"
+              ><strong>Status: </strong><br />Active</span
+            >
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          id="submitformdata"
+          class="btn btn-primary"
+          title="View Logs"
+        >
+          <i class="ti-info-alt"></i>
+        </button>
+        <button
+          type="button"
+          id="submitformdata"
+          class="btn btn-info"
+          title="View 360"
+        >
+          <i class="ti-loop"></i>
+        </button>
+        <button
+          type="button"
+          id="submitformdata"
+          class="btn btn-success"
+          title="Approve"
+        >
+          <i class="ti-check-box"></i>
+        </button>
+        <button
+          type="button"
+          id="submitformdata"
+          class="btn btn-theme"
+          title="Deactivate"
+        >
+          <i class="ti-thumb-down"></i>
+        </button>
+        <button
+          *ngIf="mobile"
+          type="button"
+          id="edit"
+          class="btn btn-info"
+          title="Edit"
+        >
+          <i class="ti-pencil"></i>
+        </button>
+        <button
+          *ngIf="mobile"
+          type="button"
+          id="delete"
+          class="btn btn-danger"
+          title="trash"
+        >
+          <i class="ti-trash"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,54 @@
+<div class="row d-flex justify-content-center">
+  <div class="mobile-footer">
+    <div class="row p-2">
+      <!-- Favourites -->
+      <div class="col-3 d-flex justify-content-center">
+        <div class="favourites_mobile">
+          <a><img src="assets/img/icon/star.png" alt="" /></a>
+          <app-favourites></app-favourites>
+        </div>
+      </div>
+      <!-- Messages -->
+      <div class="col-3 d-flex justify-content-center">
+        <div class="chat_box_mobile">
+          <a class="chatbox_open_mobile" href="javascript:void(0);">
+            <img src="assets/img/icon/message.png" alt="" />
+            <span>2</span>
+          </a>
+          <app-chat-window></app-chat-window>
+        </div>
+        <!--/### CHAT_MESSAGE_BOX  ### -->
+      </div>
+      <!-- Notifications -->
+      <div class="col-3 d-flex justify-content-center">
+        <div class="notification_mobile">
+          <a
+            class="bell_notification_clicker_mobile"
+            href="javascript:void(0);"
+          >
+            <img src="assets/img/icon/bell.png" alt="" />
+            <span>2</span>
+          </a>
+          <app-notifications></app-notifications>
+        </div>
+      </div>
+      <!-- Profile -->
+      <div class="col-3 d-flex justify-content-center">
+        <div class="profile_info_mobile">
+          <img src="assets/img/client_img.png" alt="#" />
+          <div class="profile_info_iner_mobile">
+            <div class="profile_author_name_mobile">
+              <p>{{ "@" + userService.userName }}</p>
+              <h5 class="mb-0">TMS - ERP</h5>
+            </div>
+            <div class="profile_info_details_mobile">
+              <a routerLink="profile/1">My Profile </a>
+              <a href="#">Settings</a>
+              <a href="javascript:void(0);" (click)="logout()">Log Out </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

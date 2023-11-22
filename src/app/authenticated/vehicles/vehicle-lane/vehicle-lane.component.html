@@ -1,0 +1,163 @@
+<div class="main_content_iner overly_inner">
+  <div class="container-fluid p-0">
+    <section class="container table-wrapper">
+      <data-counter
+        [data]="counterData"
+        (counterClickFunction)="counterClickFunction($event)"
+      ></data-counter>
+      <div class="position-relative">
+        <div
+          class="page_title_box d-flex flex-wrap align-items-center justify-content-between"
+        >
+          <div class="page_title_left d-flex align-items-center">
+            <h3 class="f_s_25 f_w_700 dark_text mr_30">Brands</h3>
+          </div>
+        </div>
+        <table-full
+          [columns]="tableColumns"
+          [buttons]="tableButtons"
+          [tableTitle]="'Brand Details'"
+          [optionData]="optionData"
+        ></table-full>
+
+        <app-data-card
+          [columns]="tableColumns"
+          [buttons]="tableButtons"
+          [cardTitle]="'Brand Details'"
+          [optionData]="optionData"
+        ></app-data-card>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div
+  id="AddVehicleLane"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  data-backdrop="static"
+  aria-labelledby="addVehicleBrand"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5
+          class="modal-title font-weight-bold"
+          id="
+                addVehicleBrandModalTitle"
+        >
+          Brand Details
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">Close &times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form
+          class="highlight-required"
+          id="vehicleLane"
+          #vehicleLane="ngForm"
+          autocomplete="off"
+        >
+          <input type="hidden" name="id" id="id" [(ngModel)]="this.fields.id" />
+          <div class="row">
+            <div class="col-md-4">
+              <label for="vehicleNo"
+                ><h6 class="font-weight-bold small">Vehicle No.</h6></label
+              >
+              <select2
+                [nextElement]="{ id: 'lane', type: 'select' }"
+                [options]="vehicleOptions"
+                [required]="true"
+                [multiple]="false"
+                placeholder="Select Vehicle"
+                [id]="'vehicleNo'"
+                name="vehicleNo"
+                [selectedData]="this.fields.vehicleNo"
+                [(ngModel)]="this.fields.vehicleNo"
+                (onChange)="setValue('vehicleNo', $event)"
+                ngDefaultControl
+              ></select2>
+            </div>
+            <div class="col-md-4">
+              <label for="lane"
+                ><h6 class="font-weight-bold small">Select Lane</h6></label
+              >
+              <select2
+                [prevElement]="{ id: 'vehicleNo', type: 'select' }"
+                [nextElement]="{ id: 'date', type: 'date' }"
+                [options]="laneOptions"
+                [required]="true"
+                [multiple]="false"
+                placeholder="Select Lane"
+                [id]="'lane'"
+                name="lane"
+                [selectedData]="this.fields.lane"
+                [(ngModel)]="this.fields.lane"
+                (onChange)="setValue('lane', $event)"
+                ngDefaultControl
+              ></select2>
+            </div>
+
+            <div class="col-md-4 mb-1">
+              <label for="date"
+                ><h6 class="font-weight-bold small mb-1">Date</h6></label
+              >
+              <div class="form-group mb-0">
+                <input
+                  type="date"
+                  class="form-control"
+                  name="date"
+                  id="date"
+                  [(ngModel)]="this.fields.date"
+                  #date="ngModel"
+                  placeholder="Select Date"
+                  (change)="saveDetails(vehicleLane)"
+                  (keypress)="
+                    this.tabEnterService.keyFunc(
+                      $event,
+                      'submitformdata',
+                      'button',
+                      'lane',
+                      'select'
+                    )
+                  "
+                  required
+                />
+                <div
+                  *ngIf="date.invalid && (date.dirty || date.touched)"
+                  class="input-error-container text-danger text-left"
+                >
+                  <i
+                    class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                  ></i>
+                  <div class="input-error">
+                    <div *ngIf="date.errors?.required">Field is required.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          id="submitformdata"
+          [disabled]="vehicleLane.invalid"
+          class="btn btn-theme"
+          (click)="saveDetails(vehicleLane)"
+        >
+          Save Details
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

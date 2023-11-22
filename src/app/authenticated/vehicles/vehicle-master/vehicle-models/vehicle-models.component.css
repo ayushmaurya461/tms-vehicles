@@ -1,0 +1,30 @@
+.button-for-input {
+  cursor: pointer;
+  width: 90%;
+  border: none;
+  overflow: hidden;
+  height: 29px;
+  word-break: break-all;
+}
+
+#image-button:focus,
+#image-button:hover {
+  background-color: grey;
+  color: white;
+  box-shadow: 0px 0px 5px black;
+}
+
+.image-uploads {
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.form-input-group {
+  border-radius: 5px;
+  overflow: hidden;
+  border: none;
+}
+
+.row {
+  width: 100%;
+}

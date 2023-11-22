@@ -1,0 +1,27 @@
+.container-form-fields{
+  width: fit-content;
+  height: fit-content;
+  border: 2px solid rgb(131, 131, 131);
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-radius: 10px;
+}
+
+.container-heading{
+  position: relative;
+  background-color: white;
+  z-index: 5;
+  margin-top: -35px;
+  padding: 6px;
+  margin-left: 10px;
+}
+
+.row{
+  width: 100%;
+}
+
+.button{
+  width: fit-content;
+  margin: 2px;
+}
+

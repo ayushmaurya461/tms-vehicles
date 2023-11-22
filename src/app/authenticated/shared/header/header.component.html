@@ -1,0 +1,165 @@
+<!-- menu  -->
+<div class="container-fluid no-gutters p-0">
+  <div class="row">
+    <div class="col-lg-12 p-0">
+      <div
+        class="header_iner d-flex justify-content-between align-items-center"
+      >
+        <div class="sidebar_icon d-lg-none">
+          <!-- <i class="ti-menu"></i> -->
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="25"
+            height="25"
+            fill="currentColor"
+            class="bi bi-list"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
+            />
+          </svg>
+        </div>
+        <div class="line_icon open_miniSide d-none d-lg-block">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="25"
+            height="25"
+            fill="currentColor"
+            class="bi bi-filter-left"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M2 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"
+            />
+          </svg>
+        </div>
+        <div class="serach_field-area d-flex align-items-center">
+          <div class="search_inner">
+            <form action="#">
+              <div class="search_field">
+                <input type="text" placeholder="Search" />
+              </div>
+              <button type="submit">
+                <img src="assets/img/icon/icon_search.svg" alt="" />
+              </button>
+            </form>
+          </div>
+        </div>
+        <div
+          class="header_right d-flex justify-content-between align-items-center"
+        >
+          <div
+            class="page_date_button d-flex align-items-center"
+            *ngIf="
+              +this.userService.userType > 1 &&
+              this.userService.branchList.length > 0
+            "
+          >
+            <img src="assets/img/icon/user-branch.svg" class="mr-0" alt="" />
+            <div class="select">
+              <select
+                name="userBranchId"
+                id="userBranchId"
+                [(ngModel)]="this.userService.userBranch"
+                (change)="setUserBranchId($event)"
+              >
+                <option
+                  *ngFor="let branch of this.userService.branchList"
+                  [value]="branch.id"
+                >
+                  {{ branch.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div
+            class="page_date_button d-flex align-items-center"
+            *ngIf="+this.userService.userType > 1"
+          >
+            <img src="assets/img/icon/calender_icon.svg" class="mr-0" alt="" />
+            <div class="select">
+              <select
+                name="fiscalYear"
+                id="fiscalYear"
+                [(ngModel)]="this.userService.fiscalYear"
+                (change)="setFiscalYear($event)"
+              >
+                <option *ngFor="let fy of this.finYearOptions" [value]="fy.id">
+                  {{ fy.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div
+            class="header_notification_warp d-flex align-items-center"
+            *ngIf="!mobile"
+          >
+            <li class="notifications">
+              <a
+                class="bell_notification_clicker"
+                href="javascript:void(0);"
+                (click)="showNotifications()"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="black"
+                  class="bi bi-bell"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"
+                  />
+                </svg>
+                <span>2</span>
+              </a>
+              <app-notifications *ngIf="notifications"></app-notifications>
+            </li>
+            <li class="chatbox">
+              <a class="chatbox_open" (click)="showChatbox()">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="black"
+                  class="bi bi-chat-right-dots"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1H2zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z"
+                  />
+                  <path
+                    d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"
+                  />
+                </svg>
+                <span>2</span>
+              </a>
+              <app-chat-window
+                *ngIf="chatbox"
+                (closeChatbox)="closeChatbox()"
+              ></app-chat-window>
+            </li>
+          </div>
+          <div class="profile_info" *ngIf="!mobile">
+            <img src="assets/img/client_img.png" alt="#" />
+            <div class="profile_info_iner">
+              <div class="profile_author_name">
+                <p>{{ "@" + userService.userName }}</p>
+                <h5 class="mb-0">TMS - ERP</h5>
+              </div>
+              <div class="profile_info_details">
+                <a routerLink="profile/1">My Profile </a>
+                <a href="#">Settings</a>
+                <a href="javascript:void(0);" (click)="logout()">Log Out </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--/ menu  -->

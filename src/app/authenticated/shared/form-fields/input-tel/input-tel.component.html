@@ -1,0 +1,38 @@
+<div class="form-group form-input-group mb-0">
+    <ngx-intl-tel-input
+        [cssClass]="'custom'"
+        [preferredCountries]="preferredCountries"
+        [enableAutoCountrySelect]="true"
+        [enablePlaceholder]="true"
+        [searchCountryFlag]="true"
+        [searchCountryField]="[
+            SearchCountryField.Iso2,
+            SearchCountryField.Name
+        ]"
+        [selectFirstCountry]="false"
+        [selectedCountryISO]="CountryISO.India"
+        [maxLength]="'15'"
+        [phoneValidation]="true"
+        [separateDialCode]="separateDialCode"
+        [numberFormat]="PhoneNumberFormat.National"
+        name="contactNo"
+        type="text"
+        inputId="{{id}}"
+        [(ngModel)]="data"
+        #phoneNo="ngModel"
+        (keypress)="keyFunc($event,nextElement.id,nextElement.type)"
+        (keyup)="sendErrors(phoneNo.errors)"
+        [required]='required'>
+    </ngx-intl-tel-input>
+    <div *ngIf="((phoneNo.errors) | json)?.length !=4 && phoneNo.touched"class="input-error-container text-danger text-left">
+        <i class="p-2 input-error-indicator fa fa-exclamation-triangle"></i>
+        <div class="input-error">
+            <div *ngIf="phoneNo.errors?.required">
+                Field is required.
+            </div>
+            <div *ngIf="phoneNo.errors?.validatePhoneNumber?.valid == false">
+                Invalid Number
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,8 @@
+<div class="page_date_button d-flex align-items-center customSt">
+  <i [ngClass]="icon" style="padding:0 10px; font-size:14px; font-weight:bold;"></i>
+  <div class="select d-flex flex-fill">
+      <select class="flex-fill" name="view" (change)="onSelectedOptionChange($event)">
+          <option *ngFor="let option of options" class="option" [selected]="option.selected" value="{{option.id}}">{{option.text}}</option>
+      </select>
+  </div>
+</div>

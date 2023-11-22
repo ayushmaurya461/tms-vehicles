@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- metas -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=0"
+    />
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <!-- title -->
+    <title>TMS</title>
+    <!-- twitter seo -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@TMS" />
+    <meta name="twitter:creator" content="@TMS" />
+    <meta name="twitter:title" content="Transport Management Tool" />
+    <meta
+      name="twitter:description"
+      content="Get ahead of problems before they occur with real time solution | TMS Live Synchronize Your Work."
+    />
+    <meta name="twitter:image" content="http://tmslive.in/images/logo.png" />
+    <!-- facebook seo -->
+    <meta property="og:title" content="Transport Management Tool" />
+    <meta property="og:type" content="Web-App" />
+    <meta property="og:url" content="https://tmserp.com" />
+    <meta property="og:image" content="http://tmslive.in/images/logo.png" />
+    <meta
+      property="og:description"
+      content="Get ahead of problems before they occur with real time solution | TMS Live Synchronize Your Work."
+    />
+    <meta property="og:site_name" content="TMS" />
+    <meta property="fb:admins" content="" />
+    <meta property="fb:app_id" content="" />
+    <!-- google seo -->
+    <meta
+      name="description"
+      content="Get ahead of problems before they occur with real time solution | TMS Live Synchronize Your Work."
+    />
+    <!-- base url -->
+    <base href="/" />
+    <!-- icons -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="icon" href="/assets/img/mini_logo.png" type="image/png" />
+    <!-- css imports  -->
+    <!-- <link rel="stylesheet" href="/assets/css/bootstrap.min.css" /> -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/css/bootstrap.min.css"
+      integrity="sha512-T584yQ/tdRR5QwOpfvDfVQUidzfgc2339Lc8uBDtcp/wYu80d7jwBgAxbyMh0a9YM9F8N3tdErpFI8iaGx6x5g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <!-- themefy CSS -->
+    <!-- <link rel="stylesheet" href="/assets/vendors/themefy_icon/themify-icons.css" /> -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css"
+    />
+
+    <!-- font awesome CSS -->
+    <!-- <link rel="stylesheet" href="/assets/vendors/font_awesome/css/all.min.css" /> -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn-uicons.flaticon.com/uicons-regular-straight/css/uicons-regular-straight.css"
+    />
+    <!-- metarial icon css -->
+    <!-- <link rel="stylesheet" href="/assets/vendors/material_icon/material-icons.css" /> -->
+
+    <!-- style CSS -->
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <!-- <link rel="stylesheet" href="/assets/css/colors/default.css" id="colorSkinCSS"> -->
+
+    <!-- For Tooltip -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/select/1.6.2/js/dataTables.select.min.js"></script>
+  </head>
+  <body>
+    <app-root></app-root>
+
+    <!-- Alert Modal -->
+    <div
+      id="alert-modal"
+      class="alert-modal modal fade"
+      tabindex="-1"
+      role="dialog"
+      data-backdrop="static"
+      aria-labelledby="alert-modal"
+    >
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content rounded-lg">
+          <div
+            class="modal-header bg-danger justify-content-center position-static rounded-top"
+          >
+            <img
+              id="alertBoxIcon"
+              src="assets/img/icon/alert.png"
+              height="25px"
+              alt="alert"
+            />
+          </div>
+
+          <div class="modal-body text-center p-3">
+            <h3 id="alert-title" class="font-weight-bold">Warning</h3>
+            <h6 id="alert-description">---</h6>
+            <br />
+            <button
+              type="button"
+              id="alertModalCloseButton"
+              class="btn btn-danger btn-sm"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirm Modal -->
+    <div
+      id="confirm-modal"
+      class="confirm-modal alert-modal modal fade"
+      tabindex="-1"
+      role="dialog"
+      data-backdrop="static"
+      aria-labelledby="confirm-modal"
+    >
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content rounded-lg">
+          <div
+            class="modal-header bg-danger justify-content-center position-static rounded-top"
+          >
+            <img src="assets/img/icon/alert.png" height="50px" alt="alert" />
+          </div>
+          <div class="modal-body text-center p-3">
+            <h6 id="confirm-message" class="mb-0">---</h6>
+            <br />
+            <div class="row">
+              <div class="col-md-12 mb-3 p-0">
+                <div class="form-group">
+                  <label for="confirmInputField" class="w-100 text-left mb-1"
+                    ><span id="confirmInputFieldLabel">Remark</span
+                    ><span
+                      id="confirmInputFieldRequired"
+                      class="text-danger"
+                    ></span
+                  ></label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    placeholder="Remark"
+                    name="confirmInputField"
+                    id="confirmInputField"
+                    autocomplete="off"
+                  />
+                  <span
+                    class="small float-left text-danger"
+                    id="confirmInputFieldRequiredError"
+                  ></span>
+                </div>
+              </div>
+            </div>
+            <button
+              type="button"
+              id="confirmModalVerifyButton"
+              class="btn btn-danger btn-sm"
+            >
+              Yes
+            </button>
+            <button
+              type="button"
+              id="confirmModalCloseButton"
+              class="btn btn-default btn-sm"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function alert(data) {
+        if (typeof data == "string") {
+          $("#alert-modal #alert-description").text(data);
+          $("#alert-modal .modal-header").removeClass("bg-danger");
+          $("#alert-modal .modal-header").removeClass("bg-success");
+          $("#alert-modal .modal-header").removeClass("bg-warning");
+          $("#alert-modal .modal-header").addClass("bg-danger");
+          $("#alert-modal #alertModalCloseButton").removeClass("btn-danger");
+          $("#alert-modal #alertModalCloseButton").removeClass("btn-success");
+          $("#alert-modal #alertModalCloseButton").removeClass("btn-warning");
+          $("#alert-modal #alertModalCloseButton").addClass("btn-danger");
+          $("#alert-modal #alert-title").text("Error");
+        } else if (typeof data == "object") {
+          $("#alert-modal #alert-description").text(data?.alertMessage);
+          $("#alert-modal #alertModalCloseButton").text(data?.buttonText);
+          $("#alert-modal .modal-header").removeClass("bg-danger");
+          $("#alert-modal .modal-header").removeClass("bg-success");
+          $("#alert-modal .modal-header").removeClass("bg-warning");
+          $("#alert-modal #alertModalCloseButton").removeClass("btn-danger");
+          $("#alert-modal #alertModalCloseButton").removeClass("btn-success");
+          $("#alert-modal #alertModalCloseButton").removeClass("btn-warning");
+          if (data.alertType == "success") {
+            $("#alert-modal .modal-header").addClass("bg-success");
+            $("#alert-modal #alertModalCloseButton").addClass("btn-success");
+            $("#alert-modal #alertBoxIcon").attr(
+              "src",
+              "assets/img/icon/ok.png"
+            );
+            $("#alert-modal #alert-title").text("Success");
+          } else if (data.alertType == "warning") {
+            $("#alert-modal .modal-header").addClass("bg-warning");
+            $("#alert-modal #alertModalCloseButton").addClass("btn-warning");
+            $("#alert-modal #alertBoxIcon").attr(
+              "src",
+              "assets/img/icon/alert.png"
+            );
+            $("#alert-modal #alert-title").text("Warning");
+          } else {
+            $("#alert-modal .modal-header").addClass("bg-danger");
+            $("#alert-modal #alertModalCloseButton").addClass("btn-danger");
+            $("#alert-modal #alertBoxIcon").attr(
+              "src",
+              "assets/img/icon/alert.png"
+            );
+            $("#alert-modal #alert-title").text("Error");
+          }
+        }
+        $("#alert-modal").modal("show");
+        $("#alert-modal").on("shown.bs.modal", function (e) {
+          $("#alert-modal #alertModalCloseButton").focus();
+        });
+      }
+      // For disabeling developer menu
+      // document.addEventListener('contextmenu', event => event.preventDefault());
+      // document.addEventListener("keydown", function (event) {
+      //   console.log(event);
+      //   if (event.ctrlKey && event.shiftKey && (event.keyCode==73 || event.keyCode==67)) {
+      //       event.preventDefault();
+      //   }
+      // });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,67 @@
+<div class="d-flex justify-content-end">
+  <input
+    #inputSearch
+    class="search-input"
+    type="text"
+    placeholder="Search..."
+    (keyup.enter)="search(inputSearch)"
+  />
+  <div class="btn-controls"></div>
+</div>
+
+<div class="d-flex cards justify-content-center .slideOutUp">
+  <div style="width: 100%">
+    <div class="list-container" (scroll)="onScroll()">
+      <div *ngIf="noRecordsFound">
+        <img
+          class="no-data-found-image"
+          src="../../../../assets/img/progress/norecordfound.gif"
+          alt=""
+        />
+      </div>
+      <ul class="list-group">
+        <li
+          class="list-group-item border-0"
+          *ngFor="let data of dataList; let i = index"
+          (click)="viewDetails(i)"
+        >
+          <div class="row d-flex">
+            <div
+              *ngFor="let entry of data"
+              class="col-6 col-xs-4 col-sm-4 col-md-4 col-lg-4 text-left"
+            >
+              <p class="font-weight-bold">{{ entry.title }}</p>
+              <div>
+                <p>{{ entry.value ? entry.value : "Not Available" }}</p>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li></li>
+      </ul>
+      <div class="d-flex justify-content-center" *ngIf="listLoading">
+        <div class="lds-ellipsis">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    *ngIf="showScrollButton"
+    class="scrollToTop"
+    (click)="scrollToTop()"
+    [class.scroll-up-animation]="showScrollButton"
+  >
+    <img src=".././../../../assets/img/scroll-to-top.png" alt="" />
+  </div>
+  <app-show-details
+    *ngIf="showDetails"
+    [data]="details"
+    (closeEvent)="closedDetails()"
+    [buttons]="buttons"
+    [columns]="columns"
+  ></app-show-details>
+</div>

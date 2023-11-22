@@ -1,0 +1,20 @@
+select {
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  -ms-appearance:none;
+  appearance:none;
+  outline:0;
+  box-shadow:none;
+  border:0!important;
+  background: transparent;
+  cursor:pointer;
+  font-weight: 600;
+  font-size:14px;
+  padding: 6px;
+}
+.customSt {
+  border: 1px solid black;
+  padding-left: 10px;
+  width: 100%;
+  height: fit-content;
+}

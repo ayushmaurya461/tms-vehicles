@@ -1,0 +1,693 @@
+<div
+  id="pass-entry"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  data-backdrop="static"
+  aria-labelledby="pass-entry"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title font-weight-bold">Pass Entry</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">Close &times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form
+          class="highlight-required"
+          id="passEntry"
+          #passEntry="ngForm"
+          autocomplete="off"
+        >
+          <input type="hidden" name="id" id="id" [(ngModel)]="this.fields.id" />
+          <div class="row container-form-fields">
+            <div class="row d-flex justify-content-end">
+              <div class="col-md-3 col-lg-2">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="fields.location"
+                  id="location"
+                  [readOnly]="true"
+                />
+              </div>
+              <div class="col-md-3 col-lg-2">
+                <input
+                  type="text"
+                  name="date"
+                  placeholder="Select a Date"
+                  class="form-control"
+                  onFocus="(this.type = 'date')"
+                  [(ngModel)]="fields.date"
+                  id="pass-date"
+                  (keypress)="
+                    tabEnterService.keyFunc($event, 'party', 'select')
+                  "
+                />
+              </div>
+            </div>
+            <fieldset class="pb-3 mb-3">
+              <legend class="font-weight-bold w-auto small">Party</legend>
+              <div ngModelGroup="party">
+                <div class="row" style="margin-top: -10px !important">
+                  <div class="col-md-3 mb-1 form-group">
+                    <label for="tcsApplicable"
+                      ><h6 class="font-weight-bold small mb-1">Party</h6></label
+                    >
+                    <select2
+                      [id]="'party'"
+                      name="party"
+                      [options]="partyOptions"
+                      [prevElement]="{ id: 'pass-date', type: 'date' }"
+                      [selectedData]="fields.party.name"
+                      [placeholder]="'Select Party'"
+                      (onChange)="setPartyName($event)"
+                      [(ngModel)]="fields.party.name"
+                      [selectionCounter]="false"
+                      ngDefaultControl
+                    ></select2>
+                  </div>
+                  <div
+                    class="col-md-3 mb-1"
+                    *ngIf="gstType == 'igst' || gstType == 'cgst'"
+                  >
+                    <label for="billNo"
+                      ><h6 class="font-weight-bold small mb-1">
+                        Bill No.
+                      </h6></label
+                    >
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="text"
+                      placeholder="Enter Bill No"
+                      id="billNo"
+                      [(ngModel)]="fields.party.billNo"
+                      (keypress)="
+                        tabEnterService.keyFunc(
+                          $event,
+                          'billDate',
+                          'date',
+                          'party',
+                          'select'
+                        )
+                      "
+                      [required]="true"
+                    />
+                  </div>
+                  <div
+                    class="col-md-3 col-lg-2 mb-1 form-group"
+                    *ngIf="gstType == 'igst' || gstType == 'cgst'"
+                  >
+                    <label for="billDate"
+                      ><h6 class="font-weight-bold small mb-1">
+                        Bill Date
+                      </h6></label
+                    >
+                    <input
+                      required
+                      type="text"
+                      class="form-control"
+                      name="billDate"
+                      onFocus="(this.type = 'date')"
+                      id="billDate"
+                      data-provide="datepicker"
+                      placeholder="Bill Date"
+                      [(ngModel)]="fields.party.billDate"
+                      (keypress)="
+                        tabEnterService.keyFunc(
+                          $event,
+                          'creditDays',
+                          'number',
+                          'billNo',
+                          'number'
+                        )
+                      "
+                    />
+                  </div>
+                  <div
+                    class="col-md-2 col-lg-2 mb-1"
+                    *ngIf="gstType == 'igst' || gstType == 'cgst'"
+                  >
+                    <label for="creditDays"
+                      ><h6 class="font-weight-bold small mb-1">
+                        Credit Days
+                      </h6></label
+                    >
+                    <input
+                      required
+                      type="number"
+                      class="form-control"
+                      name="creditDays"
+                      id="creditDays"
+                      placeholder="Credit Days"
+                      [(ngModel)]="fields.party.creditDays"
+                      (keypress)="
+                        tabEnterService.keyFunc(
+                          $event,
+                          'itemName_0_0',
+                          'select',
+                          'billDate',
+                          'date'
+                        )
+                      "
+                    />
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset
+              class="pb-3 mb-3"
+              *ngFor="let doc of fields.documents; let f = index"
+            >
+              <legend class="font-weight-bold w-auto small">
+                Document : {{ selectedDocuments[f].name }} ({{
+                  selectedDocuments[f].amount
+                }})
+              </legend>
+              <div ngModelGroup="document{{ f }}">
+                <div
+                  class="row"
+                  *ngFor="let entry of doc.item; let i = index"
+                  style="margin-top: -10px !important"
+                >
+                  <div class="col-md-3 col-lg-2 mb-1">
+                    <label for="itemName_{{ f }}_{{ i }}">
+                      <h6 class="font-weight-bold small mb-1">Item Name</h6>
+                    </label>
+                    <select2
+                      [id]="'itemName_' + f + '_' + i"
+                      name="itemName_{{ f }}_{{ i }}"
+                      [options]="itemNameOptions"
+                      [prevElement]="{
+                        id:
+                          i > 0
+                            ? gstType == 'none'
+                              ? 'amount_' + f + '_' + (i - 1)
+                              : gstType == 'igst'
+                              ? 'igst_' + f + '_' + (i - 1)
+                              : 'sgst_' + f + '_' + (i - 1)
+                            : f > 0
+                            ? gstType == 'none'
+                              ? 'amount_' +
+                                (f - 1) +
+                                '_' +
+                                (fields.documents[f - 1].item.length - 1)
+                              : gstType == 'igst'
+                              ? 'igst_' +
+                                (f - 1) +
+                                '_' +
+                                (fields.documents[f - 1].item.length - 1)
+                              : ''
+                            : gstType == 'none'
+                            ? 'party'
+                            : 'creditDays',
+                        type:
+                          f > 0
+                            ? 'number'
+                            : gstType == 'none'
+                            ? 'select'
+                            : 'number'
+                      }"
+                      [nextElement]="{ id: 'hsn_' + f + '_' + i, type: 'text' }"
+                      placeholder="Select"
+                      [selectionCounter]="false"
+                      [selectedData]="fields.documents[f].item[i].itemName"
+                      (onChange)="setDocumentValues($event, f, i, 'itemName')"
+                      [(ngModel)]="fields.documents[f].item[i].itemName"
+                      ngDefaultControl
+                    ></select2>
+                  </div>
+                  <div class="col-md-3 col-lg-2 mb-1">
+                    <label for="hsn_{{ f }}_{{ i }}">
+                      <h6 class="font-weight-bold small mb-1">HSN</h6>
+                    </label>
+                    <input
+                      class="form-control"
+                      name="hsn_{{ f }}_{{ i }}"
+                      id="hsn_{{ f }}_{{ i }}"
+                      type="text"
+                      placeholder="Enter HSN"
+                      [(ngModel)]="fields.documents[f].item[i].hsn"
+                      (keypress)="
+                        tabEnterService.keyFunc(
+                          $event,
+                          'quantity_' + f + '_' + i,
+                          'number',
+                          'itemName_' + f + '_' + i,
+                          'select'
+                        )
+                      "
+                      required
+                    />
+                  </div>
+                  <div class="col-md-1 mb-1">
+                    <label for="quantity_{{ f }}_{{ i }}">
+                      <h6 class="font-weight-bold small mb-1">Qty.</h6>
+                    </label>
+                    <input
+                      type="number"
+                      name="quantity_{{ f }}_{{ i }}"
+                      id="quantity_{{ f }}_{{ i }}"
+                      placeholder="Qty."
+                      class="form-control"
+                      required
+                      [(ngModel)]="fields.documents[f].item[i].quantity"
+                      (keypress)="
+                        tabEnterService.keyFunc(
+                          $event,
+                          'unit_' + f + '_' + i,
+                          'select',
+                          'hsn_' + f + '_' + i,
+                          'text'
+                        )
+                      "
+                    />
+                  </div>
+                  <div class="col-md-2 col-lg-2 mb-1">
+                    <label for="unit_{{ f }}_{{ i }}">
+                      <h6 class="font-weight-bold small mb-1">Unit</h6>
+                    </label>
+                    <select2
+                      [id]="'unit_' + f + '_' + i"
+                      name="unit_{{ f }}_{{ i }}"
+                      [nextElement]="{
+                        id: 'amount_' + f + '_' + i,
+                        type: 'number'
+                      }"
+                      [prevElement]="{
+                        id: 'quantity_' + f + '_' + i,
+                        type: 'number'
+                      }"
+                      [options]="unitOptions"
+                      [selectedData]="fields.documents[f].item[i].unit"
+                      (onChange)="setDocumentValues($event, f, i, 'unit')"
+                      [required]="true"
+                      [placeholder]="'Unit'"
+                      [selectionCounter]="false"
+                      [(ngModel)]="fields.documents[f].item[i].unit"
+                      ngDefaultControl
+                    ></select2>
+                  </div>
+                  <div class="col-md-2 mb-1">
+                    <label for="amount_{{ f }}_{{ i }}">
+                      <h6 class="font-weight-bold small mb-1">Amount</h6>
+                    </label>
+                    <input
+                      type="number"
+                      name="amount_{{ f }}_{{ i }}"
+                      id="amount_{{ f }}_{{ i }}"
+                      class="form-control"
+                      [(ngModel)]="fields.documents[f].item[i].amount"
+                      placeholder="Amount"
+                      (ngModelChange)="checkAmountsTotal()"
+                      (keydown)="checkItemsTotal($event, f, i)"
+                      required
+                      (keypress)="
+                        tabEnterService.keyFunc(
+                          $event,
+                          'gst_' + f + '_' + i,
+                          'select',
+                          'unit_' + f + '_' + i,
+                          'select'
+                        )
+                      "
+                    />
+                  </div>
+                  <div
+                    class="col-md-1 mb-1"
+                    *ngIf="gstType == 'cgst' || gstType == 'igst'"
+                  >
+                    <label for="gst_{{ f }}_{{ i }}">
+                      <h6 class="font-weight-bold small mb-1">GST %</h6>
+                    </label>
+                    <select2
+                      [id]="'gst_' + f + '_' + i"
+                      name="gst_{{ f }}_{{ i }}"
+                      [placeholder]="'Select'"
+                      [prevElement]="{
+                        id: 'amount_' + f + '_' + i,
+                        type: 'select'
+                      }"
+                      [options]="gstOptions"
+                      [selectionCounter]="false"
+                      [selectedData]="fields.documents[f].item[i].gst"
+                      (onChange)="setDocumentGst($event, f, i)"
+                      [(ngModel)]="fields.documents[f].item[i].gst"
+                      ngDefaultControl
+                    ></select2>
+                  </div>
+                  <div class="col-md-1 mb-1" *ngIf="gstType == 'igst'">
+                    <label for="igst_{{ f }}_{{ i }}">
+                      <h6 class="font-weight-bold small mb-1">IGST</h6>
+                    </label>
+                    <input
+                      type="number"
+                      name="igst_{{ f }}_{{ i }}"
+                      class="form-control"
+                      id="igst_{{ f }}_{{ i }}"
+                      placeholder="IGST"
+                      [(ngModel)]="fields.documents[f].item[i].igst"
+                      [readOnly]="true"
+                    />
+                  </div>
+                  <div class="col-md-1 mb-1" *ngIf="gstType == 'cgst'">
+                    <label for="cgst_{{ f }}_{{ i }}">
+                      <h6 class="font-weight-bold small mb-1">CGST</h6>
+                    </label>
+                    <input
+                      type="number"
+                      name="cgst_{{ f }}_{{ i }}"
+                      class="form-control"
+                      id="cgst_{{ f }}_{{ i }}"
+                      [(ngModel)]="fields.documents[f].item[i].cgst"
+                      placeholder="CGST"
+                      [readOnly]="true"
+                    />
+                  </div>
+                  <div class="col-md-1 mb-1" *ngIf="gstType == 'cgst'">
+                    <label for="sgst_{{ f }}_{{ i }}">
+                      <h6 class="font-weight-bold small mb-1">SGST</h6>
+                    </label>
+                    <input
+                      type="number"
+                      name="sgst_{{ f }}_{{ i }}"
+                      class="form-control"
+                      placeholder="SGST"
+                      [(ngModel)]="fields.documents[f].item[i].sgst"
+                      id="sgst_{{ f }}_{{ i }}"
+                      [readOnly]="true"
+                    />
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset class="pb-3 mb-3">
+              <legend class="font-weight-bold w-auto small">Account</legend>
+              <div ngModelGroup="account">
+                <div class="row" style="margin-top: -10px !important">
+                  <div class="col-md-2 mb-1">
+                    <label for="accountName">
+                      <h6 class="font-weight-bold small mb-1">Account Name</h6>
+                    </label>
+                    <select2
+                      [id]="'accountName'"
+                      name="accountName"
+                      [options]="accountNameOptions"
+                      [nextElement]="{ id: 'gstStatus', type: 'select' }"
+                      [prevElement]="{
+                        id:
+                          gstType == 'none'
+                            ? 'amount_' +
+                              (fields.documents.length - 1) +
+                              '_' +
+                              (fields.documents[fields.documents.length - 1]
+                                ?.item.length -
+                                1)
+                            : gstType == 'igst'
+                            ? 'igst_' +
+                              (fields.documents.length - 1) +
+                              '_' +
+                              (fields.documents[fields.documents.length - 1]
+                                ?.item.length -
+                                1)
+                            : 'sgst' +
+                              (fields.documents.length - 1) +
+                              '_' +
+                              (fields.documents[fields.documents.length - 1]
+                                ?.item.length -
+                                1),
+                        type: 'number'
+                      }"
+                      [placeholder]="'Select'"
+                      [(ngModel)]="fields.account.name"
+                      ngDefaultControl
+                      [selectionCounter]="false"
+                      [selectedData]="fields.account.name"
+                      (onChange)="setAccountValues($event, 'name')"
+                    ></select2>
+                  </div>
+                  <div class="col-md-2 mb-1">
+                    <label for="accountName">
+                      <h6 class="font-weight-bold small mb-1">GST status</h6>
+                    </label>
+                    <select2
+                      name="gstStatus"
+                      [id]="'gstStatus'"
+                      [placeholder]="'Select'"
+                      [options]="gstStatusOptions"
+                      [selectionCounter]="false"
+                      [selectedData]="fields.account.gstStatus"
+                      ngDefaultControl
+                      [(ngModel)]="fields.account.name"
+                      [nextElement]="{ id: 'amount', type: 'number' }"
+                      [prevElement]="{ id: 'accountName', type: 'select' }"
+                      (onChange)="setAccountValues($event, 'gstStatus')"
+                    ></select2>
+                  </div>
+                  <div class="col-md-2 mb-1">
+                    <label for="amount">
+                      <h6 class="font-weight-bold small mb-1">Amount</h6>
+                    </label>
+                    <input
+                      type="number"
+                      name="amount"
+                      id="amount"
+                      class="form-control"
+                      (keypress)="
+                        tabEnterService.keyFunc(
+                          $event,
+                          gstType != 'none' ? 'gst' : 'roundOff',
+                          gstType != 'none' ? 'select' : 'number',
+                          'gstStatus',
+                          'select'
+                        )
+                      "
+                      [(ngModel)]="fields.account.amount"
+                      (ngModelChange)="checkAmountsTotal()"
+                      required
+                      placeholder="Amount"
+                    />
+                  </div>
+                  <div
+                    class="col-md-1 mb-1"
+                    *ngIf="gstType == 'cgst' || gstType == 'igst'"
+                  >
+                    <label for="gst">
+                      <h6 class="font-weight-bold small mb-1">GST %</h6>
+                    </label>
+                    <select2
+                      [id]="'gst'"
+                      [options]="gstOptions"
+                      name="gst"
+                      [nextElement]="{
+                        id: gstType == 'igst' ? 'acc_igst' : 'acc_cgst',
+                        type: 'number'
+                      }"
+                      [placeholder]="'Select'"
+                      [prevElement]="{ id: 'amount', type: 'number' }"
+                      (onChange)="setAccountGst($event)"
+                      [(ngModel)]="fields.account.gst"
+                      [selectedData]="fields.account.gst"
+                      ngDefaultControl
+                      [selectionCounter]="false"
+                    ></select2>
+                  </div>
+                  <div class="col-md-2 mb-1" *ngIf="gstType == 'igst'">
+                    <label for="acc_igst">
+                      <h6 class="font-weight-bold small mb-1">IGST</h6>
+                    </label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="acc_igst"
+                      id="acc_igst"
+                      placeholder="IGST"
+                      [(ngModel)]="fields.account.igst"
+                      [readOnly]="true"
+                    />
+                  </div>
+                  <div class="col-md-2 mb-1" *ngIf="gstType == 'cgst'">
+                    <label for="acc_cgst">
+                      <h6 class="font-weight-bold small mb-1">CGST</h6>
+                    </label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="cgst"
+                      id="acc_cgst"
+                      placeholder="CGST"
+                      [(ngModel)]="fields.account.cgst"
+                      [readOnly]="true"
+                    />
+                  </div>
+                  <div class="col-md-2 mb-1" *ngIf="gstType == 'cgst'">
+                    <label for="acc_sgst">
+                      <h6 class="font-weight-bold small mb-1">SGST</h6>
+                    </label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="sgst"
+                      placeholder="SGST"
+                      id="acc_sgst"
+                      [(ngModel)]="fields.account.sgst"
+                      [readOnly]="true"
+                    />
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+            <div class="col-md-2">
+              <label for="adjustmentRef" *ngIf="gstType == 'igst'">
+                <h6 class="font-weight-bold small mb-1">Adjustment Ref.</h6>
+              </label>
+              <select2
+                *ngIf="gstType == 'igst'"
+                name="adjustmentRef"
+                [id]="'adjustmentRef'"
+                [options]="adjustmentRefOptions"
+                [selectionCounter]="false"
+                [nextElement]="{ id: 'roundOff', type: 'number' }"
+                [prevElement]="{ id: 'acc_igst', type: 'number' }"
+                [placeholder]="'Select'"
+                [selectedData]="fields.adjustmentRef"
+                (onChange)="setAdjustmentRef($event)"
+                ngDefaultControl
+                [(ngModel)]="fields.adjustmentRef"
+              ></select2>
+            </div>
+            <div class="col-md-2">
+              <label for="amt">
+                <h6 class="font-weight-bold small mb-1">Amount</h6>
+              </label>
+              <input
+                type="number"
+                name="amt"
+                class="form-control"
+                id="amt"
+                placeholder="Amount"
+                (keypress)="tabEnterService.keyFunc($event, '', '')"
+                [(ngModel)]="fields.amount"
+                [readOnly]="true"
+              />
+            </div>
+            <div
+              class="col-md-2"
+              *ngIf="gstType == '' || gstType == 'none'"
+            ></div>
+            <div class="col-md-2" *ngIf="gstType == 'igst'">
+              <label for="igst">
+                <h6 class="font-weight-bold small mb-1">IGST</h6>
+              </label>
+              <input
+                type="number"
+                name="igst"
+                class="form-control"
+                id="igst"
+                placeholder="IGST"
+                [(ngModel)]="fields.igst"
+                [readOnly]="true"
+              />
+            </div>
+            <div class="col-md-1" *ngIf="gstType == 'cgst'">
+              <label for="cgst">
+                <h6 class="font-weight-bold small mb-1">CGST</h6>
+              </label>
+              <input
+                type="number"
+                name="cgst"
+                class="form-control"
+                id="cgst"
+                placeholder="CGST"
+                [(ngModel)]="fields.cgst"
+                [readOnly]="true"
+              />
+            </div>
+            <div class="col-md-1" *ngIf="gstType == 'cgst'">
+              <label for="sgst">
+                <h6 class="font-weight-bold small mb-1">SGST</h6>
+              </label>
+              <input
+                type="number"
+                name="sgst"
+                class="form-control"
+                id="sgst"
+                placeholder="SGST"
+                [(ngModel)]="fields.sgst"
+                [readOnly]="true"
+              />
+            </div>
+            <div class="col-md-2">
+              <label for="totalAmount">
+                <h6 class="font-weight-bold small mb-1">Total Amount</h6>
+              </label>
+              <input
+                type="number"
+                name="totalAmount"
+                class="form-control"
+                id="totalAmount"
+                [required]="true"
+                [readOnly]="true"
+                placeholder="Total Amount"
+                [(ngModel)]="fields.totalAmount"
+              />
+            </div>
+            <div class="col-md-2">
+              <label for="roundOff">
+                <h6 class="font-weight-bold small mb-1">Round Off</h6>
+              </label>
+              <input
+                type="number"
+                name="roundOff"
+                class="form-control"
+                id="roundOff"
+                [required]="true"
+                placeholder="Round Off"
+                [(ngModel)]="fields.roundOff"
+                (keypress)="
+                  tabEnterService.keyFunc($event, 'submitPassEntry', 'button')
+                "
+              />
+            </div>
+            <div class="col-md-2">
+              <label for="finalAmount">
+                <h6 class="font-weight-bold small mb-1">Final Amount</h6>
+              </label>
+              <input
+                type="number"
+                name="finalAmount"
+                class="form-control"
+                id="finalAmount"
+                [required]="true"
+                [readOnly]="true"
+                placeholder="Final Amount"
+                (ngModelChange)="roundOffFinalAmount()"
+                [(ngModel)]="fields.finalAmount"
+              />
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          id="submitPassEntry"
+          class="btn btn-theme"
+          [disabled]="passEntry.invalid"
+          (click)="submitPassEntry(passEntry)"
+        >
+          Save Details
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

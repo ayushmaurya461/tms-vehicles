@@ -1,0 +1,74 @@
+<div class="loader-wrapper" style="display: none">
+  <div class="loader">Loading...</div>
+</div>
+<app-sidebar #sidebar></app-sidebar>
+<section id="main_content" class="main_content dashboard_part large_header_bg">
+  <app-header></app-header>
+  <router-outlet (activate)="onOutletLoaded($event)"></router-outlet>
+</section>
+<app-mobile-footer *ngIf="!checkScreenSizeService.mobile$"></app-mobile-footer>
+<app-footer *ngIf="checkScreenSizeService.mobile$"></app-footer>
+<!-- Image Preview Modal -->
+<div class="modal fade" id="imagePreviewModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content imagePreviewModalContent">
+      <!-- Modal Header -->
+      <div class="modal-header imagePreviewModalHeader">
+        <button
+          type="button"
+          class="close imagePreviewModalCloseButton"
+          data-dismiss="modal"
+        >
+          <i class="ti-close"></i>
+        </button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="imagePreviewContainer">
+          <div class="imagePreviewMainView"></div>
+          <div class="imagePreviewSideView"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- View Map -->
+<div
+  id="viewMap"
+  class="modal fade bd-example-modal-lg"
+  tabindex="-1"
+  role="dialog"
+  data-backdrop="static"
+  aria-labelledby="dummyModal"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title font-weight-bold" id="mapModalTitle">
+          Location Map
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">Close &times;</span>
+        </button>
+      </div>
+      <div class="modal-body p-0">
+        <div class="col-md-12 col-xl-12 p-0">
+          <div class="card_box box_shadow">
+            <div
+              class="box_body p-0 text-center gmap_canvas"
+              id="mapModalBody"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

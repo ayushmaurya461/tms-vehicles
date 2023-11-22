@@ -1,0 +1,87 @@
+/* config.css */
+
+/* helpers/align.css */
+.align {
+  display: grid;
+  place-items: center;
+  color: white !important;
+  background-color: var(--loginPagebodyBackgroundColor);
+  color: var(--loginPagebodyColor);
+  font-family: var(--loginPagebodyFontFamily),
+    var(--loginPagebodyFontFamilyFallback);
+  font-size: var(--loginPagebodyFontSize);
+  font-weight: var(--loginPagebodyFontWeight);
+  line-height: var(--loginPagebodyLineHeight);
+  margin: 0;
+  min-block-size: 100vh;
+  min-height: 100vh;
+}
+.grid {
+  inline-size: 90%;
+  margin-inline: auto;
+  max-inline-size: 20rem;
+}
+* {
+  box-sizing: inherit;
+}
+
+fieldset {
+  background-color: #050524;
+  /* border: none !important; */
+  padding: 1rem;
+  box-shadow: 0px 0px 10px #1b202b65;
+}
+/* html {
+  box-sizing: border-box;
+  font-size: var(--loginPagehtmlFontSize);
+} */
+input,
+select,
+textarea,
+input[type="file"] {
+  background-color: rgb(113 114 137 / 58%);
+  border: 0;
+  color: inherit;
+  font: inherit;
+  margin: 0;
+  outline: 0;
+  padding: 0 10px;
+  font-weight: 800 !important;
+  height: 35px !important;
+  transition: background-color 0.3s;
+  color: var(--loginPageanchorColor) !important;
+}
+
+option {
+  background-color: #393741;
+}
+
+input:hover,
+input:focus,
+select:focus,
+select:hover,
+textarea:focus,
+textarea:hover {
+  background-color: rgb(113 114 137 / 58%) !important;
+}
+
+input[type="file"]::-webkit-file-upload-button {
+  background-color: rgb(113 114 137 / 58%);
+  cursor: pointer;
+  width: 100%;
+  height: 29px !important;
+  border: none;
+}
+
+.file-button {
+  height: 35px;
+  background-color: rgb(113 114 137 / 58%) !important;
+  color: white;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.form {
+  display: grid;
+  gap: var(--loginPageformGap);
+}

@@ -1,0 +1,235 @@
+* {
+  color: black;
+}
+@media screen and (max-width: 786px) {
+  .main_content .main_content_iner {
+    margin-bottom: 20px !important;
+    position: fixed !important;
+  }
+}
+.cards {
+  position: relative;
+  top: 25px;
+  width: 100%;
+  border: transparent;
+  border-radius: 10px;
+}
+
+.list-group-item {
+  border-radius: 10px;
+  background: rgb(215, 213, 249);
+  background: linear-gradient(
+    0deg,
+    rgba(215, 213, 249, 1) 0%,
+    rgba(255, 255, 255, 1) 100%
+  );
+  box-shadow: 0px 4px 2px rgba(0, 0, 0, 0.342);
+}
+
+img {
+  height: 50px;
+}
+
+ul {
+  overflow: hidden;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+::ng-deep .ngx-pagination .current {
+  margin-left: 5px;
+  background-color: #f45b0f !important;
+}
+
+::ng-deep .ngx-pagination a {
+  background-color: white;
+  margin-left: 5px;
+  border-radius: 5px !important;
+}
+
+::ng-deep .ngx-pagination a::after {
+  content: "" !important;
+}
+
+::ng-deep .ngx-pagination .disabled {
+  opacity: 0;
+}
+
+::ng-deep .ngx-pagination a::before {
+  content: "" !important;
+}
+
+::ng-deep .ngx-pagination .small-screen {
+  background-color: white !important;
+  color: black !important;
+  margin-left: 5px !important;
+  padding: 3px !important;
+  border-radius: 5px !important;
+  width: 50px;
+  text-align: center;
+}
+
+.card-title {
+  font-size: 25px;
+}
+
+.load-more {
+  width: 50%;
+  background-color: #ff7a38;
+  color: white;
+  padding: 10px;
+  font-size: 15px;
+}
+
+.menu-icon {
+  position: fixed;
+  bottom: 5%;
+  right: 5%;
+  height: 80px;
+  width: 80px;
+  border-radius: 100%;
+  background-color: #f45b0f;
+  color: white;
+}
+
+.list-container {
+  overflow-y: auto;
+  height: 78vh;
+  width: 100%;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.search-input {
+  height: 30px !important;
+  width: 110px;
+  background-color: rgba(223, 227, 233, 0.841);
+  border-radius: 5px;
+  border: 1px black;
+  margin-top: 4px !important;
+}
+
+.options {
+  margin-top: 80px !important;
+  position: absolute !important;
+  margin-top: 6px !important;
+  margin-right: 8px !important;
+}
+
+.btns {
+  margin-top: 8px !important;
+  margin-left: 5px;
+  height: 35px;
+  width: 35px;
+  font-size: 25px;
+  color: white;
+  border: 1px black;
+  border-radius: 5px;
+  background-color: #ff7a38;
+  line-height: -10px !important;
+  text-align: center;
+  line-height: 10px;
+}
+
+.no-data-found-image {
+  margin-top: 20vh;
+  height: auto;
+  width: 80vw;
+}
+
+.modal-content {
+  z-index: 10000 !important;
+}
+
+.scrollToTop {
+  position: fixed;
+  z-index: 30;
+  height: 30px;
+  width: 30px;
+  border-radius: 20px;
+  bottom: 90px;
+  left: 80vw;
+  background-color: #ffffff00;
+  border: none;
+}
+
+.scroll-up-animation {
+  animation: scroll-up 0.5s ease-in-out;
+}
+
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-ellipsis div {
+  position: absolute;
+  top: 33px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #ff7a38;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis div:nth-child(1) {
+  left: 8px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(2) {
+  left: 8px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(3) {
+  left: 32px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(4) {
+  left: 56px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
+}
+
+@keyframes scroll-up {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .border-right {
+    border-right: 0px transparent !important;
+  }
+}

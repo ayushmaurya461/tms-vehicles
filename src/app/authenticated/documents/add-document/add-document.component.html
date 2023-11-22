@@ -1,0 +1,38 @@
+<div class="main_content_iner overly_inner">
+  <div class="container-fluid p-0">
+    <section class="container table-wrapper">
+      <div class="position-relative">
+        <div
+          class="page_title_box d-flex flex-wrap align-items-center justify-content-between"
+        >
+          <div class="page_title_left d-flex align-items-center">
+            <h3 style="font-size: 23px" class="f_s_25 f_w_700 dark_text mr_30">
+              Add Document
+            </h3>
+          </div>
+        </div>
+
+        <table-full
+          *ngIf="!mobile"
+          [selection]="false"
+          [columns]="tableColumns"
+          [buttons]="tableButtons"
+          [tableTitle]="'Add Document'"
+          [optionData]="optionData"
+        >
+        </table-full>
+
+        <app-data-card
+          *ngIf="mobile"
+          [columns]="tableColumns"
+          [optionData]="optionData"
+          [buttons]="tableButtons"
+          [cardTitle]="'Add Document'"
+        >
+        </app-data-card>
+      </div>
+    </section>
+  </div>
+</div>
+<app-pass-entry></app-pass-entry>
+<add-new-document></add-new-document>

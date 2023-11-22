@@ -1,0 +1,126 @@
+.profile_info_mobile .profile_info_iner_mobile {
+  width: 150px;
+  text-align: center;
+  border-radius: 10px;
+  background-color: rgba(21, 21, 32, 0);
+  box-shadow: 0px 0px 20px rgb(126, 125, 125);
+}
+
+.profile_info_mobile .profile_info_iner_mobile {
+  height: fit-content;
+  position: fixed;
+  bottom: 60px;
+  right: 20px;
+  color: white;
+  background-color: rgb(33, 33, 46);
+  border-radius: 10px;
+  animation: slideIn 0.2s linear;
+}
+
+.profile_info_mobile .profile_info_iner_mobile .profile_author_name_mobile {
+  border-radius: 10px;
+  height: 85px;
+}
+
+.profile_info_mobile .profile_info_iner_mobile .profile_info_details_mobile {
+  background-color: rgb(246, 247, 248);
+  border-radius: 0px 0px 10px 10px;
+}
+
+.profile_info_mobile .profile_info_iner_mobile .profile_author_name_mobile p,
+.profile_info_mobile .profile_info_iner_mobile .profile_author_name_mobile h5 {
+  padding-top: 10px;
+  color: white;
+}
+
+.profile_info_mobile .profile_info_iner_mobile a {
+  color: rgb(47, 47, 49);
+  display: block;
+  padding: 5px;
+}
+
+.profile_info_mobile img {
+  margin-top: -7px;
+}
+
+a img {
+  height: 24px;
+}
+
+a span {
+  position: absolute;
+  border-radius: 10px;
+  height: 20px;
+  top: -4px;
+  left: calc(50% + 2px);
+  text-align: center;
+  background-color: red;
+  color: white;
+  width: 20px;
+  font-size: 12px;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.chat_box_mobile app-chat-window {
+  display: block;
+  animation: slideIn 0.2s ease-in-out;
+  position: fixed;
+  height: 60vh;
+  width: 80vw;
+  left: 10vw;
+  bottom: 60px;
+  z-index: 100;
+  box-shadow: 0px 0px 5px rgb(77, 77, 77);
+  background-color: transparent;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.favourites_mobile app-favourites {
+  position: fixed;
+  animation: slideIn 0.2s ease-in-out;
+  height: 60vh;
+  width: 80vw;
+  left: 10vw;
+  bottom: 60px;
+  z-index: 100;
+  box-shadow: 0px 0px 5px rgb(77, 77, 77);
+  background-color: transparent;
+  border-radius: 10px;
+}
+
+.notification_mobile app-notifications {
+  position: fixed;
+  animation: slideIn 0.2s ease-in-out;
+  height: 60vh;
+  left: 10vw;
+  width: 80vw;
+  bottom: 60px;
+  box-shadow: 0px 0px 5px rgb(78, 78, 78);
+  background-color: transparent;
+  z-index: 100;
+  border-radius: 10px;
+}
+
+.mobile-backdrop {
+  display: none;
+  background-color: #000000ad;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  position: fixed;
+  left: 0;
+  z-index: 100;
+}

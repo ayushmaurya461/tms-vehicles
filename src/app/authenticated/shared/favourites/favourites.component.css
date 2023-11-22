@@ -1,0 +1,28 @@
+.favourites {
+  background-color: white;
+  border-radius: 10px;
+  height: 100% !important;
+  width: 100% !important;
+}
+
+.fav-header {
+  border-radius: 10px 10px 0px 0px;
+  padding: 10px;
+  background-color: rgb(47, 47, 49);
+}
+
+.fav-header h3 {
+  color: white;
+}
+
+.fav-body li a {
+  color: black;
+  font-size: 14px;
+  font-weight: 700;
+  margin-left: 10px;
+}
+
+.fav-body li img {
+  height: 25px;
+  width: 25px;
+}

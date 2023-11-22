@@ -1,0 +1,34 @@
+<div class="main_content_iner overly_inner">
+  <div class="container-fluid p-0">
+    <section class="container table-wrapper">
+      <div class="position-relative">
+        <div
+          class="page_title_box d-flex flex-wrap align-items-center justify-content-between"
+        >
+          <div class="page_title_left d-flex align-items-center">
+            <h3 class="f_s_25 f_w_700 dark_text mr_30">Vehicle Body Types</h3>
+          </div>
+        </div>
+        <table-full
+          *ngIf="!mobile"
+          [columns]="tableColumns"
+          [buttons]="tableButtons"
+          [tableTitle]="'Vehicle Body Types'"
+          [optionData]="optionData"
+          (dblClick)="viewDetails($event)"
+        ></table-full>
+
+        <app-data-card
+          *ngIf="mobile"
+          [columns]="tableColumns"
+          [buttons]="tableButtons"
+          [optionData]="optionData"
+          [cardTitle]="'Vehicle Body Types'"
+        >
+        </app-data-card>
+      </div>
+    </section>
+  </div>
+</div>
+
+<app-add-vehicle-body-type></app-add-vehicle-body-type>

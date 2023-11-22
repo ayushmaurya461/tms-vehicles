@@ -1,0 +1,1144 @@
+<div
+  id="addVehicleDetails"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  data-backdrop="static"
+  aria-labelledby="addVehicleBodyType"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title font-weight-bold" id="addVehicleBodyTypeTitle">
+          Add Vehicle Details
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">Close &times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form
+          class="highlight-required"
+          id="vehicleDetails"
+          #vehicleDetails="ngForm"
+          autocomplete="off"
+        >
+          <input type="hidden" name="id" id="id" [(ngModel)]="this.fields.id" />
+          <fieldset>
+            <legend>Vehicle Details</legend>
+            <div class="row">
+              <div class="col-md-3 mb-1">
+                <label for="vehicleType"
+                  ><h6 class="font-weight-bold small mb-1">
+                    Vehicle Type
+                  </h6></label
+                >
+                <div class="form-group mb-0">
+                  <select2
+                    [nextElement]="{ id: 'vehicleTypeUsage', type: 'select' }"
+                    [multiple]="false"
+                    [options]="vehicleTypeOptions"
+                    [required]="true"
+                    placeholder="Select"
+                    [id]="'vehicleType'"
+                    name="vehicleType"
+                    [selectedData]="this.fields.vehicleType"
+                    [(ngModel)]="this.fields.vehicleType"
+                    (onChange)="setValue('vehicleType', $event)"
+                    ngDefaultControl
+                  ></select2>
+                </div>
+              </div>
+              <div class="col-md-3 mb-1">
+                <label for="vehicleTypeUsage"
+                  ><h6 class="font-weight-bold small mb-1">
+                    Vehicle Type Usage
+                  </h6></label
+                >
+                <div class="form-group mb-0">
+                  <select2
+                    [prevElement]="{ id: 'vehicleType', type: 'select' }"
+                    [nextElement]="{ id: 'branch', type: 'select' }"
+                    [multiple]="false"
+                    [options]="vehicleTypeUsageOptions"
+                    [required]="true"
+                    placeholder="Select"
+                    [id]="'vehicleTypeUsage'"
+                    name="vehicleTypeUsage"
+                    [selectedData]="this.fields.vehicleTypeUsage"
+                    [(ngModel)]="this.fields.vehicleTypeUsage"
+                    (onChange)="setValue('vehicleTypeUsage', $event)"
+                    ngDefaultControl
+                  ></select2>
+                </div>
+              </div>
+              <div class="col-md-3 mb-1">
+                <label for="branch"
+                  ><h6 class="font-weight-bold small mb-1">Branch</h6></label
+                >
+                <div class="form-group mb-0">
+                  <select2
+                    [prevElement]="{ id: 'vehicleTypeUsage', type: 'select' }"
+                    [nextElement]="{ id: 'ownership', type: 'select' }"
+                    [options]="branchOptions"
+                    [multiple]="false"
+                    [required]="true"
+                    [placeholder]="'Select'"
+                    [id]="'branch'"
+                    name="branch"
+                    [selectedData]="this.fields.branch"
+                    [(ngModel)]="this.fields.branch"
+                    (onChange)="setValue('branch', $event)"
+                    ngDefaultControl
+                  ></select2>
+                </div>
+              </div>
+              <div class="col-md-3 mb-1">
+                <label for="ownership"
+                  ><h6 class="font-weight-bold small mb-1">OwnerShip</h6></label
+                >
+                <div class="form-group mb-0">
+                  <select2
+                    [prevElement]="{ id: 'branch', type: 'select' }"
+                    [nextElement]="{ id: 'owner', type: 'select' }"
+                    [options]="ownershipOptions"
+                    [multiple]="false"
+                    [required]="true"
+                    placeholder="Select"
+                    [id]="'ownership'"
+                    name="ownership"
+                    [selectedData]="this.fields.ownership"
+                    [(ngModel)]="this.fields.ownership"
+                    (onChange)="setValue('ownership', $event)"
+                    ngDefaultControl
+                  ></select2>
+                </div>
+              </div>
+              <div class="col-md-3 mb-1">
+                <label
+                  ><h6 class="font-weight-bold small mb-1">Owner</h6></label
+                >
+                <div class="form-group mb-0">
+                  <select2
+                    [prevElement]="{ id: 'ownership', type: 'select' }"
+                    [nextElement]="{ id: 'regNo', type: 'text' }"
+                    [options]="ownerOptions"
+                    [required]="true"
+                    [multiple]="false"
+                    placeholder="Select"
+                    [id]="'owner'"
+                    name="owner"
+                    [selectedData]="this.fields.owner"
+                    [(ngModel)]="this.fields.owner"
+                    (onChange)="setValue('owner', $event)"
+                    ngDefaultControl
+                  ></select2>
+                </div>
+              </div>
+
+              <div class="col-md-3 mb-1">
+                <label
+                  ><h6 class="font-weight-bold small mb-1">
+                    Registration No.
+                  </h6></label
+                >
+                <div class="form-group mb-0">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="regNo"
+                    id="regNo"
+                    [(ngModel)]="this.fields.regNo"
+                    #regNo="ngModel"
+                    placeholder="Registration Number"
+                    (keypress)="
+                      this.tabEnterService.keyFunc(
+                        $event,
+                        'engineNo',
+                        'text',
+                        'owner',
+                        'select'
+                      )
+                    "
+                    required
+                  />
+                  <div
+                    *ngIf="regNo.invalid && (regNo.dirty || regNo.touched)"
+                    class="input-error-container text-danger text-left"
+                  >
+                    <i
+                      class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                    ></i>
+                    <div class="input-error">
+                      <div *ngIf="regNo.errors?.required">
+                        Field is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3 mb-1">
+                <label for="engineNo"
+                  ><h6 class="font-weight-bold small mb-1">
+                    Engine No.
+                  </h6></label
+                >
+                <div class="form-group mb-0">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="engineNo"
+                    id="engineNo"
+                    [(ngModel)]="this.fields.engineNo"
+                    #engineNo="ngModel"
+                    placeholder="Engine Number"
+                    (keypress)="
+                      this.tabEnterService.keyFunc(
+                        $event,
+                        'chasisNo',
+                        'text',
+                        'regNo',
+                        'text'
+                      )
+                    "
+                    required
+                  />
+                  <div
+                    *ngIf="
+                      engineNo.invalid && (engineNo.dirty || engineNo.touched)
+                    "
+                    class="input-error-container text-danger text-left"
+                  >
+                    <i
+                      class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                    ></i>
+                    <div class="input-error">
+                      <div *ngIf="engineNo.errors?.required">
+                        Field is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3 mb-1">
+                <label for="chasisNo"
+                  ><h6 class="font-weight-bold small mb-1">
+                    Chasis No.
+                  </h6></label
+                >
+                <div class="form-group mb-0">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="chasisNo"
+                    id="chasisNo"
+                    [(ngModel)]="this.fields.chasisNo"
+                    #chasisNo="ngModel"
+                    placeholder="Chasis Number"
+                    (keypress)="
+                      this.tabEnterService.keyFunc(
+                        $event,
+                        'brand',
+                        'select',
+                        'engineNo',
+                        'text'
+                      )
+                    "
+                    required
+                  />
+                  <div
+                    *ngIf="
+                      chasisNo.invalid && (chasisNo.dirty || chasisNo.touched)
+                    "
+                    class="input-error-container text-danger text-left"
+                  >
+                    <i
+                      class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                    ></i>
+                    <div class="input-error">
+                      <div *ngIf="chasisNo.errors?.required">
+                        Field is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3 mb-1">
+                <label for="brand"
+                  ><h6 class="font-weight-bold small mb-1">Brand</h6></label
+                >
+                <div class="form-group mb-0">
+                  <select2
+                    [prevElement]="{ id: 'chasisNo', type: 'text' }"
+                    [nextElement]="{ id: 'model', type: 'select' }"
+                    [options]="brandOptions"
+                    [multiple]="false"
+                    [required]="true"
+                    placeholder="Select"
+                    [id]="'brand'"
+                    name="brand"
+                    [selectedData]="this.fields.brand"
+                    [(ngModel)]="this.fields.brand"
+                    (onChange)="setValue('brand', $event)"
+                    ngDefaultControl
+                  ></select2>
+                </div>
+              </div>
+
+              <div class="col-md-3 mb-1">
+                <label for="model"
+                  ><h6 class="font-weight-bold small mb-1">Model</h6></label
+                >
+                <div class="form-group mb-0">
+                  <select2
+                    [prevElement]="{ id: 'brand', type: 'select' }"
+                    [nextElement]="{ id: 'bodyType', type: 'select' }"
+                    [options]="modelOptions"
+                    [required]="true"
+                    [multiple]="false"
+                    placeholder="Select"
+                    [id]="'model'"
+                    name="model"
+                    [selectedData]="this.fields.model"
+                    [(ngModel)]="this.fields.model"
+                    (onChange)="setValue('model', $event)"
+                    ngDefaultControl
+                  ></select2>
+                </div>
+              </div>
+
+              <div class="col-md-3 mb-1">
+                <label for="bodyType"
+                  ><h6 class="font-weight-bold small mb-1">Body Type</h6></label
+                >
+                <div class="form-group mb-0">
+                  <select2
+                    [prevElement]="{ id: 'model', type: 'select' }"
+                    [nextElement]="{ id: 'modelTyres', type: 'text' }"
+                    [options]="bodyTypeOptions"
+                    [required]="true"
+                    [multiple]="false"
+                    placeholder="Select"
+                    [id]="'bodyType'"
+                    name="bodyType"
+                    [selectedData]="this.fields.bodyType"
+                    [(ngModel)]="this.fields.bodyType"
+                    (onChange)="setValue('bodyType', $event)"
+                    ngDefaultControl
+                  ></select2>
+                </div>
+              </div>
+
+              <div class="col-md-3 mb-1">
+                <label for="modelTyres"
+                  ><h6 class="font-weight-bold small mb-1">
+                    Model Tyres
+                  </h6></label
+                >
+                <div class="form-group mb-0">
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="modelTyres"
+                    id="modelTyres"
+                    [(ngModel)]="this.fields.modelTyres"
+                    #modelTyres="ngModel"
+                    placeholder="Model Tyres"
+                    (keypress)="
+                      this.tabEnterService.keyFunc(
+                        $event,
+                        'bodyTyres',
+                        'text',
+                        'bodyType',
+                        'select'
+                      )
+                    "
+                    required
+                  />
+                  <div
+                    *ngIf="
+                      modelTyres.invalid &&
+                      (modelTyres.dirty || modelTyres.touched)
+                    "
+                    class="input-error-container text-danger text-left"
+                  >
+                    <i
+                      class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                    ></i>
+                    <div class="input-error">
+                      <div *ngIf="modelTyres.errors?.required">
+                        Field is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3 mb-1">
+                <label for="bodyTyres"
+                  ><h6 class="font-weight-bold small mb-1">
+                    Body Tyres
+                  </h6></label
+                >
+                <div class="form-group mb-0">
+                  <input
+                    type="number"
+                    maxlength="2"
+                    class="form-control"
+                    name="bodyTyres"
+                    id="bodyTyres"
+                    [(ngModel)]="this.fields.bodyTyres"
+                    #bodyTyres="ngModel"
+                    placeholder="Body Tyres"
+                    (keypress)="
+                      this.tabEnterService.keyFunc(
+                        $event,
+                        'totalTyres',
+                        'text',
+                        'modelTyres',
+                        'text'
+                      )
+                    "
+                    required
+                  />
+                  <div
+                    *ngIf="
+                      bodyTyres.invalid &&
+                      (bodyTyres.dirty || bodyTyres.touched)
+                    "
+                    class="input-error-container text-danger text-left"
+                  >
+                    <i
+                      class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                    ></i>
+                    <div class="input-error">
+                      <div *ngIf="bodyTyres.errors?.required">
+                        Field is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3 mb-1">
+                <label for="totalTyres"
+                  ><h6 class="font-weight-bold small mb-1">
+                    Total Tyres
+                  </h6></label
+                >
+                <div class="form-group mb-0">
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="totalTyres"
+                    id="totalTyres"
+                    [(ngModel)]="this.fields.totalTyres"
+                    #totalTyres="ngModel"
+                    placeholder="Total Tyres"
+                    (keypress)="
+                      this.tabEnterService.keyFunc(
+                        $event,
+                        'mfgYear',
+                        'select',
+                        'bodyTyres',
+                        'text'
+                      )
+                    "
+                    required
+                  />
+                  <div
+                    *ngIf="
+                      totalTyres.invalid &&
+                      (totalTyres.dirty || totalTyres.touched)
+                    "
+                    class="input-error-container text-danger text-left"
+                  >
+                    <i
+                      class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                    ></i>
+                    <div class="input-error">
+                      <div *ngIf="totalTyres.errors?.required">
+                        Field is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3 mb-1">
+                <label for="mfgYear"
+                  ><h6 class="font-weight-bold small mb-1">
+                    Manufacturing Year
+                  </h6></label
+                >
+                <div class="form-group mb-0">
+                  <select2
+                    [prevElement]="{ id: 'totalTyres', type: 'text' }"
+                    [nextElement]="{ id: 'regDate', type: 'date' }"
+                    [options]="yearOptions"
+                    [multiple]="false"
+                    [required]="true"
+                    placeholder="Select"
+                    [id]="'mfgYear'"
+                    name="mfgYear"
+                    [selectedData]="this.fields.mfgYear"
+                    [(ngModel)]="this.fields.mfgYear"
+                    (onChange)="setValue('mfgYear', $event)"
+                    ngDefaultControl
+                  ></select2>
+                </div>
+              </div>
+
+              <div class="col-md-3 mb-1">
+                <label for="regDate"
+                  ><h6 class="font-weight-bold small mb-1">
+                    Registration Date
+                  </h6></label
+                >
+                <div class="form-group mb-0">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="regDate"
+                    id="regDate"
+                    [(ngModel)]="this.fields.regDate"
+                    #regDate="ngModel"
+                    onfocus="(this.type='date')"
+                    placeholder="Select Date"
+                    (keypress)="
+                      this.tabEnterService.keyFunc(
+                        $event,
+                        'manualOdometer',
+                        'number'
+                      )
+                    "
+                    required
+                  />
+                  <div
+                    *ngIf="
+                      regDate.invalid && (regDate.dirty || regDate.touched)
+                    "
+                    class="input-error-container text-danger text-left"
+                  >
+                    <i
+                      class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                    ></i>
+                    <div class="input-error">
+                      <div *ngIf="regDate.errors?.required">
+                        Field is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3 mb-1">
+                <label for="manualOdometer"
+                  ><h6 class="font-weight-bold small mb-1">
+                    Manual Odometer
+                  </h6></label
+                >
+                <div class="form-group mb-0">
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="manualOdometer"
+                    id="manualOdometer"
+                    [(ngModel)]="this.fields.manualOdometer"
+                    #manualOdometer="ngModel"
+                    placeholder="Manual Odometer"
+                    (keypress)="
+                      this.tabEnterService.keyFunc(
+                        $event,
+                        'gpsOdometer',
+                        'number',
+                        'regDate',
+                        'date'
+                      )
+                    "
+                    required
+                  />
+                  <div
+                    *ngIf="
+                      manualOdometer.invalid &&
+                      (manualOdometer.dirty || manualOdometer.touched)
+                    "
+                    class="input-error-container text-danger text-left"
+                  >
+                    <i
+                      class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                    ></i>
+                    <div class="input-error">
+                      <div *ngIf="manualOdometer.errors?.required">
+                        Field is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3 mb-1">
+                <label for="gpsOdometer"
+                  ><h6 class="font-weight-bold small mb-1">
+                    GPS Odometer
+                  </h6></label
+                >
+                <div class="form-group mb-0">
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="gpsOdometer"
+                    id="gpsOdometer"
+                    [(ngModel)]="this.fields.gpsOdometer"
+                    #gpsOdometer="ngModel"
+                    placeholder="GPS Odometer"
+                    (keypress)="
+                      this.tabEnterService.keyFunc(
+                        $event,
+                        'tmsOdometer',
+                        'number',
+                        'manualOdometer',
+                        'number'
+                      )
+                    "
+                    required
+                  />
+                  <div
+                    *ngIf="
+                      gpsOdometer.invalid &&
+                      (gpsOdometer.dirty || gpsOdometer.touched)
+                    "
+                    class="input-error-container text-danger text-left"
+                  >
+                    <i
+                      class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                    ></i>
+                    <div class="input-error">
+                      <div *ngIf="gpsOdometer.errors?.required">
+                        Field is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3 mb-1">
+                <label for="tmsOdometer"
+                  ><h6 class="font-weight-bold small mb-1">
+                    TMS Odometer
+                  </h6></label
+                >
+                <div class="form-group mb-0">
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="tmsOdometer"
+                    id="tmsOdometer"
+                    [(ngModel)]="this.fields.tmsOdometer"
+                    #tmsOdometer="ngModel"
+                    placeholder="Tms Odometer"
+                    (keypress)="
+                      this.tabEnterService.keyFunc(
+                        $event,
+                        'fuelType',
+                        'select',
+                        'gpsOdometer',
+                        'number'
+                      )
+                    "
+                    required
+                  />
+                  <div
+                    *ngIf="
+                      tmsOdometer.invalid &&
+                      (tmsOdometer.dirty || tmsOdometer.touched)
+                    "
+                    class="input-error-container text-danger text-left"
+                  >
+                    <i
+                      class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                    ></i>
+                    <div class="input-error">
+                      <div *ngIf="tmsOdometer.errors?.required">
+                        Field is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3 mb-1">
+                <label for="fuelType"
+                  ><h6 class="font-weight-bold small mb-1">Fuel Type</h6></label
+                >
+                <div class="form-group mb-0">
+                  <select2
+                    [prevElement]="{ id: 'tmsOdometer', type: 'text' }"
+                    [nextElement]="{ id: 'fuelTank', type: 'number' }"
+                    [options]="fuelOptions"
+                    [multiple]="false"
+                    [required]="true"
+                    placeholder="Select"
+                    [id]="'fuelType'"
+                    name="fuelType"
+                    [selectedData]="this.fields.fuelType"
+                    [(ngModel)]="this.fields.fuelType"
+                    (onChange)="setValue('fuelType', $event)"
+                    ngDefaultControl
+                  ></select2>
+                </div>
+              </div>
+
+              <div class="col-md-3 mb-1">
+                <label for="fuelTank"
+                  ><h6 class="font-weight-bold small mb-1">Fuel Tank</h6></label
+                >
+                <div class="form-group mb-0">
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="fuelTank"
+                    id="fuelTank"
+                    [(ngModel)]="this.fields.fuelTank"
+                    #fuelTank="ngModel"
+                    placeholder="Fuel Tank"
+                    (keypress)="
+                      this.tabEnterService.keyFunc(
+                        $event,
+                        'maxFillCapacity',
+                        'number',
+                        'fuelType',
+                        'select'
+                      )
+                    "
+                    required
+                  />
+                  <div
+                    *ngIf="
+                      fuelTank.invalid && (fuelTank.dirty || fuelTank.touched)
+                    "
+                    class="input-error-container text-danger text-left"
+                  >
+                    <i
+                      class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                    ></i>
+                    <div class="input-error">
+                      <div *ngIf="fuelTank.errors?.required">
+                        Field is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3 mb-1">
+                <label for="maxFillCapacity"
+                  ><h6 class="font-weight-bold small mb-1">
+                    Maximum Filling Capacity
+                  </h6></label
+                >
+                <div class="form-group mb-0">
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="maxFillCapacity"
+                    id="maxFillCapacity"
+                    [(ngModel)]="this.fields.maxFillCapacity"
+                    #maxFillCapacity="ngModel"
+                    placeholder="Maximum Filling Capacity"
+                    (keypress)="
+                      this.tabEnterService.keyFunc(
+                        $event,
+                        'avgWithLoad',
+                        'number',
+                        'fuelTank',
+                        'number'
+                      )
+                    "
+                    required
+                  />
+                  <div
+                    *ngIf="
+                      maxFillCapacity.invalid &&
+                      (maxFillCapacity.dirty || maxFillCapacity.touched)
+                    "
+                    class="input-error-container text-danger text-left"
+                  >
+                    <i
+                      class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                    ></i>
+                    <div class="input-error">
+                      <div *ngIf="maxFillCapacity.errors?.required">
+                        Field is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3 mb-1">
+                <label for="avgWithLoad"
+                  ><h6 class="font-weight-bold small mb-1">
+                    Average With Load
+                  </h6></label
+                >
+                <div class="form-group mb-0">
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="avgWithLoad"
+                    id="avgWithLoad"
+                    [(ngModel)]="this.fields.avgWithLoad"
+                    #avgWithLoad="ngModel"
+                    placeholder="Average With Load"
+                    (keypress)="
+                      this.tabEnterService.keyFunc(
+                        $event,
+                        'avgWithoutLoad',
+                        'number',
+                        'maxFillCapacity',
+                        'number'
+                      )
+                    "
+                    required
+                  />
+                  <div
+                    *ngIf="
+                      avgWithLoad.invalid &&
+                      (avgWithLoad.dirty || avgWithLoad.touched)
+                    "
+                    class="input-error-container text-danger text-left"
+                  >
+                    <i
+                      class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                    ></i>
+                    <div class="input-error">
+                      <div *ngIf="avgWithLoad.errors?.required">
+                        Field is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3 mb-1">
+                <label for="avgWithoutLoad"
+                  ><h6 class="font-weight-bold small mb-1">
+                    Average Without Load
+                  </h6></label
+                >
+                <div class="form-group mb-0">
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="avgWithoutLoad"
+                    id="avgWithoutLoad"
+                    [(ngModel)]="this.fields.avgWithoutLoad"
+                    #avgWithoutLoad="ngModel"
+                    placeholder="Average without any Load"
+                    (keypress)="
+                      this.tabEnterService.keyFunc(
+                        $event,
+                        'gearBox',
+                        'number',
+                        'avgWithLoad',
+                        'number'
+                      )
+                    "
+                    required
+                  />
+                  <div
+                    *ngIf="
+                      avgWithoutLoad.invalid &&
+                      (avgWithoutLoad.dirty || avgWithoutLoad.touched)
+                    "
+                    class="input-error-container text-danger text-left"
+                  >
+                    <i
+                      class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                    ></i>
+                    <div class="input-error">
+                      <div *ngIf="avgWithoutLoad.errors?.required">
+                        Field is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3 mb-1">
+                <label for="gearBox"
+                  ><h6 class="font-weight-bold small mb-1">Gear Box</h6></label
+                >
+                <div class="form-group mb-0">
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="gearBox"
+                    id="gearBox"
+                    [(ngModel)]="this.fields.gearBox"
+                    #gearBox="ngModel"
+                    placeholder="Gear Box"
+                    (keypress)="
+                      this.tabEnterService.keyFunc(
+                        $event,
+                        'engineType',
+                        'text',
+                        'avgWithoutLoad',
+                        'number'
+                      )
+                    "
+                    required
+                  />
+                  <div
+                    *ngIf="
+                      gearBox.invalid && (gearBox.dirty || gearBox.touched)
+                    "
+                    class="input-error-container text-danger text-left"
+                  >
+                    <i
+                      class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                    ></i>
+                    <div class="input-error">
+                      <div *ngIf="gearBox.errors?.required">
+                        Field is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3 mb-1">
+                <label for="engineType"
+                  ><h6 class="font-weight-bold small mb-1">
+                    Engine Type
+                  </h6></label
+                >
+                <div class="form-group mb-0">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="engineType"
+                    id="engineType"
+                    [(ngModel)]="this.fields.engineType"
+                    #engineType="ngModel"
+                    placeholder="Maximum Filling Capacity"
+                    (keypress)="
+                      this.tabEnterService.keyFunc(
+                        $event,
+                        'vehicleStatus',
+                        'select',
+                        'gearBox',
+                        'text'
+                      )
+                    "
+                    required
+                  />
+                  <div
+                    *ngIf="
+                      engineType.invalid &&
+                      (engineType.dirty || engineType.touched)
+                    "
+                    class="input-error-container text-danger text-left"
+                  >
+                    <i
+                      class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                    ></i>
+                    <div class="input-error">
+                      <div *ngIf="engineType.errors?.required">
+                        Field is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3 mb-1">
+                <label for="vehicleStatus"
+                  ><h6 class="font-weight-bold small mb-1">
+                    Vehicle Status
+                  </h6></label
+                >
+                <div class="form-group mb-0">
+                  <select2
+                    [prevElement]="{ id: 'engineType', type: 'text' }"
+                    [nextElement]="{ id: 'adblue', type: 'select' }"
+                    [options]="vehicleStatusOptions"
+                    [required]="true"
+                    [multiple]="false"
+                    placeholder="Select"
+                    [id]="'vehicleStatus'"
+                    name="vehicleStatus"
+                    [selectedData]="this.fields.vehicleStatus"
+                    [(ngModel)]="this.fields.vehicleStatus"
+                    (onChange)="setValue('vehicleStatus', $event)"
+                    ngDefaultControl
+                  ></select2>
+                </div>
+              </div>
+              <div class="col-md-3 mb-1">
+                <label for="bharatStage"
+                  ><h6 class="font-weight-bold small mb-1">
+                    Bharat Stage
+                  </h6></label
+                >
+                <select2
+                  [isFocused]="true"
+                  [prevElement]="{ id: 'battery', type: 'number' }"
+                  [nextElement]="{ id: 'adblue', type: 'select' }"
+                  [options]="bharatStageOptions"
+                  [required]="true"
+                  placeholder="Select Bharat Stage"
+                  [id]="'bharatStage'"
+                  name="bharatStage"
+                  [selectedData]="this.fields.bharatStage"
+                  [(ngModel)]="this.fields.bharatStage"
+                  #approchType="ngModel"
+                  (onChange)="setValue('bharatStage', $event)"
+                  ngDefaultControl
+                ></select2>
+                <!-- [multiple]="true" Multiselect option -->
+                <!-- (onChange)="setCompanyTypeValue($event)" -->
+              </div>
+
+              <div class="col-md-3 mb-1">
+                <label for="adblue"
+                  ><h6 class="font-weight-bold small mb-1">Adblue</h6></label
+                >
+                <div class="form-group mb-0">
+                  <select2
+                    [prevElement]="{ id: 'vehicleStatus', type: 'select' }"
+                    [nextElement]="{ id: 'gps', type: 'select' }"
+                    [options]="adblueOptions"
+                    [multiple]="false"
+                    [required]="true"
+                    placeholder="Select"
+                    [id]="'adBlue'"
+                    name="adBlue"
+                    [selectedData]="this.fields.adBlue"
+                    [(ngModel)]="this.fields.adBlue"
+                    (onChange)="setValue('adblue', $event)"
+                    ngDefaultControl
+                  ></select2>
+                </div>
+              </div>
+
+              <div class="col-md-3 mb-1">
+                <label for="gps"
+                  ><h6 class="font-weight-bold small mb-1">GPS</h6></label
+                >
+                <div class="form-group mb-0">
+                  <select2
+                    [prevElement]="{ id: 'adblue', type: 'select' }"
+                    [nextElement]="{
+                      id: 'submitVehicleDetails',
+                      type: 'button'
+                    }"
+                    [options]="gpsOptions"
+                    [required]="true"
+                    placeholder="Select GPS"
+                    [id]="'gps'"
+                    name="gps"
+                    [multiple]="false"
+                    [selectedData]="this.fields.gps"
+                    [(ngModel)]="this.fields.gps"
+                    (onChange)="setValue('gps', $event)"
+                    ngDefaultControl
+                  ></select2>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Upload Images</legend>
+            <div class="row">
+              <div class="row" style="margin-top: 10px !important">
+                <div class="col-md-3 col-12 col-xs-12 col-sm-12 mb-1">
+                  <label for="frontImage">
+                    <h6 class="font-weight-bold small mb-1">Front Image</h6>
+                  </label>
+                  <input-file
+                    [id]="'frontImage'"
+                    name="frontImage"
+                    (onFileSelect)="setValue('frontImage', $event)"
+                    [(ngModel)]="fields.frontImage"
+                    [selectedFile]="fields.frontImage"
+                    [required]="true"
+                    ngDefaultControl
+                  ></input-file>
+                </div>
+
+                <div class="col-md-3 col-12 col-xs-12 col-sm-12 mb-1">
+                  <label for="leftImage">
+                    <h6 class="font-weight-bold small mb-1">Left Image</h6>
+                  </label>
+                  <input-file
+                    name="leftImage"
+                    [id]="'leftImage'"
+                    (onFileSelect)="setValue('leftImage', $event)"
+                    [(ngModel)]="fields.leftImage"
+                    [selectedFile]="fields.leftImage"
+                    [required]="true"
+                    ngDefaultControl
+                  >
+                  </input-file>
+                </div>
+
+                <div class="col-md-3 col-12 col-xs-12 col-sm-12 mb-1">
+                  <label for="rightImage">
+                    <h6 class="font-weight-bold small mb-1">Right Image</h6>
+                  </label>
+                  <input-file
+                    [id]="'rightImage'"
+                    name="rightImage"
+                    (onFileSelect)="setValue('rightImage', $event)"
+                    [(ngModel)]="fields.rightImage"
+                    [selectedFile]="fields.rightImage"
+                    [required]="true"
+                    ngDefaultControl
+                  ></input-file>
+                </div>
+
+                <div class="col-md-3 col-12 col-xs-12 col-sm-12 mb-1">
+                  <label for="backImage">
+                    <h6 class="font-weight-bold small mb-1">Back Image</h6>
+                  </label>
+                  <input-file
+                    [id]="'backImage'"
+                    name="backImage"
+                    (onFileSelect)="setValue('backImage', $event)"
+                    [(ngModel)]="fields.backImage"
+                    [selectedFile]="fields.backImage"
+                    [required]="true"
+                    ngDefaultControl
+                  ></input-file>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <!--  -->
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          id="submitVehicleDetails"
+          class="btn btn-theme"
+          [disabled]="vehicleDetails.invalid || loading"
+          (click)="submitVehicleDetails(vehicleDetails)"
+        >
+          Save Details
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,409 @@
+<div
+  id="document-master"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  data-backdrop="static"
+  aria-labelledby="document-master"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title font-weight-bold" id="addDistrictModalTitle">
+          Add Vehicle Document
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">Close &times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form
+          class="highlight-required"
+          id="vehicleDetails"
+          #vehicleDetails="ngForm"
+          autocomplete="off"
+        >
+          <input type="hidden" name="id" id="id" [(ngModel)]="this.fields.id" />
+          <div class="row container-form-fields">
+            <div class="row" style="height: 0px !important">
+              <h5 class="container-heading">Vehicle Document Details</h5>
+            </div>
+            <div class="col-md-4 mb-1">
+              <label for="name"
+                ><h6 class="font-weight-bold small mb-1">Name</h6></label
+              >
+              <div class="form-group mb-0">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="name"
+                  id="name"
+                  [(ngModel)]="this.fields.name"
+                  #name="ngModel"
+                  placeholder="Name"
+                  (keypress)="
+                    this.tabEnterService.keyFunc(
+                      $event,
+                      'gstApplicable',
+                      'select'
+                    )
+                  "
+                  required
+                />
+                <div
+                  *ngIf="name.invalid && (name.dirty || name.touched)"
+                  class="input-error-container text-danger text-left"
+                >
+                  <i
+                    class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                  ></i>
+                  <div class="input-error">
+                    <div *ngIf="name.errors?.required">Field is required.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4 mb-1">
+              <label for="country"
+                ><h6 class="font-weight-bold small mb-1">
+                  GST Applicable
+                </h6></label
+              >
+              <div class="form-group mb-0">
+                <select2
+                  [prevElement]="{ id: 'name', type: 'text' }"
+                  [nextElement]="{ id: 'docExpence', type: 'select' }"
+                  [options]="gstApplicableOption"
+                  [required]="true"
+                  placeholder="Click to select default"
+                  [id]="'gstApplicable'"
+                  name="gstApplicable"
+                  [selectedData]="this.fields.gstApplicable"
+                  [(ngModel)]="this.fields.gstApplicable"
+                  (onChange)="setValues($event, 'gstApplicable')"
+                  ngDefaultControl
+                ></select2>
+              </div>
+            </div>
+
+            <div class="col-md-4 mb-1">
+              <label for="docExpence"
+                ><h6 class="font-weight-bold small mb-1">
+                  Document Expense
+                </h6></label
+              >
+              <div class="form-group mb-0">
+                <select2
+                  [prevElement]="{ id: 'gstApplicable', type: 'select' }"
+                  [nextElement]="{ id: 'approxAmount', type: 'text' }"
+                  [options]="expenceOptions"
+                  [required]="true"
+                  placeholder="Click to select state"
+                  [id]="'docExpence'"
+                  name="docExpence"
+                  [selectedData]="this.fields.docExpence"
+                  [(ngModel)]="this.fields.docExpence"
+                  (onChange)="setValues($event, 'docExpence')"
+                  ngDefaultControl
+                ></select2>
+              </div>
+            </div>
+
+            <div class="col-md-4 mb-1">
+              <label for="approxAmount"
+                ><h6 class="font-weight-bold small mb-1">
+                  Approx Amount
+                </h6></label
+              >
+              <div class="form-group mb-0">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="approxAmount"
+                  id="approxAmount"
+                  [(ngModel)]="this.fields.approxAmount"
+                  #approxAmount="ngModel"
+                  placeholder="approxAmount"
+                  (keypress)="
+                    this.tabEnterService.keyFunc(
+                      $event,
+                      'prepaidAccount',
+                      'select'
+                    )
+                  "
+                  required
+                />
+                <div
+                  *ngIf="
+                    approxAmount.invalid &&
+                    (approxAmount.dirty || approxAmount.touched)
+                  "
+                  class="input-error-container text-danger text-left"
+                >
+                  <i
+                    class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                  ></i>
+                  <div class="input-error">
+                    <div *ngIf="approxAmount.errors?.required">
+                      Field is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4 mb-1">
+              <label for="prepaidAccount"
+                ><h6 class="font-weight-bold small mb-1">
+                  Prepaid Account
+                </h6></label
+              >
+              <div class="form-group mb-0">
+                <select2
+                  [prevElement]="{ id: 'approxAmount', type: 'text' }"
+                  [nextElement]="{ id: 'maxValidityDocument', type: 'select' }"
+                  [options]="prepaidOptions"
+                  [required]="true"
+                  placeholder="Click to select state"
+                  [id]="'prepaidAccount'"
+                  name="prepaidAccount"
+                  [selectedData]="this.fields.prepaidAccount"
+                  [(ngModel)]="this.fields.prepaidAccount"
+                  (onChange)="setValues($event, 'prepaidAccount')"
+                  ngDefaultControl
+                ></select2>
+              </div>
+            </div>
+
+            <div class="col-md-4 mb-1">
+              <label for="state"
+                ><h6 class="font-weight-bold small mb-1">
+                  Max Validity Of Document
+                </h6></label
+              >
+              <div class="form-group mb-0">
+                <select2
+                  [prevElement]="{ id: 'prepaidAccount', type: 'select' }"
+                  [nextElement]="{
+                    id: 'documentParameter0',
+                    type: 'select'
+                  }"
+                  [options]="validityOptions"
+                  [required]="true"
+                  placeholder="Click to select maxValidityDocument"
+                  [id]="'maxValidityDocument'"
+                  name="maxValidityDocument"
+                  [selectedData]="this.fields.maxValidityDocument"
+                  [(ngModel)]="this.fields.maxValidityDocument"
+                  (onChange)="setValues($event, 'maxValidityDocument')"
+                  ngDefaultControl
+                ></select2>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="row container-form-fields"
+            style="margin-top: 20px !important"
+          >
+            <div class="row" style="height: 0px">
+              <h5 class="container-heading">Vehicle Document Parameter</h5>
+            </div>
+            <div
+              class="col-md-4 mb-1"
+              *ngFor="let entry of fields.documentParameter; let i = index"
+            >
+              <label for="state"
+                ><h6 class="font-weight-bold small mb-1">
+                  Document Parameter
+                </h6></label
+              >
+              <div class="form-group mb-0">
+                <select2
+                  [prevElement]="{
+                    id:
+                      i > 0
+                        ? 'documentParameter' + (i - 1)
+                        : 'maxValidityDocument',
+                    type: 'select'
+                  }"
+                  [nextElement]="{
+                    id:
+                      fields.documentParameter.length > i + 1
+                        ? 'documentParameter' + (i + 1)
+                        : 'timePeriodConditions0',
+                    type: 'select'
+                  }"
+                  [options]="parameterOptions"
+                  [required]="true"
+                  placeholder="Click to select parameter"
+                  [id]="'documentParameter' + i"
+                  name="documentParameter{{ i }}"
+                  [selectedData]="this.fields.documentParameter[i].value"
+                  [(ngModel)]="this.fields.documentParameter[i].value"
+                  (onChange)="setDocumentParameter($event, i)"
+                  ngDefaultControl
+                ></select2>
+              </div>
+            </div>
+
+            <div class="row" style="margin-top: 5px !important">
+              <div class="col-md-4">
+                <div class="row btn-btn">
+                  <button
+                    id="add-age-button"
+                    type="button"
+                    class="btn btn-success button in-form-buttons"
+                    (click)="addNewVehicleDocumentParameter()"
+                  >
+                    Add More
+                  </button>
+                  <button
+                    class="btn btn-danger button in-form-buttons"
+                    id="remove-age-button"
+                    type="button"
+                    (click)="removeVehicleDocumentParameter()"
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="row container-form-fields"
+            style="margin-top: 20px !important"
+          >
+            <div class="row" style="height: 0px !important">
+              <h5 class="container-heading">Document Conditions</h5>
+            </div>
+            <div
+              class="row"
+              *ngFor="let entry of fields.documentConditions; let i = index"
+            >
+              <div class="col-md-4 mb-1">
+                <label for="timePeriodConditions"
+                  ><h6 class="font-weight-bold small mb-1">
+                    Time Period
+                  </h6></label
+                >
+                <div class="form-group mb-0">
+                  <select2
+                    [prevElement]="{
+                      id:
+                        i > 0
+                          ? 'bookingNotification' + (i - 1)
+                          : 'documentParameter' +
+                            (fields.documentParameter.length - 1),
+                      type: 'select'
+                    }"
+                    [nextElement]="{
+                      id: 'accounting' + i,
+                      type: 'select'
+                    }"
+                    [options]="timePeriodOptions"
+                    [required]="true"
+                    placeholder="Click to select timePeriodConditions"
+                    [id]="'timePeriodConditions' + i"
+                    name="timePeriodConditions{{ i }}"
+                    [selectedData]="
+                      this.fields.documentConditions[i].timePeriod
+                    "
+                    [(ngModel)]="this.fields.documentConditions[i].timePeriod"
+                    (onChange)="setConditionsParameter($event, i, 'timePeriod')"
+                    ngDefaultControl
+                  ></select2>
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-1">
+                <label for="accounting"
+                  ><h6 class="font-weight-bold small mb-1">
+                    Accounting Notification
+                  </h6></label
+                >
+                <div class="form-group mb-0">
+                  <select2
+                    [prevElement]="{
+                      id: 'timePeriodConditions' + i,
+                      type: 'select'
+                    }"
+                    [nextElement]="{
+                      id: 'bookingNotification' + i,
+                      type: 'select'
+                    }"
+                    [options]="accountingOptions"
+                    [required]="true"
+                    placeholder="Click to select accounting"
+                    [id]="'accounting' + i"
+                    name="accounting{{ i }}"
+                    [selectedData]="
+                      this.fields.documentConditions[i].accounting
+                    "
+                    [(ngModel)]="this.fields.documentConditions[i].accounting"
+                    (onChange)="setConditionsParameter($event, i, 'accounting')"
+                    ngDefaultControl
+                  ></select2>
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-1">
+                <label for="bookingNotification"
+                  ><h6 class="font-weight-bold small mb-1">
+                    Booking Notification
+                  </h6></label
+                >
+                <div class="form-group mb-0">
+                  <select2
+                    [prevElement]="{
+                      id: 'accounting' + i,
+                      type: 'select'
+                    }"
+                    [nextElement]="{
+                      id: 'submitDistrictInformation',
+                      type: 'button'
+                    }"
+                    [options]="accountingOptions"
+                    [required]="true"
+                    placeholder="Click to select Booking Notification"
+                    [id]="'bookingNotification' + i"
+                    name="bookingNotification{{ i }}"
+                    [selectedData]="
+                      this.fields.documentConditions[i].bookingNotification
+                    "
+                    [(ngModel)]="
+                      this.fields.documentConditions[i].bookingNotification
+                    "
+                    (onChange)="
+                      setConditionsParameter($event, i, 'bookingNotification')
+                    "
+                    ngDefaultControl
+                  ></select2>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          id="submitDistrictInformation"
+          class="btn btn-theme"
+          [disabled]="vehicleDetails.invalid"
+          (click)="submitVehicleDocument(vehicleDetails)"
+        >
+          Save Details
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

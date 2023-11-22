@@ -1,0 +1,183 @@
+<div class="main_content_iner overly_inner">
+  <div class="container-fluid p-0">
+    <section class="container table-wrapper">
+      <div class="position-relative">
+        <div
+          class="page_title_box d-flex flex-wrap align-items-center justify-content-between"
+        >
+          <div class="page_title_left d-flex align-items-center">
+            <h3 class="f_s_25 f_w_700 dark_text mr_30">Vehicle Average Logs</h3>
+          </div>
+        </div>
+        <table-full
+          *ngIf="!mobile"
+          [columns]="tableColumns"
+          [buttons]="tableButtons"
+          [tableTitle]="'Vehicle  Average Logs'"
+          [optionData]="optionData"
+        ></table-full>
+
+        <app-data-card
+          *ngIf="mobile"
+          [optionData]="optionData"
+          [buttons]="tableButtons"
+          [cardTitle]="'Vehicle  Average Logs'"
+          [columns]="tableColumns"
+        ></app-data-card>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div
+  id="vehicleAverage"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  data-backdrop="static"
+  aria-labelledby="vehicleAverage"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title font-weight-bold" id="vehicleAverageModalTitle">
+          Update Odometer
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">Close &times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #averageLogs="ngForm">
+          <input type="text" name="id" [(ngModel)]="fields.id" hidden />
+          <div class="row">
+            <div class="col-md-4">
+              <label for="vehicle">
+                <h6 class="font-weight-bold small">Vehicle No.</h6>
+              </label>
+              <select2
+                [id]="'vehicle'"
+                name="vehicle"
+                [options]="vehicleOptions"
+                [(ngModel)]="fields.vehicle"
+                [selectedData]="fields.vehicle"
+                ngDefaultControl
+                [nextElement]="{ id: 'date', type: 'text' }"
+                (onChange)="setVehicle($event)"
+                [required]="true"
+              >
+              </select2>
+            </div>
+            <div class="col-md-4">
+              <label for="date">
+                <h6 class="font-weight-bold small">Effective Date</h6>
+              </label>
+              <input
+                type="text"
+                name="date"
+                id="date"
+                class="form-control"
+                [required]="true"
+                [(ngModel)]="fields.effectiveDate"
+                onfocus="this.type='date'"
+                (keypress)="
+                  tabEnterService.keyFunc(
+                    $event,
+                    'avgWithLoad',
+                    'text',
+                    'vehicle',
+                    'select'
+                  )
+                "
+              />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <label for="avgWithLoad">
+                <h6 class="font-weight-bold small">Average With Load</h6>
+              </label>
+              <input
+                type="text"
+                name="avgWithLoad"
+                id="avgWithLoad"
+                class="form-control"
+                [required]="true"
+                [(ngModel)]="fields.avgWithLoad"
+                (keypress)="
+                  tabEnterService.keyFunc(
+                    $event,
+                    'avgWithoutLoad',
+                    'text',
+                    'date',
+                    'text'
+                  )
+                "
+              />
+            </div>
+            <div class="col-md-4">
+              <label for="avgWithoutLoad">
+                <h6 class="font-weight-bold small">Average Without Load</h6>
+              </label>
+              <input
+                type="text"
+                name="avgWithoutLoad"
+                id="avgWithoutLoad"
+                class="form-control"
+                [required]="true"
+                [(ngModel)]="fields.avgWithoutLoad"
+                (keypress)="
+                  tabEnterService.keyFunc(
+                    $event,
+                    'avgWithOverload',
+                    'text',
+                    'avgWithLoad',
+                    'text'
+                  )
+                "
+              />
+            </div>
+            <div class="col-md-4">
+              <label for="avgWithOverload">
+                <h6 class="font-weight-bold small">Average Without Overload</h6>
+              </label>
+              <input
+                type="text"
+                name="avgWithOverload"
+                id="avgWithOverload"
+                class="form-control"
+                [required]="true"
+                [(ngModel)]="fields.avgWithOverload"
+                (keypress)="
+                  tabEnterService.keyFunc(
+                    $event,
+                    '',
+                    '',
+                    'avgWithoutLoad',
+                    'text'
+                  )
+                "
+              />
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          class="btn btn-theme"
+          type="submit"
+          data-dismiss="modal"
+          [disabled]="averageLogs.invalid"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

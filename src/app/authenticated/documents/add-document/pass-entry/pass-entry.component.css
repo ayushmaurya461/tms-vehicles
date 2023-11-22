@@ -1,0 +1,19 @@
+.modal-lg,
+.modal-xl {
+  max-width: 1250px;
+}
+
+.col-md-1,
+.col-md-2,
+.col-md-3,
+.col-md-3,
+.col-lg-1,
+.col-lg-2,
+.col-lg-3,
+.col-lg-4 {
+  padding: 3px 6px;
+}
+
+fieldset {
+  padding: 0px 10px 0px !important;
+}

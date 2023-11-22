@@ -1,0 +1,76 @@
+<section *ngIf="data.length" class="white_card_body pb-0 data-counter">
+  <div class="Sales_Details_plan">
+    <button
+      *ngIf="mobile"
+      type="button"
+      class="btn btn-info counter-button"
+      [attr.data-toggle]="mobile ? 'collapse' : null"
+      data-target="#counters"
+    >
+      <i class="ti-angle-double-left"></i>
+    </button>
+    <div
+      class="row justify-content-center"
+      [ngClass]="{ collapse: mobile }"
+      id="counters"
+    >
+      <div
+        *ngFor="let counter of data"
+        class="col-6 col-sm-4 col-md-3 col-lg-3 col-xl-2"
+      >
+        <a
+          href="javascript:void(0)"
+          [title]="counter.fullTitle ? counter.fullTitle : counter.title"
+          (click)="counterClickEvent($event, counter.id)"
+        >
+          <div
+            class="single_plan d-flex align-items-center justify-content-between"
+          >
+            <div class="plan_left d-flex align-items-center">
+              <div
+                class="thumb"
+                [ngClass]="counter.colorClass"
+                [style.background-color]="
+                  counter.bgColor ? counter.bgColor + ' !important' : ''
+                "
+              >
+                <i *ngIf="counter.icon" [ngClass]="counter.icon"></i>
+                <img
+                  *ngIf="!counter.icon"
+                  [src]="counter.iconPath ?? counter.iconPath"
+                  alt="Icon"
+                />
+              </div>
+              <div class="counter-data">
+                <h5>{{ counter.data }}</h5>
+                <span>{{ counter.title }}</span>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- <section *ngIf="data.length" class="white_card_body pb-0 data-counter">
+    <div class="Sales_Details_plan">
+        <div class="d-flex overflow-auto wrapper">
+            <div *ngFor="let counter of data" class="single-counter">
+                <a href="javascript:void(0)" (click)="counterClickEvent(counter.id)">
+                    <div class="single_plan d-flex align-items-center justify-content-between">
+                        <div class="plan_left d-flex align-items-center">
+                            <div class="thumb" [ngClass]="counter.colorClass">
+                                <i [ngClass]="counter.icon"></i>
+                            </div>
+                            <div class="pr-3 content">
+                                <h5>{{counter.data}}</h5>
+                                <span>{{counter.title}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section> -->

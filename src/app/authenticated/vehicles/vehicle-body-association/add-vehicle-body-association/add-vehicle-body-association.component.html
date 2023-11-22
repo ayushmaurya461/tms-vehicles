@@ -1,0 +1,236 @@
+<div
+  id="addVehicleBodyAssociation"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  data-backdrop="static"
+  aria-labelledby="addVehicleBodyAssociation"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5
+          class="modal-title font-weight-bold"
+          id="
+                addVehicleBrandModalTitle"
+        >
+          Body Assosciation
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">Close &times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form
+          class="highlight-required"
+          id="vehicleBodyAssociation"
+          #vehicleBodyAssociation="ngForm"
+          autocomplete="off"
+        >
+          <input type="hidden" name="id" id="id" [(ngModel)]="this.fields.id" />
+          <div class="row">
+            <div class="col-md-4 mb-1">
+              <label for="bodyNo"
+                ><h6 class="font-weight-bold small mb-1">Body No.</h6></label
+              >
+              <div class="form-group mb-0">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="bodyNo"
+                  id="bodyNo"
+                  [(ngModel)]="this.fields.bodyNo"
+                  #bodyNo="ngModel"
+                  placeholder="Enter Body Number"
+                  (keypress)="
+                    this.tabEnterService.keyFunc($event, 'vehicleNo', 'text')
+                  "
+                  required
+                />
+                <div
+                  *ngIf="bodyNo.invalid && (bodyNo.dirty || bodyNo.touched)"
+                  class="input-error-container text-danger text-left"
+                >
+                  <i
+                    class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                  ></i>
+                  <div class="input-error">
+                    <div *ngIf="bodyNo.errors?.required">
+                      Field is required.
+                    </div>
+                    <div *ngIf="bodyNo.errors?.pattern">Pattern Mismatch</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4 mb-1">
+              <label for="vehicleNo"
+                ><h6 class="font-weight-bold small mb-1">Vehicle No.</h6></label
+              >
+              <div class="form-group mb-0">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="vehicleNo"
+                  id="vehicleNo"
+                  [(ngModel)]="this.fields.vehicleNo"
+                  #vehicleNo="ngModel"
+                  placeholder="vehicleNo"
+                  (keypress)="
+                    this.tabEnterService.keyFunc(
+                      $event,
+                      'assignDate',
+                      'date',
+                      'bodyNo',
+                      'text'
+                    )
+                  "
+                  required
+                />
+                <div
+                  *ngIf="
+                    vehicleNo.invalid && (vehicleNo.dirty || vehicleNo.touched)
+                  "
+                  class="input-error-container text-danger text-left"
+                >
+                  <i
+                    class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                  ></i>
+                  <div class="input-error">
+                    <div *ngIf="vehicleNo.errors?.required">
+                      Field is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4 mb-1">
+              <label for="assignDate"
+                ><h6 class="font-weight-bold small mb-1">Assign Date</h6></label
+              >
+              <div class="form-group mb-0">
+                <input
+                  type="date"
+                  class="form-control"
+                  name="assignDate"
+                  id="assignDate"
+                  [(ngModel)]="this.fields.assignDate"
+                  #assignDate="ngModel"
+                  placeholder="vehicleNo"
+                  (keypress)="
+                    this.tabEnterService.keyFunc(
+                      $event,
+                      'unassignDate',
+                      'date',
+                      'vehicleNo',
+                      'text'
+                    )
+                  "
+                  required
+                />
+                <div
+                  *ngIf="
+                    assignDate.invalid &&
+                    (assignDate.dirty || assignDate.touched)
+                  "
+                  class="input-error-container text-danger text-left"
+                >
+                  <i
+                    class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                  ></i>
+                  <div class="input-error">
+                    <div *ngIf="assignDate.errors?.required">
+                      Field is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4 mb-1">
+              <label for="unassignDate"
+                ><h6 class="font-weight-bold small mb-1">
+                  Unassign Date
+                </h6></label
+              >
+              <div class="form-group mb-0">
+                <input
+                  type="date"
+                  class="form-control"
+                  name="unassignDate"
+                  id="unassignDate"
+                  [(ngModel)]="this.fields.unassignDate"
+                  #unassignDate="ngModel"
+                  placeholder="unassignDate"
+                  (keypress)="
+                    this.tabEnterService.keyFunc(
+                      $event,
+                      'user',
+                      'select',
+                      'assignDate',
+                      'date'
+                    )
+                  "
+                  required
+                />
+                <div
+                  *ngIf="
+                    unassignDate.invalid &&
+                    (unassignDate.dirty || unassignDate.touched)
+                  "
+                  class="input-error-container text-danger text-left"
+                >
+                  <i
+                    class="p-2 input-error-indicator fa fa-exclamation-triangle"
+                  ></i>
+                  <div class="input-error">
+                    <div *ngIf="unassignDate.errors?.required">
+                      Field is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label for="user"
+                ><h6 class="font-weight-bold small">User</h6></label
+              >
+              <select2
+                [prevElement]="{ id: 'unassignDate', type: 'date' }"
+                [nextElement]="{ id: 'submitformdata', type: 'button' }"
+                [options]="userOptions"
+                [required]="true"
+                [multiple]="false"
+                placeholder="Select User"
+                [id]="'user'"
+                name="user"
+                [selectedData]="this.fields.user"
+                [(ngModel)]="this.fields.user"
+                (onChange)="setValue('user', $event)"
+                ngDefaultControl
+              ></select2>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          id="submitformdata"
+          [disabled]="vehicleBodyAssociation.invalid"
+          class="btn btn-theme"
+        >
+          Save Details
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
